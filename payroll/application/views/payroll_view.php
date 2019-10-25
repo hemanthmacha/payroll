@@ -102,26 +102,23 @@ $(document).ready(function() {
     //this calculates values automatically 
    
     $("#firsttpay, #secondpay").on("change", function() {
-        sum();
-    });
-});
 
-function sum() {
-            var num1 = document.getElementById('firsttpay').value;
-            var num2 = document.getElementById('secondpay').value;
-            var bal = document.getElementById('balance').value;
+            var num1 = $(this).parent('td').parent('tr').find('#firsttpay').val();
+            var num2 = $(this).parent('td').parent('tr').find('#secondpay').val();
+            var bal = $(this).parent('td').parent('tr').find('#balance').val();
             var result = parseInt(num1) + parseInt(num2);
-            var result1 = parseInt(bal)-parseInt(result);
-
-           
+            var result1 = parseInt(bal)-parseInt(result);  
 
             if (!isNaN(result)) {
-                document.getElementById('total').value = result;
-                document.getElementById('balance').value = result1;
+
+              $(this).parent('td').parent('tr').find('#total').val(result);
+              $(this).parent('td').parent('tr').find('#balance').val(result1);
+
         
             }
-        }
-
+        });
+});
+   
 
 
 $(document).on("click", "#save", function() { 
