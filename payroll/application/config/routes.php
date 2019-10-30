@@ -12,6 +12,8 @@ $route['month/(:any)'] = 'Payroll_sheet';
 $route['update']='Payroll_sheet/update_payroll';
 
 $route['updateemployee'] = 'Employe/updateemp';
+$route['deleteemployee'] = 'Employe/deleteemp';
+
 
 $route['addemployeedata'] = 'Employe/newdata_emp';
 $route['addemp'] = 'Addemploye/add';

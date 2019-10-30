@@ -37,11 +37,36 @@ class Employe extends CI_Controller {
          $year  = $_POST['year'];
 
 
-       $result['res']= $this->Payroll_sheet_model->insert_rate_percent($id,$month,$year,$pct,$billedhours); 
+       $this->Payroll_sheet_model->insert_rate_percent($id,$month,$year,$pct,$billedhours); 
        $result['res'] = $this->Employe_model->insert_into_employee($id,$billedhours,$totalamount,$month,$year,$pct); 
          echo json_encode($result);
 
      }
+
+
+       public function deleteemp()
+     {
+      
+      $id=$_POST['id'];
+      $month=$_POST['month'];
+      $year=$_POST['year'];
+      $delete['data']= $this->Employe_model->deleteemployee($id,$month,$year);
+      echo json_encode($delete);
+     }
+
+    /* public function editemp()
+     {
+      $id=$_POST['id'];
+      $month=$_POST['month'];
+      $year=$_POST['year'];
+      $edit['data']=$this->Employe_model->editemployee($id,$month,$year);
+      echo json_encode($edit);
+
+     }*/
+    
+
+
+
 
 
      public function emplist(){
