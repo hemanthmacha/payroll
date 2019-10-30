@@ -60,7 +60,7 @@
 				<!-- <td> <input type="month" id="date" name="date"> </td> -->
 				<input type="hidden" id="idddd" value="<?php echo $val->id; ?>">
 				<td>  <input type="text" id="des" name="des"></textarea>  </td>
-				<td> <input type="text"  id="amount" name="amount"> </td>
+				<td> <input type="text"  id="amount" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="amount"> </td>
 				<td><input class="btn btn-primary" type="submit" id="save" value="Save"> </td>
 			</tr>
 		</tbody>
@@ -104,7 +104,7 @@
            cache: false,    
            data: {id:id, des:des, amount:amount, date:date},
            success: function(json){      
-            alert('Expenses Updated');
+            alert('Expenses Added');
             location.reload();
           } 
           });

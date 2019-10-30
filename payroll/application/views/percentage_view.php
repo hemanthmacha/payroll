@@ -165,14 +165,6 @@ $(document).ready(function () {
 			});
 		}
 		
-	
-
-
-
-
-		
-
-
 	   var tr = $('#percentage tr:last'); 
        var hr = $(tr).find("td").find('input.length').val();
 
@@ -186,7 +178,7 @@ $(document).ready(function () {
 
             $(".add-row").click(function () { 
             	 
-            	  markup = "<tr> <td> <input type='number' id='hour1' name='hour1' value="+hr+" disabled> </td> <td> <input type='integer' id='hour2' name='hour2'>   </td><td> <input type='text'   id='percentage' name='percentage'> </td><td><input class='btn btn-primary' type='button' id='save' value='Save'> </tr>";
+            	  markup = "<tr> <td> <input type='number' id='hour1' name='hour1' value="+hr+" disabled> </td> <td> <input type='integer' id='hour2' onkeypress='return event.charCode >= 48 && event.charCode <= 57' name='hour2'>   </td><td> <input type='text'   id='percentage'  onkeypress='return event.charCode >= 48 && event.charCode <= 57'  name='percentage'> </td><td><input class='btn btn-primary' type='button' id='save' value='Save'> </tr>";
                 tableBody = $("table tbody"); 
                 tableBody.append(markup); 
 

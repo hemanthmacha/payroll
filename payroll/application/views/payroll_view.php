@@ -36,7 +36,7 @@
     <td><?=$i?></td>
     <input type="hidden" id="idd" value="<?=$val->id?>">
     <input type="hidden" id="expences" value="<?=$val->expences?>">
-    <input type="hidden" id="month" value="<?=$val->month?>">
+    <input type="hidden" id="month"  value="<?=$val->month?>">
     <input type="hidden" id="year" value="<?=$val->year?>">
     
     <td><input type="text" id="fname" name="name" value="<?php echo $val->firstname; ?>"  disabled/></td>
@@ -44,8 +44,8 @@
     <td><input type="text" id="rate" name="name" value="<?php echo $val->rate_percent; ?>" disabled/></td>
     <td><input type="text" id="hours" name="name" value="<?php echo $val->hours; ?>" disabled/></td>
     <!-- <td><input type="text" id="pct" name="name" value="<?php echo $val->pct; ?>" disabled/></td> -->
-    <td><input type="text" id="firsttpay" name="name" value="<?php echo $val->onestpay; ?>"/></td>
-    <td><input type="text" id="secondpay" name="name" value="<?php echo $val->onefivethpay; ?>"/></td>
+    <td><input type="text" id="firsttpay" name="name" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onestpay; ?>"/></td>
+    <td><input type="text" id="secondpay" name="name" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onefivethpay; ?>"/></td>
     <td><input type="text" id="total" name="name" value="<?php echo $val->total; ?>" disabled/></td>
     <!-- <td>
       <select style="width: 90px;"   id="status"  class="form-control dropdownselect">

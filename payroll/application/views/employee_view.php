@@ -68,7 +68,7 @@
 
    <?php $i=0; foreach($sresult as $key=>$val){ $i++; ?>
 
-	<tr>
+  <tr>
      
      <td><?php echo $i; ?></td>
      <input type="hidden" id="sno" value="<?php echo $i; ?>">
@@ -76,7 +76,7 @@
       <input type="hidden" id="mon" value="<?=$val->month?>">
       <input type="hidden" id="yea" value="<?=$val->year?>">
     <td><input type="text" id="billedmonth" name="month" value="<?php echo $val->month; echo "-"; echo $val->year; ?>"  disabled/></td>
-    <td><input type="text" id="billedhours"  name="hours" class="miles" value="<?php echo $val->billedhours; ?>"/></td>
+    <td><input type="text" id="billedhours"  name="hours" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="miles" value="<?php echo $val->billedhours; ?>"/></td>
 
       
         <td> <input type="text" id="pct" class="pct" name="pct"  value="<?php echo $val->rate; ?>" disabled> </td>
@@ -171,7 +171,7 @@
        
         var sno='<?php  $i++; echo $i; ?>';
        
-        markup = "<tr> <input type='hidden' id='idd1' value='<?=$val->id?>'><td> " + sno + "</td> <td><input id='newmonth1' type='month' name='month1' min='2017-01' max='2100-12'></td> <td><input type='text' id='billedhours1' class='billhours' name='hours'> </td>   <td><input type='text' id='pct1' name='pct' disabled> </td>  <td><input type='text' id='totalamount1' name='total'> </td> <td ><button class='btn btn-primary buttonsave' id='save1'>Save</button></td> <td> <button class='btn btn-primary buttonsave' id='Delete1' >Delete</button></td> </tr>";
+        markup = "<tr> <input type='hidden' id='idd1' value='<?=$val->id?>'><td> " + sno + "</td> <td><input id='newmonth1' type='month' name='month1' min='2017-01' max='2100-12'></td> <td><input type='text' onkeypress='return event.charCode >= 48 && event.charCode <= 57'  id='billedhours1' class='billhours' name='hours'> </td>   <td><input type='text' id='pct1' name='pct' disabled> </td>  <td><input type='text' id='totalamount1' onkeypress='return event.charCode >= 48 && event.charCode <= 57' name='total'> </td> <td ><button class='btn btn-primary buttonsave' id='save1'>Save</button></td> <td> <button class='btn btn-primary buttonsave' id='Delete1' >Delete</button></td> </tr>";
         tableBody = $("table"); 
         tableBody.append(markup);
 
