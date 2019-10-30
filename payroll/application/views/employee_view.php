@@ -14,7 +14,6 @@
     <div class="content"> 
     <div class="row"> 
     <div class="col-sm-10">
-    	
 
 
 <table class="table text-center" align="center" id="customers">
@@ -87,7 +86,8 @@
    <!-- <td><input type="text" id="expenses" name="expenses" value="<?php echo $val->expenses; ?>"/></td> -->
    <!--  <td><input type="text" id="balance" name="balance" value="<?php echo $val->balance; ?>"disabled/></td> -->
     <td ><button class="btn btn-primary buttonsave" id="save">Save</button></td>
-	</tr>
+      <td> <button class="btn btn-primary buttonsave" id="Delete" >Delete</button></td>
+  </tr>
 
  <?php } ?>
 </table>
@@ -158,16 +158,7 @@
 
                    }
             })
-
-      
-
-
-});
-
-
-
-
-     
+});  
 
 
    // adding new data
@@ -180,7 +171,7 @@
        
         var sno='<?php  $i++; echo $i; ?>';
        
-        markup = "<tr> <input type='hidden' id='idd1' value='<?=$val->id?>'><td> " + sno + "</td> <td><input id='newmonth1' type='month' name='month1' min='2017-01' max='2100-12'></td> <td><input type='text' id='billedhours1' class='billhours' name='hours'> </td>   <td><input type='text' id='pct1' name='pct' disabled> </td>  <td><input type='text' id='totalamount1' name='total'> </td> <td ><button class='btn btn-primary buttonsave' id='save1'>Save</button></td> </tr>";
+        markup = "<tr> <input type='hidden' id='idd1' value='<?=$val->id?>'><td> " + sno + "</td> <td><input id='newmonth1' type='month' name='month1' min='2017-01' max='2100-12'></td> <td><input type='text' id='billedhours1' class='billhours' name='hours'> </td>   <td><input type='text' id='pct1' name='pct' disabled> </td>  <td><input type='text' id='totalamount1' name='total'> </td> <td ><button class='btn btn-primary buttonsave' id='save1'>Save</button></td> <td> <button class='btn btn-primary buttonsave' id='Delete1' >Delete</button></td> </tr>";
         tableBody = $("table"); 
         tableBody.append(markup);
 
@@ -350,7 +341,7 @@ $(document).on("click", "#save", function() {
            cache: false,    
            data: {id:id, pct:pct, billedhours:billedhours, totalamount:totalamount, balance:balance, month:month, year:year},
            success: function(json){      
-            alert('Payroll updated');
+            alert('Payroll Updated');
             location.reload();
           } 
           });
@@ -368,29 +359,46 @@ $(document).on("click", "#save", function() {
            //var expenses = $(this).parent('td').parent('tr').find('#expenses1').val();
            var balance= $(this).parent('td').parent('tr').find('#balance1').val();
            var mo= $(this).parent('td').parent('tr').find('#newmonth1').val();
-      
-        
-
-          
+ 
           $.ajax({
            type: "post",
            url: "<?= base_url();?>addemployeedata",
            cache: false,    
            data: {id:id, pct:pct, billedhours:billedhours, totalamount:totalamount, balance:balance,mo:mo},
            success: function(json){      
-            alert(json);
+            alert('Payroll Added');
             location.reload();
           } 
           });
          });      
 
+//delete data
+  $(document).on("click", "#Delete", function(){
+
+     var id = $(this).parent('td').parent('tr').find('#idd').val();
+     var month=$(this).parent('td').parent('tr').find('#mon').val();
+     var year=$(this).parent('td').parent('tr').find('#yea').val();
+     //var billedhours=$(this).parent('td').parent('tr').find('#billedhours').val();
+    //var rate= $(this).parent('td').parent('tr').find('#rate').val();
+     //var pct = $(this).parent('td').parent('tr').find('#pct').val();
+    // var totalamount= $(this).parent('td').parent('tr').find('#totalamount').val();
+    // var expenses = $(this).parent('td').parent('tr').find('#expenses').val();
+     //var balance= $(this).parent('td').parent('tr').find('#balance').val();
+
+     $.ajax({
+    type:'POST',
+    url:"<?= base_url();?>deleteemployee",
+    data:{month:month, year:year,id:id },
+    success: function(json){
+          alert('Payroll Deleted ');
+           location.reload();
+       }
+
+       });
+      });
 
 
 
 </script>
-
-
-
-
 </body>
 </html>
