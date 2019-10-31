@@ -439,8 +439,8 @@ $(document).on("click", "#save", function() {
            //var rate= $(this).parent('td').parent('tr').find('#rate').val();
            var pct = $(this).parent('td').parent('tr').find('#pct').val();
            var totalamount= $(this).parent('td').parent('tr').find('#totalamount').val();
-           var expenses = $(this).parent('td').parent('tr').find('#expenses').val();
-           var balance= $(this).parent('td').parent('tr').find('#balance').val();
+          // var expenses = $(this).parent('td').parent('tr').find('#expenses').val();
+           //var balance= $(this).parent('td').parent('tr').find('#balance').val();
         
 
           
@@ -448,7 +448,7 @@ $(document).on("click", "#save", function() {
            type: "post",
            url: "<?= base_url();?>updateemployee",
            cache: false,    
-           data: {id:id, pct:pct, billedhours:billedhours, totalamount:totalamount, balance:balance, month:month, year:year},
+           data: {id:id, pct:pct, billedhours:billedhours, totalamount:totalamount, month:month, year:year},
            success: function(json){      
             alert('Payroll updated');
             location.reload();
@@ -476,7 +476,7 @@ $(document).on("click", "#save", function() {
            type: "post",
            url: "<?= base_url();?>addemployeedata",
            cache: false,    
-           data: {id:id, pct:pct, billedhours:billedhours, totalamount:totalamount, balance:balance,mo:mo},
+           data: {id:id, pct:pct, billedhours:billedhours, totalamount:totalamount,mo:mo},
            success: function(json){      
             alert(json);
             location.reload();

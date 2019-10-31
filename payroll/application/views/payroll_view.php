@@ -40,14 +40,14 @@
     <input type="hidden" id="month" value="<?=$val->month?>">
     <input type="hidden" id="year" value="<?=$val->year?>">
     
-    <td><input type="text" id="fname" name="name" value="<?php echo $val->firstname; ?>"  disabled/></td>
-    <td><input type="text" id="lname" name="name" value="<?php echo $val->lastname; ?>"disabled/></td>
-    <td><input type="text" id="rate" name="name" value="<?php echo $val->rate_percent; ?>" disabled/></td>
-    <td><input type="text" id="hours" name="name" value="<?php echo $val->hours; ?>" disabled/></td>
-    <!-- <td><input type="text" id="pct" name="name" value="<?php echo $val->pct; ?>" disabled/></td> -->
-    <td><input type="text" id="firsttpay" name="name" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onestpay; ?>"/></td>
-    <td><input type="text" id="secondpay" name="name" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onefivethpay; ?>"/></td>
-    <td><input type="text" id="total" name="name" value="<?php echo $val->total; ?>" disabled/></td>
+    <td><input type="text" id="fname"  value="<?php echo $val->firstname; ?>"  disabled/></td>
+    <td><input type="text" id="lname" value="<?php echo $val->lastname; ?>"disabled/></td>
+    <td><input type="text" id="rate" value="<?php echo $val->rate_percent; ?>" disabled/></td>
+    <td><input type="text" id="hours"  value="<?php echo $val->hours; ?>" disabled/></td>
+    <!-- <td><input type="text" id="pct"  value="<?php echo $val->pct; ?>" disabled/></td> -->
+    <td><input type="text" id="firsttpay" class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onestpay; ?>"/></td>
+    <td><input type="text" id="secondpay"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onefivethpay; ?>"/></td>
+    <td><input type="text" id="total" value="<?php echo $val->total; ?>" disabled/></td>
     <!-- <td>
       <select style="width: 90px;"   id="status"  class="form-control dropdownselect">
             <option value="Active" <?php if($val->status == 'Active') { echo 'selected'; } ?>>Active</option>
@@ -103,7 +103,7 @@ $(document).ready(function() {
     //this calculates values automatically 
     
    
-    $("#secondpay").on("change", function() {
+    $("input.paychange").on("change", function() {
 
       var balancearray=[];
     <?php foreach($sresult as $key=>$val){  ?>

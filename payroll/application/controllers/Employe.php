@@ -166,6 +166,7 @@ class Employe extends CI_Controller {
         
         //$this->Balance_model->updatebalance($id,$balance);
         $result['res'] = $this->Employe_model->insert_newdata_employee($id,$billedhours,$totalamount,$month,$year,$fname,$lname,$pct); 
+        $this->Payroll_sheet_model->insert_rate_percent($id,$month,$year,$pct,$billedhours); 
 
          echo json_encode($result);
 

@@ -43,6 +43,7 @@
 
 				<?php $id= $val->id1; ?>
          <?php $a= $val->percentage; ?>
+         <?php $a= $val->hourstop; ?>
 			<tr >
 				<input type="hidden" id="sno" value="<?php echo $i;?>"> 
 				<td> <input type="text" id="firsthour<?php echo $i;?>" value="<?php echo $val->hourstart; ?>" disabled>  </td>
