@@ -49,7 +49,7 @@
 			<tr>
 
 				<td>  <select style="width: 110px;"   id="date" name="date" class="form-control dropdownselect">
-            				<?php foreach($date1 as $row)
+            				<?php foreach($date2 as $row)
            					   { 
               					echo '<option value="'.$row->month.'-'.$row->year.'">'.$row->month.'-'.$row->year.'</option>';
             					}

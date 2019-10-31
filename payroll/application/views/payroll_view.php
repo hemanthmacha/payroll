@@ -34,6 +34,7 @@
    <?php $i=0;foreach($sresult as $key=>$val){ $i++; ?>
   <tr>
     <td><?=$i?></td>
+    <input type="hidden" id="sno" value="<?=$i?>">
     <input type="hidden" id="idd" value="<?=$val->id?>">
     <input type="hidden" id="expences" value="<?=$val->expences?>">
     <input type="hidden" id="month" value="<?=$val->month?>">
@@ -100,18 +101,28 @@
 
 $(document).ready(function() {
     //this calculates values automatically 
+    
    
-    $("#firsttpay, #secondpay").on("change", function() {
+    $("#secondpay").on("change", function() {
 
+      var balancearray=[];
+    <?php foreach($sresult as $key=>$val){  ?>
+      balancearray.push(<?php echo $val->balance;?>);
+    <?php } ?>
+
+            var index = $(this).parent('td').parent('tr').find('#sno').val();
+               index= parseInt(index)-1;
             var num1 = $(this).parent('td').parent('tr').find('#firsttpay').val();
             var num2 = $(this).parent('td').parent('tr').find('#secondpay').val();
-            var bal = $(this).parent('td').parent('tr').find('#balance').val();
-            var result = parseInt(num1) + parseInt(num2);
-            var result1 = parseInt(bal)-parseInt(result);  
+            //var bal = $(this).parent('td').parent('tr').find('#balance').val();
+            var result = parseFloat(num1) + parseFloat(num2);
+            //var result1 = parseFloat(bal)-parseFloat(result);  
 
             if (!isNaN(result)) {
 
               $(this).parent('td').parent('tr').find('#total').val(result);
+              var bal = balancearray[index];
+              var result1 = parseFloat(bal)-parseFloat(result);
               $(this).parent('td').parent('tr').find('#balance').val(result1);
 
         

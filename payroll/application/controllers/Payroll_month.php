@@ -35,7 +35,7 @@ class Payroll_month extends CI_Controller {
 
        }
 
-foreach ($balance1 as $key => $value) {
+       foreach ($balance1 as $key => $value) {
 
         $balance =$value->total;
 

@@ -35,7 +35,7 @@ class Balance_model extends CI_Model {
  public function balance($id){
 
 
-		$query3="SELECT (sum(mounthtotal) - (SELECT sum(expenses) FROM tbl_expenses WHERE id1 = '$id')) AS total FROM tbl_employee WHERE id = '$id'";
+		$query3="SELECT (sum(mounthtotal) - (SELECT IFNULL(sum(expenses),0) FROM tbl_expenses WHERE id1 = '$id')) AS total FROM tbl_employee WHERE id = '$id'";
     $bal=$this->db->query($query3)->result();
       return $bal;
 }

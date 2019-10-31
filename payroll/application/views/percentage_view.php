@@ -46,9 +46,9 @@
 			<tr >
 				<input type="hidden" id="sno" value="<?php echo $i;?>"> 
 				<td> <input type="text" id="firsthour<?php echo $i;?>" value="<?php echo $val->hourstart; ?>" disabled>  </td>
-				<td> <input type="text" id="secondhour<?php echo $i;?>" class="lasthour" name="test" value="<?php echo $val->hourstop; ?>" disabled></td>
-				<td> <input type="text"  id="rate<?php echo $i; ?>" value="<?php echo $val->rate; ?>" disabled> </td>
-        <td> <input type="text"  id="percent<?php echo $i; ?>" value="<?php echo $val->percentage; ?>"> </td>
+				<td> <input type="text" id="secondhour<?php echo $i;?>" class="lasthour" name="test" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->hourstop; ?>" disabled></td>
+				<td> <input type="text"  id="rate<?php echo $i; ?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->rate; ?>" disabled> </td>
+        <td style="display: none"> <input  type="text"  id="percent<?php echo $i; ?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->percentage; ?>"> </td>
         <td>
         <?php if($a != 0){ ?>  
          <input type="text"  id="percent<?php echo $i; ?>" value="<?php echo $val->percentage; ?>" disabled>
@@ -82,8 +82,7 @@
 
 $(document).ready(function () {
 
-   $('td:nth-child(5)').hide();
-
+ 
 	$("input.lasthour").on("change", function(){ 
 
             	var sn =$(this).parent('td').parent('tr').find('#sno').val();
@@ -115,7 +114,7 @@ $(document).ready(function () {
 
             $(".add-row").click(function () { 
             	 
-            	  markup = "<tr> <td> <input type='text' id='hour1' name='hour1' value="+hr+" disabled> </td> <td> <input type='text' id='hour2' name='hour2'>   </td> <td> <input type='text' id='rate1' name='rate1'> </td>    <td> <input style= 'display: none' type='text'   id='percent12' name='percent1'> </td>  <td><input class='btn btn-primary' type='button' id='save' value='Save'> <td> <input  type='button'   id='showpercent' name='showpercent' class='shoupercent' value='Add Percentage'> </td> </tr>";
+            	  markup = "<tr> <td> <input type='text' id='hour1' name='hour1' value="+hr+" disabled> </td> <td> <input type='text' id='hour2' onkeypress='return event.charCode >= 48 && event.charCode <= 57' name='hour2'>   </td> <td> <input type='text' id='rate1' onkeypress='return event.charCode >= 48 && event.charCode <= 57' name='rate1'> </td>    <td> <input style= 'display: none' type='text'   id='percent12' onkeypress='return event.charCode >= 48 && event.charCode <= 57' name='percent1'> </td>  <td><input class='btn btn-primary' type='button' id='save' value='Save'> <td> <input  type='button'   id='showpercent' name='showpercent' class='shoupercent' value='Add Percentage'> </td> </tr>";
                 tableBody = $("table tbody"); 
                 tableBody.append(markup); 
 
