@@ -4,6 +4,15 @@
 	<script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">  </script> 
 	<title></title>
 
+	<style>
+		
+		 .dropdownselect{
+    height: 21px !important;
+    padding: 0px 0px !important;
+    font-size: 13px !important;
+  }
+	</style>
+
 </head>
 
 
@@ -72,6 +81,14 @@
 </div>
 </div>
 </div>
+
+<style type="text/css">
+  .buttondelete{
+    height: 23px;
+    padding:0px 10px;
+
+  }
+  </style>
 
 <script> 
        // let lineNo = 1; 
