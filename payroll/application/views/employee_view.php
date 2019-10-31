@@ -120,7 +120,7 @@
                       if(h1<hourscheck || h1==hourscheck ) {
 
                          var h2 = <?php echo $val->hourstop; ?>;
-                         if(h2>hourscheck || h2==hourscheck ) {
+                         if(h2>hourscheck || h2==hourscheck || h2==0) {
 
                               $(this).parent('td').parent('tr').find('#pct').val(rate);
                             }   
@@ -178,7 +178,7 @@ $("input.billhours").on("change ", function() {
 
                          var tee=1;
                          var h2 = <?php echo $val->hourstop; ?>;
-                         if(h2>hourscheck || h2==hourscheck) {
+                         if(h2>hourscheck || h2==hourscheck || h2==0) {
 
                               $(this).parent('td').parent('tr').find('#pct1').val(percent);
                             }   
@@ -272,6 +272,7 @@ $("input.billhours").on("change ", function() {
                   $(this).parent('td').parent('tr').find('#totalamount1').val(cal);
             }
        });
+  });
 
 
 
@@ -498,7 +499,7 @@ $(document).on("click", "#save", function() {
     url:"<?= base_url();?>deleteemployee",
     data:{month:month, year:year,id:id },
     success: function(json){
-          alert('Payroll Deleted ');
+          alert('Payroll Deleted');
            location.reload();
        }
 

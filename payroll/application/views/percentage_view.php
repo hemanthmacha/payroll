@@ -198,14 +198,10 @@ $(document).ready(function () {
            						url: "<?= base_url();?>percentagedelete",
           						cache: false,    
            						data: {id:id},
-          						
-         					 });
-        
-             	
-
-  		    var test= 0;
+                      success: function(json){      
+                    
             $("table tbody tr").each(function () {
-            	var id= <?php echo $id; ?>;
+              var id= <?php echo $id; ?>;
                 var hour1 = $(this).find("td").eq(0).find(":text").val();
                 var hour2 = $(this).find("td").eq(1).find(":text").val();
                 var rate = $(this).find("td").eq(2).find(":text").val();
@@ -214,6 +210,37 @@ $(document).ready(function () {
                 alert(hour2);
                 alert(rate);
                 alert(percentage);*/
+                
+                    $.ajax({
+                      type: "post",
+                     url: "<?= base_url();?>percentageupdate",
+                      cache: false,    
+                      data: {id:id, hour1:hour1, hour2:hour2, percentage:percentage, rate:rate},
+                      
+                   });
+                
+                 })
+             alert('Rate saved');
+            location.reload();
+                      } 
+
+
+          						
+         					 });
+        
+             	
+
+  		  /*  var test= 0;
+            $("table tbody tr").each(function () {
+            	var id= <?php echo $id; ?>;
+                var hour1 = $(this).find("td").eq(0).find(":text").val();
+                var hour2 = $(this).find("td").eq(1).find(":text").val();
+                var rate = $(this).find("td").eq(2).find(":text").val();
+                var percentage = $(this).find("td").eq(3).find(":text").val();
+                alert(hour1);
+                alert(hour2);
+                alert(rate);
+                alert(percentage);
                 
                     $.ajax({
            						type: "post",
@@ -225,14 +252,9 @@ $(document).ready(function () {
           						} 
          					 });
                 
-                 })
+                 })*/
 
-            if(test=1) {
-
-            alert('Rate saved');
-            location.reload();
-             }
-
+           
 
             });
 
