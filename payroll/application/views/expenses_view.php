@@ -104,7 +104,7 @@
            cache: false,    
            data: {id:id, des:des, amount:amount, date:date},
            success: function(json){      
-            alert('Expenses Added');
+            alert('Expenses Updated');
             location.reload();
           } 
           });

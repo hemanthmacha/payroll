@@ -32,6 +32,15 @@ class Percentage extends CI_Controller {
         echo json_encode($data);
 
     }
+
+    public function deletepercent()
+    {
+        $id =$_POST['id'];
+      
+        $data['rate']=$this->Percentage_model->deletepercent($id);
+        echo json_encode($data);
+
+    }
       
 }
 ?>

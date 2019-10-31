@@ -36,7 +36,7 @@
     <td><?=$i?></td>
     <input type="hidden" id="idd" value="<?=$val->id?>">
     <input type="hidden" id="expences" value="<?=$val->expences?>">
-    <input type="hidden" id="month"  value="<?=$val->month?>">
+    <input type="hidden" id="month" value="<?=$val->month?>">
     <input type="hidden" id="year" value="<?=$val->year?>">
     
     <td><input type="text" id="fname" name="name" value="<?php echo $val->firstname; ?>"  disabled/></td>

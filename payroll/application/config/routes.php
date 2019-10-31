@@ -13,7 +13,6 @@ $route['update']='Payroll_sheet/update_payroll';
 
 $route['updateemployee'] = 'Employe/updateemp';
 $route['deleteemployee'] = 'Employe/deleteemp';
-$route['deleteemployeelist']='Employe/deleteemplist';
 
 
 $route['addemployeedata'] = 'Employe/newdata_emp';
@@ -35,4 +34,8 @@ $route['employee/expense'] = 'Expenses';
 $route['newexpenses'] = 'Expenses/addexp';
 
 $route['percentageupdate'] = 'Percentage/addpercent';
+$route['percentagedelete'] = 'Percentage/deletepercent';
+
+$route['deleteemployeelist']='Employe/deleteemplist';
+
 

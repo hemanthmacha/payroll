@@ -43,7 +43,6 @@ class Employe extends CI_Controller {
 
      }
 
-
        public function deleteemp()
      {
       
@@ -53,29 +52,6 @@ class Employe extends CI_Controller {
       $delete['data']= $this->Employe_model->deleteemployee($id,$month,$year);
       echo json_encode($delete);
      }
-
-     public function deleteemplist()
-     {
-      $id=$_POST['id'];
-
-      $deletlist['data11']=$this->Employe_model->deleteemployeelist($id);
-      echo json_encode($deletlist);
-     }
-
-
-
-    /* public function editemp()
-     {
-      $id=$_POST['id'];
-      $month=$_POST['month'];
-      $year=$_POST['year'];
-      $edit['data']=$this->Employe_model->editemployee($id,$month,$year);
-      echo json_encode($edit);
-
-     }*/
-    
-
-
 
 
 
@@ -194,6 +170,15 @@ class Employe extends CI_Controller {
          echo json_encode($result);
 
      
+     }
+
+
+    public function deleteemplist() {
+
+      $id=$_POST['id'];
+      $deletlist['data11']=$this->Employe_model->deleteemployeelist($id);
+      echo json_encode($deletlist);
+      
      }
 
 
