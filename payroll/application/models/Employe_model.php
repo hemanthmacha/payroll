@@ -36,6 +36,20 @@ class Employe_model extends CI_Model
  
     }
 
+   public function deleteemployeelist($id)
+    {
+      $query="DELETE FROM `tbl_users` WHERE id='$id'";
+      $this->db->query($query);
+       $query1 =" DELETE FROM `tbl_employee` WHERE id='$id'";
+      $this->db->query($query1);
+      $query2 =" DELETE FROM `tbl_payrool_sheet` WHERE id='$id'";
+       $this->db->query($query2);
+       return $query;
+
+
+    }
+
+
    /* public function editemployee($id,$month,$year)
     {
       $query="UPDATE `tbl_employee` SET month='$month',year='$year' WHERE id='$id'";

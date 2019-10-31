@@ -13,6 +13,7 @@ $route['update']='Payroll_sheet/update_payroll';
 
 $route['updateemployee'] = 'Employe/updateemp';
 $route['deleteemployee'] = 'Employe/deleteemp';
+$route['deleteemployeelist']='Employe/deleteemplist';
 
 
 $route['addemployeedata'] = 'Employe/newdata_emp';
