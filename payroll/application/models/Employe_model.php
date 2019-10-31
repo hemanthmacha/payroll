@@ -10,7 +10,7 @@ class Employe_model extends CI_Model
     /*$query=" SELECT tbl_employee.id, tbl_employee.month, tbl_employee.year, tbl_employee.billedhours, tbl_percentage.rate, tbl_percentage.percentage, tbl_percentage.hourstart,tbl_percentage.hourstop,tbl_employee.mounthtotal, tbl_balance.balance from tbl_employee JOIN tbl_percentage ON tbl_employee.id = tbl_percentage.id1  JOIN tbl_balance ON tbl_employee.id= tbl_balance.emp_id WHERE id='$id'";*/
 
 
-    $query=" SELECT `billedhours`, `mounthtotal`, `month`, `year`, `id`, `rate` FROM `tbl_employee` WHERE id='$id' ";
+    $query=" SELECT `billedhours`, `mounthtotal`, `month`, `year`, `id`, `rate` FROM `tbl_employee` WHERE id='$id'  ORDER BY year ASC, field(month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec') ";
     $response= $this->db->query($query)->result();
     return $response;
 			 
