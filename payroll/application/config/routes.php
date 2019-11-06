@@ -32,6 +32,9 @@ $route['percentage'] = 'Percentage';
 $route['list/expense'] = 'Expenses';
 $route['employee/expense'] = 'Expenses';
 $route['newexpenses'] = 'Expenses/addexp';
+$route['deleteexpenses']= 'Expenses/deleteexp';
+
+
 
 $route['percentageupdate'] = 'Percentage/addpercent';
 $route['percentagedelete'] = 'Percentage/deletepercent';

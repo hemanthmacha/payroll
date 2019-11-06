@@ -39,5 +39,19 @@ class Expenses extends CI_Controller {
         echo json_encode($data);
 
       }
+
+      public function deleteexp()
+      {
+          $id=$_POST['id'];
+          $date=$_POST['date'];
+
+           $date = explode('-', $date);
+          $month = $date[0];
+          $year  = $date[1];
+
+          $delete=$this->Expenses_model->delete_expenses($id,$month,$year);
+          echo json_encode($delete);
+      }
+      
 }
 ?>

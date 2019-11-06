@@ -29,6 +29,12 @@ class Expenses_model extends CI_Model
 
 	}
 
+	public function delete_expenses($id,$month,$year)
+	{
+		$query="DELETE FROM `tbl_expenses` WHERE id1='$id' and month='$month' and year='$year'";
+		$response= $this->db->query($query);
+		 return $query;
+	}
 
 
 }

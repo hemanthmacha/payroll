@@ -10,6 +10,21 @@
     height: 21px !important;
     padding: 0px 0px !important;
     font-size: 13px !important;
+}
+
+    .buttondelete{
+    height: 30px;
+    padding:0px 10px;
+  }
+  .back{
+  	height: 30px;
+    padding:0px 10px;
+
+  }
+  .add-row{
+  	height: 30px;
+    padding:0px 6px;
+
   }
 	</style>
 
@@ -46,10 +61,12 @@
 		    <?php $i=0;foreach($date1 as $key=>$val){ $i++; ?>
 		    	<?php if(!empty($val->description)){?>
 			 	<tr>
-
-            	<td><input type="text"  value="<?php echo $val->month; ?>-<?php echo $val->year; ?>"  disabled/></td>
-				<td><input type="text"  value="<?php echo $val->description; ?>"disabled/></td>
+			 		<input type="hidden" id="idddd" value="<?php echo $val->id; ?>">
+            	<td><input type="text" id="date" value="<?php echo $val->month; ?>-<?php echo $val->year; ?>"  disabled/></td>
+				<td><input type="text"   value="<?php echo $val->description; ?>"disabled/></td>
     			<td><input type="text"  value="<?php echo $val->expenses; ?>" disabled/></td>
+    			<td> <button class="btn btn-primary buttondelete" id="delete" >Delete</button></td>
+    			
 		
 			    </tr>
 			<?php } ?>
@@ -70,12 +87,13 @@
 				<input type="hidden" id="idddd" value="<?php echo $val->id; ?>">
 				<td>  <input type="text" id="des" name="des"></textarea>  </td>
 				<td> <input type="text"  id="amount" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="amount"> </td>
-				<td><input class="btn btn-primary" type="submit" id="save" value="Save"> </td>
+				<td><input class="btn btn-primary buttondelete" type="submit" id="save" value="Save"> </td>			
 			</tr>
 		</tbody>
 		</table> 
 		
-		<button class="add-row">  Add row </button> 
+		 <button class=" btn btn-primary add-row">  Add row </button> 
+	     <input type="button" class="btn btn-primary back" value="Back" onclick="history.back()">
 </div>
 </div>
 </div>
@@ -126,6 +144,26 @@
           } 
           });
          });
+
+         $(document).on("click", "#delete", function(){ 
+           
+           var id = $(this).parent('td').parent('tr').find('#idddd').val();
+           var date1= $(this).parent('td').parent('tr').find('#date').val();
+           var des= $(this).parent('td').parent('tr').find('#des').val();
+           var amount = $(this).parent('td').parent('tr').find('#amount').val();
+     
+         $.ajax({
+           type: "post",
+           url: "<?= base_url();?>deleteexpenses", 
+           data: {id:id, date:date1, des:des, amount:amount,},
+           success: function(json){      
+            alert('Expenses Delete');
+            location.reload();
+          } 
+          });
+         });
+
+
     </script>
 </body>
 </html>
