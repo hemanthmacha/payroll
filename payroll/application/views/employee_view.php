@@ -15,11 +15,13 @@
     <div class="content"> 
     <div class="row"> 
     <div class="col-sm-10">
-    	
+      
 
 
 <table class="table text-center" align="center" id="customers">
+  <thead>
 <tr>
+      <?php $id=0; ?>
       <th>Sno</th>  
       <th>Billed Month</th>
       <th>Billed Hours</th>
@@ -39,6 +41,8 @@
       <th>Total Amount</th>
      <!--  <th>Expenses</th> -->
      <!--  <th >Balance</th> -->
+
+     </thead>
 </tr>
     <!-- <?php   $hour1=array();
           $hour2=array(); foreach($sresult1 as $key=>$val){ 
@@ -49,33 +53,37 @@
 
       ?>    -->
 
-
+  <tbody>
    <?php $i=0; foreach($sresult as $key=>$val){ $i++; ?>
-
-	<tr>
+   <tr>
      
      <td><?php echo $i; ?></td>
      <input type="hidden" id="sno" value="<?php echo $i; ?>">
-      <input type="hidden" id="idd" value="<?=$val->id?>">
+    <input type="hidden" id="idd" value="<?=$val->id?>">
       <input type="hidden" id="mon" value="<?=$val->month?>">
       <input type="hidden" id="yea" value="<?=$val->year?>">
+
     <td><input type="text" id="billedmonth" name="month" value="<?php echo $val->month; echo "-"; echo $val->year; ?>"  disabled/></td>
-    <td><input type="text" id="billedhours"  name="hours" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="miles" value="<?php echo $val->billedhours; ?>"/></td>
-    <td> <input type="text" id="pct" class="pct" name="pct"  value="<?php echo $val->rate; ?>" disabled> </td>
-    <td><input type="text" id="totalamount" name="total" value="<?php echo $val->mounthtotal; ?>"disabled/><p id="alert" style="display: none" >The total amount may vary because the total amount <br> calculations based on the range of hours with respect <br> to their rate and percentage. </p></td>
-    <td ><button class="btn btn-primary buttonsave" id="save">Save</button></td>
-      <td> <button class="btn btn-primary buttonsave" id="delete" >Delete</button></td>
+    <td><input type="text" id="billedhours<?php echo $i;?>"  name="hours" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="miles" value="<?php echo $val->billedhours;?>"/></td>
+    <td><input type="text" id="rate<?php echo $i;?>" class="rate" name="rate"  value="" disabled> </td>
+    <td><input type="text" id="totalamount<?php echo $i;?>" name="total" value="<?php echo $val->mounthtotal; ?>" disabled/><p id="alert" style="display: none" >The total amount may vary because the total amount <br> calculations based on the range of hours with respect <br> to their rate and percentage. </p></td>
+    <td> <button class="btn btn-primary buttonsave" id="delete" >Delete</button></td>
   </tr>
 
  <?php } ?>
+ </tbody>
 </table>
 <div>
-  <button  id="adddata">Add Data</button> <br><br>
-<br>
+  <button  class="btn btn-primary buttonsave" id="adddata">Add Data</button> 
+  <button class="btn btn-primary buttonsave" id="save">Save</button>
+  <!-- <button class="btn btn-primary buttonsave" id="update">Update</button> -->
 
- <form method="post" action="expense/?val1=<?=$val->id?>">
-     <button  id="addexp">Add Expense</button>
+<br> <br>
+ <form method="post" action="expense/?val1=<?php echo $_GET['var1'];?>">
+     <button  class="btn btn-primary buttonsave" id="addexp">Add Expense</button>
   </form>
+
+  
  </div> 
 
 </div>
@@ -97,45 +105,300 @@
 <script type="text/javascript">
 
 
+/*$(document).on("click", "#adddata", function() { 
 
-  $(document).ready(function () {
 
 
- $("p").hide(); 
-     
-        $("input.miles").each(function() {
-        //add only if the value is number
-             if(!isNaN(this.value) && this.value.length!=0) {
-           
-                     var thisRow = $(this).closest('tr');
-                     var hourscheck=this.value;
-        
-                   <?php foreach ($sresult1 as $key => $val) { ?>
+});
+*/
 
-       
-                      var h1 = <?php echo $val->hourstart;?>;
+////// automatic calculations
+
+
+$(document).ready(function(){
+
+  
+             var hourstartarray=[];
+             var hourstoparray=[];
+             var ratearray=[];
+             var percentagearray=[];
+             var hours = [];
+
+             
+
+      <?php foreach ($sresult as $key => $val) { ?>
+           hours.push(<?php echo $val->billedhours; ?>);
+      <?php } ?>
+
+
+     <?php foreach ($sresult1 as $key => $val) { ?>
+
+          hourstartarray.push(<?php echo $val->hourstart;?>);
+          if(<?php echo $val->hourstop;?> == 0){
+             hourstoparray.push(10000000);
+            }
+           else{
+              hourstoparray.push(<?php echo $val->hourstop;?>);
+            } 
+                       // hourstoparray.push(<?php echo $val->hourstop;?>);
+            ratearray.push(<?php echo $val->rate;?>);
+            percentagearray.push(<?php echo $val->percentage;?>);
+
+     <?php } ?>
+
+     var temp = 0;
+     var temp1 = 0;
+     var abc=0;
+     for(var i = 0; i <hours.length;i++ ){
+      var cal=0;
+      var temp3=0;
+      var temp6=0;
+      var temp7=0;
+      var temp5=0;
+
+       temp = hours[i];
+       temp1 = temp1 + hours[i];
+
+       for(var j = 0; j<hourstartarray.length;j++){
+
+          if(abc == 0){
+
+              if(temp >= hourstartarray[j]){
+
+                if(temp <= hourstoparray[j]){
+
+
+                  if(i != 0){
+
+                    temp3 = temp - hourstoparray[j-1];
+                    if(percentagearray[j]==0){
+
+                      cal = cal + temp3 * ratearray[j];
+
+                    }  
+                    if(percentagearray[j]>0){
+
+                      cal = cal + temp3 * ratearray[j]*(percentagearray[j]/100);
+                      
+                    }
                    
-                      var rate =  <?php echo $val->rate; ?>;
-                    
-                      if(h1<hourscheck || h1==hourscheck ) {
 
-                         var h2 = <?php echo $val->hourstop; ?>;
-                         if(h2>hourscheck || h2==hourscheck || h2==0) {
+                    for(var k= j-1,p=j-2; k>=0 ; k--){
 
-                              $(this).parent('td').parent('tr').find('#pct').val(rate);
-                            }   
-                        }
+                      if( k == 0){
 
-                   <?php } ?>
+                        temp3 = hourstoparray[0]- hourstartarray[0];
+
+                        if(percentagearray[0]==0){
+                        cal = cal + temp3 * ratearray[0];
+                          }
+
+                        if(percentagearray[0]>0){
+                        cal = cal + temp3 * ratearray[0]*(percentagearray[0]/100);
+                          }
+                      }
+
+                      if(p>=0){
+
+                        temp3 = hourstoparray[k]- hourstoparray[p];
+
+                        if(percentagearray[k]==0){
+                        cal = cal + temp3 * ratearray[k];
+                         } 
+
+                         if(percentagearray[k]>0){
+                        cal = cal + temp3 * ratearray[k]*(percentagearray[k]/100);
+                         } 
+
+                      }
 
 
-                   }
-            })
+                    }
 
+
+                  }
+
+                  else{
+
+                    if(percentagearray[i]==0){
+                      cal = cal + temp *ratearray[i];
+                    }
+                    if(percentagearray[i]>0){
+                      cal = cal + temp *ratearray[i]*(percentagearray[i]/100);
+                    }
+
+                  }
+
+                }
+
+abc++;
+              }
+
+          
+
+          }
+
+         else{
+
+           if(temp1 >= hourstartarray[j]){
+
+            if(temp1 <= hourstoparray[j]){
+
+
+              if(j==0){
+
+                if(percentagearray[j]==0){
+                      cal = cal + temp *ratearray[j];
+                    }
+                    if(percentagearray[j]>0){
+                      cal = cal + temp *ratearray[j]*(percentagearray[j]/100);
+                    }
+
+              }
+
+             else{ 
+
+             temp5 = temp1 - hourstoparray[j-1];
+            
+             temp6 = temp - temp5; 
+             if(temp6<=0){
+                 if(percentagearray[j]==0){
+                 cal = cal + temp * ratearray[j];
+                }
+                if(percentagearray[j]>0){
+                 cal = cal + temp * ratearray[j]*(percentagearray[j]/100);
+                }
+             }
+             if(temp6>0){ 
+
+              if(percentagearray[j]==0){
+                 cal = cal + temp5 * ratearray[j];
+                }
+                if(percentagearray[j]>0){
+                 cal = cal + temp5 * ratearray[j]*(percentagearray[j]/100);
+                }
+
+             for(var k=j-1, p=j-2; k>=0; k--, p--){
+              
+               if(p<0){
+                p=0;
+               }
+              temp7 = hourstoparray[k] - hourstoparray[p];
+
+              if(temp7 >= temp6 && temp6!=0){
+
+
+                if(percentagearray[k]==0){
+                 cal = cal+ temp6 * ratearray[k];
+                 temp6 = 0;
+                }
+
+                if(percentagearray[k]>0){
+                 cal = cal+ temp6 * ratearray[k]*(percentagearray[k]/100);
+                 temp6 = 0;
+                }
+
+              }
+
+              if(temp7 <= temp6){
+
+
+                 if(percentagearray[k]==0){
+                 cal = cal+ temp7 * ratearray[k];
+                 temp6 = temp6 - temp7;
+                }
+
+                 if(percentagearray[k]>0){
+                 cal = cal+ temp7 * ratearray[k]*(percentagearray[k]/100);
+                 temp6 = temp6 - temp7;
+                }
+
+                
+              }
+              
+              if(temp7==0){
+
+
+                if(percentagearray[k]==0){
+                 cal = cal+ temp6 * ratearray[k];
+                 
+                }
+
+                 if(percentagearray[k]>0){
+                 cal = cal+ temp6 * ratearray[k]*(percentagearray[k]/100);
+                
+                }
+
+              }
+
+
+
+             }
+               }
+
+            }
+
+          }
+
+           }
+
+
+
+         }
+
+       }
       
+      for(var q=0; q<hourstartarray.length;q++){
+
+        if(hourstartarray[q]<temp1 || hourstartarray[q]==temp1){
+
+           if(hourstoparray[q]>temp1 || hourstoparray[q]==temp1){
 
 
-}); 
+            $('#rate'+(i+1)).val(ratearray[q]); 
+            
+        }
+
+
+
+      }
+
+    }
+
+    $('#totalamount'+(i+1)).val(cal);
+
+
+     }
+
+ $("table tbody tr").each(function () {  
+
+                var id = <?php echo $_GET['var1'];  ?>;
+                var mon = $(this).find("td").eq(1).find(":text").val();
+                var billedhours = $(this).find("td").eq(2).find(":text").val();
+                var rate = $(this).find("td").eq(3).find(":text").val();
+                var totalamount = $(this).find("td").eq(4).find(":text").val();
+                console.log(rate);
+                
+                  $.ajax({
+                    type: "post",
+                    url: "<?= base_url();?>updateemployee",
+                    cache: false,    
+                    data: {id:id, rate:rate, billedhours:billedhours, totalamount:totalamount, mon:mon},
+                    success: function(json){  
+                      
+                   } 
+                });
+
+              });          
+});
+
+$(document).on("click", "#save", function() { 
+
+
+
+
+
+});
 
 
 
@@ -148,284 +411,35 @@
 
     $(document).on("click", "#adddata", function() { 
 
-       //var sno = $(this).last().parent('td').parent('tr').find('#sno').val();
-
+      $('#adddata').hide();
+      $('#save').hide();
+      $('#addexp').hide();
        
         var sno='<?php  $i++; echo $i; ?>';
+        <?php  $abc= date("Y"); 
+               //$abc1= date("F");
+               $yearArray = range(2015, 2100);
+               $monthArray = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+        ?>
        
-        markup = "<tr> <input type='hidden' id='idd1' value='<?=$val->id?>'><td> " + sno + "</td> <td><input id='newmonth1' type='month' name='month1' min='2017-01' max='2100-12'></td> <td><input type='text' id='billedhours1' class='billhours' name='hours'> </td>   <td><input type='text' id='pct1' name='pct' disabled> </td>  <td><input type='text' id='totalamount1' name='total'> </td> <td ><button class='btn btn-primary buttonsave' id='save1'>Save</button></td> </tr>";
+        markup = "<tr> <input type='hidden' id='idd1' value='<?=$val->id?>'><td> " + sno + "</td> <td> <select id='year' name='year'> <option value=''>Select Year</option> <?php foreach ($yearArray as $year) {
+         $selected = ($year == $abc) ? 'selected' : '';
+        echo '<option '.$selected.' value='.$year.'>'.$year.'</option>';
+        }
+    ?></select> <select id='month' name='month'> <option value=''>Select Month</option> <?php
+    foreach ($monthArray as $month) {
+        echo '<option value='.substr($month,0,3).'>'.$month.'</option>';
+    }
+    ?>
+    </select> </td>  <td><input type='text' id='billedhours1' class='billhours' name='hours'> </td>   <td><input type='text' id='pct1' name='pct' disabled> </td>  <td><input type='text' id='totalamount1' name='total' disabled> </td> <td ><button class='btn btn-primary buttonsave' id='save1'>Add</button></td> </tr>";
         tableBody = $("table"); 
         tableBody.append(markup);
 
 
 
-$("input.billhours").on("change ", function() {
-        
-           
-            var hourscheck=$(this).parent('td').parent('tr').find('#billedhours1').val();
-               hourscheck = parseInt(hourscheck);
-             var hourstartarray=[];
-             var hourstoparray=[];
-             var ratearray=[];
-             var percentagearray=[];
-        
-                   <?php foreach ($sresult1 as $key => $val) { ?>
-       
-                      var h1 = <?php echo $val->hourstart;?>;
-                      var percent =  <?php echo $val->rate; ?>;
-                   
-                      if(h1<hourscheck || h1==hourscheck) {
-
-                         var tee=1;
-                         var h2 = <?php echo $val->hourstop; ?>;
-                         if(h2>hourscheck || h2==hourscheck || h2==0) {
-
-                              $(this).parent('td').parent('tr').find('#pct1').val(percent);
-                            }   
-                        }
-
-                       
-                        
-                        hourstartarray.push(<?php echo $val->hourstart;?>);
-                        hourstoparray.push(<?php echo $val->hourstop;?>);
-                        ratearray.push(<?php echo $val->rate;?>);
-                         percentagearray.push(<?php echo $val->percentage;?>);
-
-                   <?php } ?>
-                   var j=0;
-                   var cal = 0;
-                   var diff=0;
-                   var h=0;
-                   for (var  i = 0; i < hourstartarray.length; i++) { 
-
-                      if(hourstartarray[i] < hourscheck){
-                         
-                         if(j==0){
-
-                          if(hourstoparray[i] < hourscheck){
-
-                              diff = hourscheck - hourstoparray[i];
-                              temp = hourstoparray[i] 
-                               
-                                if(percentagearray[i]==0){
-                                     cal = cal+temp*ratearray[i];
-                                }
-                                if(percentagearray[i]>0){
-                                     cal = cal+temp*ratearray[i]*(percentagearray[i]/100);
-                                }
-
-                              j++;
-                             }
-
-                             else{
 
 
-                             if(percentagearray[i]==0){
-                                     cal = cal+hourscheck*ratearray[i];
-                                }
-                                if(percentagearray[i]>0){
-                                     cal = cal+hourscheck*ratearray[i]*(percentagearray[i]/100);
-                                }
-
-                             } 
-
-                            }
-
-                          else{
-
-                            h=i-1;
-
-                            if(hourstoparray[i] < hourscheck && hourstoparray[i]!=0 ){
-
-                              diff = hourscheck - hourstoparray[i];
-                              temp = hourstoparray[i] - hourstoparray[h];
-                             if(percentagearray[i]==0){
-                                     cal = cal+temp*ratearray[i];
-                                }
-                                if(percentagearray[i]>0){
-                                     cal = cal+temp*ratearray[i]*(percentagearray[i]/100);
-                                }
-                             } 
-
-
-                             else{
-
-                                if(percentagearray[i]==0){
-                                     temp = hourscheck - hourstoparray[h];
-                                     cal = cal+temp*ratearray[i];
-                                }
-                                if(percentagearray[i]>0){
-                                  temp = hourscheck - hourstoparray[h];
-                                     cal = cal+temp*ratearray[i]*(percentagearray[i]/100);
-                                }
-                             } 
-
-
-
-                          }  
-                     }
-                         
-
-                  }
-              if (!isNaN(cal)) {
-
-                  $(this).parent('td').parent('tr').find('#totalamount1').val(cal);
-            }
-       });
   });
-
-
-
-
-
-
-
-
-    //this calculates values automatically 
-   
-    $("input.miles").on("change ", function() {
-        
-           
-            var hourscheck=$(this).parent('td').parent('tr').find('#billedhours').val();
-               hourscheck = parseInt(hourscheck);
-             var hourstartarray=[];
-             var hourstoparray=[];
-             var ratearray=[];
-             var percentagearray=[];
-        
-                   <?php foreach ($sresult1 as $key => $val) { ?>
-       
-                      var h1 = <?php echo $val->hourstart;?>;
-                      var percent =  <?php echo $val->rate; ?>;
-                   
-                      if(h1<hourscheck || h1==hourscheck) {
-
-                         var tee=1;
-                         var h2 = <?php echo $val->hourstop; ?>;
-                         if(h2>hourscheck || h2==hourscheck) {
-
-                              $(this).parent('td').parent('tr').find('#pct').val(percent);
-                            }   
-                        }
-
-                       
-                        
-                        hourstartarray.push(<?php echo $val->hourstart;?>);
-                        hourstoparray.push(<?php echo $val->hourstop;?>);
-                        ratearray.push(<?php echo $val->rate;?>);
-                         percentagearray.push(<?php echo $val->percentage;?>);
-
-                   <?php } ?>
-                   var j=0;
-                   var cal = 0;
-                   var diff=0;
-                   var h=0;
-                   for (var  i = 0; i < hourstartarray.length; i++) { 
-
-                      if(hourstartarray[i] < hourscheck){
-                         
-                         if(j==0){
-
-                          if(hourstoparray[i] < hourscheck){
-
-                              diff = hourscheck - hourstoparray[i];
-                              temp = hourstoparray[i] 
-                               
-                                if(percentagearray[i]==0){
-                                     cal = cal+temp*ratearray[i];
-                                }
-                                if(percentagearray[i]>0){
-                                     cal = cal+temp*ratearray[i]*(percentagearray[i]/100);
-                                }
-
-                              j++;
-                             }
-
-                             else{
-
-
-                             if(percentagearray[i]==0){
-                                     cal = cal+hourscheck*ratearray[i];
-                                }
-                                if(percentagearray[i]>0){
-                                     cal = cal+hourscheck*ratearray[i]*(percentagearray[i]/100);
-                                }
-
-                             } 
-
-                            }
-
-                          else{
-
-                            h=i-1;
-
-                            if(hourstoparray[i] < hourscheck && hourstoparray[i]!=0 ){
-
-                              diff = hourscheck - hourstoparray[i];
-                              temp = hourstoparray[i] - hourstoparray[h];
-                             if(percentagearray[i]==0){
-                                     cal = cal+temp*ratearray[i];
-                                }
-                                if(percentagearray[i]>0){
-                                     cal = cal+temp*ratearray[i]*(percentagearray[i]/100);
-                                }
-                             } 
-
-
-                             else{
-
-                                if(percentagearray[i]==0){
-                                     temp = hourscheck - hourstoparray[h];
-                                     cal = cal+temp*ratearray[i];
-                                }
-                                if(percentagearray[i]>0){
-                                  temp = hourscheck - hourstoparray[h];
-                                     cal = cal+temp*ratearray[i]*(percentagearray[i]/100);
-                                }
-                             } 
-
-
-
-                           }  
-
-                        }
-                   }
-
-              if (!isNaN(cal)) {
-                 $(this).parent('td').parent('tr').find('#totalamount').val(cal);
-                }
-  
-     });
-
-
-
-           $(document).ready(function(){
-
-
-              $("input.miles").on("change ", function() {
-
-             var hourscheck=$(this).parent('td').parent('tr').find('#billedhours').val();
-               hourscheck = parseInt(hourscheck);
-
-            <?php foreach ($sresult1 as $key => $val) { ?>
-                   var hhh = <?php echo $val->hourstop; ?>; 
-
-                           if(hhh<hourscheck){
-
-                         $(this).parent('td').parent('tr').find('#alert').show();
-
-                           }
-                           
-
-                     <?php break;} ?>
-
-
-                 });
-
-             });
-
-            
-      
 
 
 
@@ -433,53 +447,56 @@ $("input.billhours").on("change ", function() {
 
 $(document).on("click", "#save", function() { 
            
-           var id = $(this).parent('td').parent('tr').find('#idd').val();
-           var month= $(this).parent('td').parent('tr').find('#mon').val();
-           var year= $(this).parent('td').parent('tr').find('#yea').val();
-           var billedhours = $(this).parent('td').parent('tr').find('#billedhours').val();
-           //var rate= $(this).parent('td').parent('tr').find('#rate').val();
-           var pct = $(this).parent('td').parent('tr').find('#pct').val();
-           var totalamount= $(this).parent('td').parent('tr').find('#totalamount').val();
-          // var expenses = $(this).parent('td').parent('tr').find('#expenses').val();
-           //var balance= $(this).parent('td').parent('tr').find('#balance').val();
+
+                   $("table tbody tr").each(function () {  
+
+                var id = <?php echo $_GET['var1'];  ?>;
+                var mon = $(this).find("td").eq(1).find(":text").val();
+                var billedhours = $(this).find("td").eq(2).find(":text").val();
+                var rate = $(this).find("td").eq(3).find(":text").val();
+                var totalamount = $(this).find("td").eq(4).find(":text").val();
+                console.log(rate);
+                
+                  $.ajax({
+                    type: "post",
+                    url: "<?= base_url();?>updateemployee",
+                    cache: false,    
+                    data: {id:id, rate:rate, billedhours:billedhours, totalamount:totalamount, mon:mon},
+                    success: function(json){  
+                        alert(json);
+                        location.reload();
+                   } 
+                });
+
+              });
         
 
           
-          $.ajax({
-           type: "post",
-           url: "<?= base_url();?>updateemployee",
-           cache: false,    
-           data: {id:id, pct:pct, billedhours:billedhours, totalamount:totalamount, month:month, year:year},
-           success: function(json){      
-            alert('Payroll updated');
-            location.reload();
-          } 
-          });
+       
          });
         
 
   $(document).on("click", "#save1", function() { 
 
-           
+
            var id = <?php echo$_GET['var1']; ?>;
            var billedhours = $(this).parent('td').parent('tr').find('#billedhours1').val();
+           var month = $(this).parent('td').parent('tr').find('#month').val();
+           var year = $(this).parent('td').parent('tr').find('#year').val();
            //var rate= $(this).parent('td').parent('tr').find('#rate1').val();
            var pct = $(this).parent('td').parent('tr').find('#pct1').val();
            var totalamount= $(this).parent('td').parent('tr').find('#totalamount1').val();
            //var expenses = $(this).parent('td').parent('tr').find('#expenses1').val();
            var balance= $(this).parent('td').parent('tr').find('#balance1').val();
-           var mo= $(this).parent('td').parent('tr').find('#newmonth1').val();
-      
-        
-
+  
           
           $.ajax({
            type: "post",
            url: "<?= base_url();?>addemployeedata",
            cache: false,    
-           data: {id:id, pct:pct, billedhours:billedhours, totalamount:totalamount,mo:mo},
+           data: {id:id, pct:pct, billedhours:billedhours, totalamount:totalamount,month:month,year,year },
            success: function(json){      
-            alert(json);
+            alert("Added Employee Data");
             location.reload();
           } 
           });
@@ -488,7 +505,7 @@ $(document).on("click", "#save", function() {
 
 
 
-  $(document).on("click", "#delete", function(){
+ $(document).on("click", "#delete", function(){
 
      var id = $(this).parent('td').parent('tr').find('#idd').val();
      var month=$(this).parent('td').parent('tr').find('#mon').val();

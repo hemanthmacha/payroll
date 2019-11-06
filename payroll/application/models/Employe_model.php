@@ -15,7 +15,10 @@ class Employe_model extends CI_Model
 
 
     public function deleteemployee($id,$month,$year)
-    {
+    {  
+      $query1="DELETE FROM `tbl_payrool_sheet` WHERE id='$id' and month='$month' and year='$year'";
+      $response= $this->db->query($query1);
+
       $query="DELETE FROM `tbl_employee` WHERE id='$id' and month='$month' and year='$year'";
       $response= $this->db->query($query);
  
@@ -33,6 +36,10 @@ class Employe_model extends CI_Model
     public function insert_into_employee($id,$billedhours,$totalamount,$month,$year,$rate){
  		
  		
+      $query1= "UPDATE `tbl_payrool_sheet` SET `rate_percent`='$rate',`hours`='$billedhours',`total`='$totalamount' WHERE id='$id' and year='$year' and month='$month'";
+
+       $this->db->query($query1);
+       
 
        $query= "UPDATE tbl_employee SET billedhours='$billedhours',mounthtotal='$totalamount',rate='$rate' WHERE id='$id' and month='$month' and year='$year'";
 
@@ -77,12 +84,29 @@ class Employe_model extends CI_Model
     {
       $query="DELETE FROM `tbl_users` WHERE id='$id'";
       $this->db->query($query);
+
        $query1 =" DELETE FROM `tbl_employee` WHERE id='$id'";
       $this->db->query($query1);
+
       $query2 =" DELETE FROM `tbl_payrool_sheet` WHERE id='$id'";
        $this->db->query($query2);
+
+        $query3 =" DELETE FROM `tbl_balance` WHERE emp_id='$id'";
+       $this->db->query($query3);
+
+        $query4 =" DELETE FROM `tbl_admin` WHERE id='$id'";
+       $this->db->query($query4);
+
+        $query5 =" DELETE FROM `tbl_expenses` WHERE id1='$id'";
+       $this->db->query($query5);
+
+       $query6 =" DELETE FROM `tbl_percentage` WHERE id1='$id'";
+       $this->db->query($query6);
        return true;
     }
+
+    
+
 
 
 

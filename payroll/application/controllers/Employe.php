@@ -29,16 +29,18 @@ class Employe extends CI_Controller {
         //$billedmonth      = $_POST['billedmonth'];
          $billedhours  = $_POST['billedhours'];
          //$rate      = $_POST['rate'];
-         $pct  = $_POST['pct'];
+         $rate  = $_POST['rate'];
          $totalamount      = $_POST['totalamount'];
          //$expenses  = $_POST['expenses'];
          //$balance      = $_POST['balance'];
-         $month      = $_POST['month'];
-         $year  = $_POST['year'];
+         $date = $_POST['mon'];
+         $date = explode("-", $date);
+         $month      = $date[0];
+         $year  = $date[1];
 
 
-       $this->Payroll_sheet_model->insert_rate_percent($id,$month,$year,$pct,$billedhours); 
-       $result['res'] = $this->Employe_model->insert_into_employee($id,$billedhours,$totalamount,$month,$year,$pct); 
+      // $this->Payroll_sheet_model->insert_rate_percent($id,$month,$year,$pct,$billedhours); 
+       $result['res'] = $this->Employe_model->insert_into_employee($id,$billedhours,$totalamount,$month,$year,$rate); 
          echo json_encode($result);
 
      }
@@ -95,71 +97,10 @@ class Employe extends CI_Controller {
          $totalamount      = $_POST['totalamount'];
          //$expenses  = $_POST['expenses'];
          //$balance      = $_POST['balance'];
-         $date1 = $_POST['mo'];
-
-         $date = explode('-', $date1);
-         $year  = $date[0];
-         $month = $date[1];
         
-        if( $month==1)
-        {
-          $month="Jan";
+         $year  = $_POST['year'];
+         $month = $_POST['month'];
           
-        }
-        if( $month==2)
-        {
-          $month="Feb";
-        }
-        if( $month==3)
-        {
-          $month="Mar";
-          //echo $month;
-        }
-        if( $month==4)
-        {
-          $month="Apr";
-          //echo $month;
-        }
-        if( $month==5)
-        {
-          $month="May";
-          //echo $month;
-        }
-        if( $month==6)
-        {
-          $month="Jun";
-          //echo $month;
-        }
-        if( $month==7)
-        {
-          $month="Jul";
-          //echo $month;
-        }
-        if( $month==8)
-        {
-          $month="Aug";
-          //echo $month;
-        }
-        if( $month==9)
-        {
-          $month="Sep";
-          //echo $month;
-        }
-        if( $month==10)
-        {
-          $month="Oct";
-          //echo $month;
-        }
-        if( $month==11)
-        {
-          $month="Nov";
-          //echo $month;
-        }
-        if( $month==12)
-        {
-          $month="Dec";
-          //echo $month;
-        }  
 
         $fname=$this->session->userdata('firstname');
         $lname=$this->session->userdata('lastname');  

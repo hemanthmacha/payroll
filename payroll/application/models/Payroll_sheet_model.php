@@ -87,7 +87,7 @@ public function getting_last_id($month,$year){
 
       public function insert_rate_percent($id,$month,$year,$rate,$billedhours){
  		
- 		
+ 		   
        $query= "UPDATE tbl_payrool_sheet SET `rate_percent`='$rate' , `hours`='$billedhours'WHERE id='$id' and month='$month' and year='$year'";
 
        $this->db->query($query);
