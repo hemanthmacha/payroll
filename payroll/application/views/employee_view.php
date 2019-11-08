@@ -29,6 +29,12 @@
     <div class="col-sm-10">
       
 
+<?php $abc=array();
+     
+            foreach ($sresult1 as $key => $val) { 
+            array_push($abc,"$val->hourstop");
+         
+      } ?>
 
 <table class="table text-center" align="center" id="customers">
   <thead>
@@ -51,22 +57,15 @@
        </th>
 
       <th>Total Amount</th>
-      <th>Des</th>
+      <th>Demo Calculation</th>
+       <th>Delete</th>
      <!--  <th>Expenses</th> -->
      <!--  <th >Balance</th> -->
      </thead>
 </tr>
-    <!-- <?php   $hour1=array();
-          $hour2=array(); foreach($sresult1 as $key=>$val){ 
-
-    
-          array_push($hour1,"$val->hourstart");
-          array_push($hour2,"$val->hourstop"); }
-
-      ?>    -->
-
+     
   <tbody>
-   <?php $i=0; foreach($sresult as $key=>$val){ $i++; ?>
+   <?php $i=0; $ttee=0; foreach($sresult as $key=>$val){ $i++; $ttee=$ttee+$val->billedhours; ?>
      <?php
         $totalhrs = $this->db->query( "SELECT SUM(billedhours) AS Total FROM `tbl_employee` WHERE id='".$val->id."'")->row_object();
         ?>
@@ -82,10 +81,18 @@
     <td><input type="text" id="billedmonth" name="month" value="<?php echo $val->month; echo "-"; echo $val->year; ?>"  disabled/></td>
     <td><input type="text" id="billedhours<?php echo $i;?>"  name="hours" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="miles" value="<?php echo $val->billedhours;?>"/></td>
     <td><input type="text" id="rate<?php echo $i;?>" class="rate" name="rate"  value="" disabled> </td>
-    <td><input type="text" id="totalamount<?php echo $i;?>" name="total" value="<?php echo $val->mounthtotal; ?>" disabled/><p id="alert" style="display: none" >The total amount may vary because the total amount <br> calculations based on the range of hours with respect <br> to their rate and percentage. </p></td>
+    <td><input type="text" id="totalamount<?php echo $i;?>" name="total" value="<?php echo $val->mounthtotal; ?>" disabled/></td>
+    
+    <?php if($abc[0]<$ttee) { ?>
 
     <td>  <a href="<?= base_url();?>cal" data-toggle="tooltip" title="Find sample calculation!">Sample Calculation</a> </td>
 
+     <?php } ?>
+     <?php if($abc[0]>$ttee) { ?>
+
+    <td>   </td>
+
+     <?php } ?>
     <td> <button class="btn btn-primary buttonsave" id="delete" >Delete</button></td>
   </tr>
 
@@ -93,19 +100,23 @@
  </tbody>
 </table>
 <?php if (!empty($sresult)){ ?>
+  <table>
 <div>
- 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;<a id="theLink">Total No of Billed Hours:</a>
-<div id="theDiv">
-<br>
-  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
-  &emsp;&emsp;&emsp;
-  <input type="text" id="count" name="amount"  value="<?php echo $totalhrs->Total; ?>" /></div>
-    </div> 
+ <tr>
+
+  <td><a id="theLink">Total Billed Hours:</a> </td>
+
+<td> <div id="theDiv">
+
+ &emsp; &emsp; &emsp;  &emsp; &emsp;&emsp; &emsp;
+  <input type="text" id="count" name="amount"  style="border: none;" value="<?php echo $totalhrs->Total; ?>" /></div>
+    </div>  </td>
+  </tr>
 
    <?php } ?>  
+  </table> 
    
-   
+   <br>
    
   <button  class="btn btn-primary buttonsave" id="adddata">Add Data</button> 
   <button class="btn btn-primary buttonsave" id="save">Save</button>
