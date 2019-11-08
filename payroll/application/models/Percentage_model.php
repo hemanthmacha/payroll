@@ -28,7 +28,5 @@ class Percentage_model extends CI_Model
 
 	}
 
-
-
 }
 ?>

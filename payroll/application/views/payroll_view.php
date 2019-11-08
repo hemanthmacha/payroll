@@ -63,7 +63,7 @@
 
       <td >
         
-          <button class="btn btn-primary buttonsave" id="save" >Save</button>
+          <button class="btn btn-primary buttonsave" id="save" disabled>Save</button>
           
   
         </td>
@@ -129,6 +129,16 @@ $(document).ready(function() {
             }
         });
 });
+$(document).ready(function () {
+        $("input.paychange").on('change', function () {
+            if ($(this).val() != '') {
+                $(this).parent('td').parent('tr').find('#save').prop('disabled', false);
+            }
+            else {
+                $(this).parent('td').parent('tr').find('#save').prop('disabled', true);
+            }
+        });
+    });
    
 
 

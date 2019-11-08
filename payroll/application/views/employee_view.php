@@ -9,7 +9,12 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
 </head>
-
+<style >
+  div.box div.overlay
+{
+    display:none;
+}
+</style>
 <body>
 
     <div class="content"> 
@@ -55,7 +60,11 @@
 
   <tbody>
    <?php $i=0; foreach($sresult as $key=>$val){ $i++; ?>
-   <tr>
+     <?php
+        $totalhrs = $this->db->query( "SELECT SUM(billedhours) AS Total FROM `tbl_employee` WHERE id='".$val->id."'")->row_object();
+        ?>
+
+    <tr>
      
      <td><?php echo $i; ?></td>
      <input type="hidden" id="sno" value="<?php echo $i; ?>">
@@ -74,6 +83,17 @@
  </tbody>
 </table>
 <div>
+
+ <!--  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;<a id="theLink">Total No of Billed Hours:</a>
+<div id="theDiv">
+<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
+  &emsp;&emsp;&emsp;
+  <input type="text" id="count" name="amount"  value="<?php echo $totalhrs->Total; ?>" /></div>
+    </div> -->
+   
+   
+   
   <button  class="btn btn-primary buttonsave" id="adddata">Add Data</button> 
   <button class="btn btn-primary buttonsave" id="save">Save</button>
   <!-- <button class="btn btn-primary buttonsave" id="update">Update</button> -->
@@ -95,6 +115,9 @@
     padding:0px 10px;
 
   }
+  #theDiv {
+    display: none;
+}
 
 
 </style>
@@ -113,7 +136,14 @@
 */
 
 ////// automatic calculations
-
+$("#theLink").hover(
+        function () {
+            $("#theDiv").fadeIn();
+        },
+        function () {
+            $("#theDiv").fadeOut();
+        }
+    );                                  
 
 $(document).ready(function(){
 
@@ -410,7 +440,8 @@ $(document).on("click", "#save", function() {
 
 
     $(document).on("click", "#adddata", function() { 
-
+      $('#count').hide();
+      $('#theLink').hide();
       $('#adddata').hide();
       $('#save').hide();
       $('#addexp').hide();
@@ -421,17 +452,17 @@ $(document).on("click", "#save", function() {
                $yearArray = range(2015, 2100);
                $monthArray = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
         ?>
-       
+       //'.$selected.'
         markup = "<tr> <input type='hidden' id='idd1' value='<?=$val->id?>'><td> " + sno + "</td> <td> <select id='year' name='year'> <option value=''>Select Year</option> <?php foreach ($yearArray as $year) {
          $selected = ($year == $abc) ? 'selected' : '';
-        echo '<option '.$selected.' value='.$year.'>'.$year.'</option>';
+        echo '<option value='.$year.'>'.$year.'</option>';
         }
     ?></select> <select id='month' name='month'> <option value=''>Select Month</option> <?php
     foreach ($monthArray as $month) {
         echo '<option value='.substr($month,0,3).'>'.$month.'</option>';
     }
     ?>
-    </select> </td>  <td><input type='text' id='billedhours1' class='billhours' name='hours'> </td>   <td><input type='text' id='pct1' name='pct' disabled> </td>  <td><input type='text' id='totalamount1' name='total' disabled> </td> <td ><button class='btn btn-primary buttonsave' id='save1'>Add</button></td> </tr>";
+    </select> </td>  <td><input type='text' id='billedhours1'onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='billhours' name='hours'> </td>   <td><input type='text' id='pct1' name='pct' disabled> </td>  <td><input type='text' id='totalamount1' name='total' disabled> </td> <td ><button class='btn btn-primary buttonsaveone' id='save1' disabled>Add</button></td> </tr>";
         tableBody = $("table"); 
         tableBody.append(markup);
 
@@ -448,7 +479,7 @@ $(document).on("click", "#save", function() {
 $(document).on("click", "#save", function() { 
            
 
-                   $("table tbody tr").each(function () {  
+                   $("table tbody").each(function () {  
 
                 var id = <?php echo $_GET['var1'];  ?>;
                 var mon = $(this).find("td").eq(1).find(":text").val();
@@ -463,19 +494,31 @@ $(document).on("click", "#save", function() {
                     cache: false,    
                     data: {id:id, rate:rate, billedhours:billedhours, totalamount:totalamount, mon:mon},
                     success: function(json){  
-                        alert(json);
+                        alert("saved succesfully");
                         location.reload();
                    } 
                 });
 
               });
-        
+        });               
 
-          
-       
-         });
-        
+               
 
+  $(document).ready(function () {
+        $(document).on('input change',"#year", function () {
+          $(document).on('input change',"#month",function(){ 
+            $(document).on('input change',"#billedhours1",function(){
+            if ($(this).val() != '') {
+                $(this).parent('td').parent('tr').find('#save1').prop('disabled', false);
+            }
+            else {
+                $(this).parent('td').parent('tr').find('#save1').prop('disabled', true);
+            }
+            });
+          });
+        });
+    });
+        
   $(document).on("click", "#save1", function() { 
 
 
@@ -495,11 +538,15 @@ $(document).on("click", "#save", function() {
            url: "<?= base_url();?>addemployeedata",
            cache: false,    
            data: {id:id, pct:pct, billedhours:billedhours, totalamount:totalamount,month:month,year,year },
-           success: function(json){      
+           success: function(json){    
+
             alert("Added Employee Data");
             location.reload();
           } 
           });
+          $(this).attr('class','btn btn-primary buttonsaveone');
+          $(this).attr('disabled',true);
+        
          });      
 
 
@@ -523,8 +570,6 @@ $(document).on("click", "#save", function() {
 
        });
       });
-
-
 
 
 </script>

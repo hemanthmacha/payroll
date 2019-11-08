@@ -87,7 +87,7 @@
 				<input type="hidden" id="idddd" value="<?php echo $val->id; ?>">
 				<td>  <input type="text" id="des" name="des"></textarea>  </td>
 				<td> <input type="text"  id="amount" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="amount"> </td>
-				<td><input class="btn btn-primary buttondelete" type="submit" id="save" value="Save"> </td>			
+				<td><input class="btn btn-primary buttondelete" type="submit" id="save" value="Save" disabled> </td>			
 			</tr>
 		</tbody>
 		</table> 
@@ -162,6 +162,23 @@
           } 
           });
          });
+
+
+         
+    $(document).ready(function () {
+        $(document).on('input change',"#date", function () {
+          $(document).on('input change',"#des",function(){
+            $(document).on('input change',"#amount",function(){ 
+            if ($(this).val() != '') {
+                $(this).parent('td').parent('tr').find('#save').prop('disabled', false);
+            }
+            else {
+                $(this).parent('td').parent('tr').find('#save').prop('disabled', true);
+            }
+             });
+          });
+        });
+    });
 
 
     </script>

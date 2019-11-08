@@ -38,6 +38,7 @@ $route['deleteexpenses']= 'Expenses/deleteexp';
 
 $route['percentageupdate'] = 'Percentage/addpercent';
 $route['percentagedelete'] = 'Percentage/deletepercent';
+$route['completepercentagedelete']='Percentage/deletepercent';
 
 $route['deleteemployeelist']='Employe/deleteemplist';
 

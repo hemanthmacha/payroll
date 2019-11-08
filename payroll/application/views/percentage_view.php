@@ -9,7 +9,14 @@
   .buttonsave{
     height: 28px;
     padding:0px 10px;
-
+  }
+  .buttonback{
+    height: 28px;
+    padding:0px 10px;
+  }
+  .buttondelete{
+    height: 28px;
+    padding:0px 10px;
   }
 
 
@@ -91,6 +98,10 @@
     <input type="button" class="btn btn-primary buttonsave" style="display: none"  name="update" id="update" value="Update" />
     <input type="button" class="btn btn-primary buttonsave" style="display: none"  name="save" id="save" value="save" />
     <button class="btn btn-primary buttonsave add-row" id="addcondition" style="display: none" >  Add condition </button>
+     <input type="button" class="btn btn-primary buttondelete" style="display: none"  name="delete" id="delete" value="Delete"/>
+    <input type="button" class="btn btn-primary buttonback" value="Back" onclick="history.back()">
+   
+
 
 
 </div>
@@ -222,11 +233,12 @@ $(document).on("click","#save", function(){
                 $('#percentage').find('input[type="text"]').prop('disabled', false);
                 $('td:nth-child(5)').show();
                 $('td:nth-child(6)').hide();
-                $('#addcondition').hide();
+                $('#addcondition').show();
                 $('#edit').hide();
                 $('#save').hide();
                 $('#addcondition').hide();
                 $('#update').show();
+                $('#delete').show();
 
             });
 
@@ -307,20 +319,26 @@ $(document).on("click","#save", function(){
              alert('Rate Updated');
             location.reload();
                       } 
-
-
                       
-                   });
-        
-              
-
+                   });             
             });
 
 
- 
+     $(document).on("click","#delete",function(){
 
+       var id= <?php echo $id; ?>;
+                  $.ajax({
+                      type: "post",
+                      url: "<?= base_url();?>completepercentagedelete",
+                      cache: false,    
+                      data: {id:id},
+                      success: function(json){  
+                      alert('Percentage Deleted successfully');
+                      location.reload();
+                      }
 
-
+                   });
+                 });
 
 </script>
 
