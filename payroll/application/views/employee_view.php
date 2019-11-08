@@ -7,6 +7,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 
 </head>
 <style >
@@ -14,6 +17,10 @@
 {
     display:none;
 }
+.back{
+    height: 25px;
+    padding:0px 10px;
+  }
 </style>
 <body>
 
@@ -44,9 +51,9 @@
        </th>
 
       <th>Total Amount</th>
+      <th>Des</th>
      <!--  <th>Expenses</th> -->
      <!--  <th >Balance</th> -->
-
      </thead>
 </tr>
     <!-- <?php   $hour1=array();
@@ -76,6 +83,9 @@
     <td><input type="text" id="billedhours<?php echo $i;?>"  name="hours" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="miles" value="<?php echo $val->billedhours;?>"/></td>
     <td><input type="text" id="rate<?php echo $i;?>" class="rate" name="rate"  value="" disabled> </td>
     <td><input type="text" id="totalamount<?php echo $i;?>" name="total" value="<?php echo $val->mounthtotal; ?>" disabled/><p id="alert" style="display: none" >The total amount may vary because the total amount <br> calculations based on the range of hours with respect <br> to their rate and percentage. </p></td>
+
+    <td>  <a href="<?= base_url();?>cal" data-toggle="tooltip" title="Find sample calculation!">Sample Calculation</a> </td>
+
     <td> <button class="btn btn-primary buttonsave" id="delete" >Delete</button></td>
   </tr>
 
@@ -96,6 +106,7 @@
    
   <button  class="btn btn-primary buttonsave" id="adddata">Add Data</button> 
   <button class="btn btn-primary buttonsave" id="save">Save</button>
+  <input type="button" class="btn btn-primary back" value="Back" onclick="history.back()">
   <!-- <button class="btn btn-primary buttonsave" id="update">Update</button> -->
 
 <br> <br>
@@ -127,8 +138,11 @@
 
 <script type="text/javascript">
 
+//tooltip
 
-/*$(document).on("click", "#adddata", function() { 
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
 
 
 
@@ -573,9 +587,5 @@ $(document).on("click", "#save", function() {
 
 
 </script>
-
-
-
-
 </body>
 </html>

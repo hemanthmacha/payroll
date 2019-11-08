@@ -113,14 +113,16 @@ class Employe extends CI_Controller {
 
      
      }
-
-
     public function deleteemplist() {
 
       $id=$_POST['id'];
       $deletlist['data11']=$this->Employe_model->deleteemployeelist($id);
-      echo json_encode($deletlist);
-      
+      echo json_encode($deletlist);   
+     }
+
+     public function sample_cal()
+     {
+      $this->load->view('cal_view');
      }
 
 

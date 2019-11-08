@@ -41,5 +41,6 @@ $route['percentagedelete'] = 'Percentage/deletepercent';
 $route['completepercentagedelete']='Percentage/deletepercent';
 
 $route['deleteemployeelist']='Employe/deleteemplist';
+$route['cal']='Employe/sample_cal';
 
 

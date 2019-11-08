@@ -19,11 +19,15 @@
   .back{
   	height: 30px;
     padding:0px 10px;
-
   }
   .add-row{
   	height: 30px;
     padding:0px 6px;
+
+  }
+    .buttondelete{
+    height: 23px;
+    padding:0px 10px;
 
   }
 	</style>

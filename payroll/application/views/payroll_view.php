@@ -64,8 +64,6 @@
       <td >
         
           <button class="btn btn-primary buttonsave" id="save" disabled>Save</button>
-          
-  
         </td>
 
   </tr>
@@ -73,6 +71,7 @@
     <?php } ?>
 </table>
   <?php } ?>
+  <input type="button" class="btn btn-primary buttonsave" value="Back" onclick="history.back()">
 </div>
 </div> </div>
 </div>
