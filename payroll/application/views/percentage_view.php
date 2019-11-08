@@ -68,10 +68,11 @@
         <?php } ?>
 
         <?php if($max == 0){ ?> 
-        <td> <input type="text" id="secondhour<?php echo $i;?>" class="lasthour" name="hour2" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="" disabled></td>
+        <td> <input type="text" id="secondhour<?php echo $i;?>" class="lasthour" name="hour2" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="max" disabled>
+        </td>
         <?php } ?>
 
-        <td> <input type="text"  id="rate<?php echo $i; ?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->rate; ?>" disabled> </td>
+        <td> <input type="text"  id="rate<?php echo $i; ?>" name="rate" class="ratee" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->rate; ?>" disabled> </td>
 
         <td style="display: none"> <input  type="text"  id="percent<?php echo $i; ?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->percentage; ?>"> </td>
        
@@ -141,7 +142,7 @@
 
                var sno = tr.find('input[name="sno"]').val();
 
-                if(nexthour == undefined || sno== undefined){ 
+                if(nexthour == undefined || sno== undefined || nexthour == 'max'){ 
                   nexthour = 0;
                   sno=1;
                   }
@@ -151,7 +152,7 @@
                   }
 
                
-                markup = "<tr> <input type='hidden' id='sno' name='sno' value="+sno+">  <td> <input type='text' id='firsthour"+sno+"' name='firsthour"+sno+"' value="+nexthour+" disabled> </td> <td> <input type='text' id='secondhour"+sno+"' onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='lasthour' name='hour2'>   </td> <td> <input type='text' id='rate"+sno+"' onkeypress='return event.charCode >= 48 && event.charCode <= 57' name='rate'> </td>    <td> <input type='text'  id='percent"+sno+"' onkeypress='return event.charCode >= 48 && event.charCode <= 57' name='percent'> </td>  <td> </tr>";
+                markup = "<tr> <input type='hidden' id='sno' name='sno' value="+sno+">  <td> <input type='text' id='firsthour"+sno+"' name='firsthour"+sno+"' value="+nexthour+" disabled> </td> <td> <input type='text' id='secondhour"+sno+"' onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='lasthour' name='hour2'>   </td> <td> <input type='text' id='rate"+sno+"' onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='rate11' name='rate'> </td>    <td> <input type='text'  id='percent"+sno+"' onkeypress='return event.charCode >= 48 && event.charCode <= 57' name='percent'> </td>  <td> </tr>";
                 tableBody = $("table tbody"); 
                 tableBody.append(markup); 
 
@@ -159,12 +160,15 @@
 
 
           $("input.lasthour").on("change", function(){ 
-
-                      $('#addcondition').show();
-                      $('#save').hide();    
+   
                        var num = parseInt($(this).parent('td').parent('tr').find('#sno').val());
                        var num1 =$(this).parent('td').parent('tr').find('#firsthour'+num).val();
                        var num2= $(this).parent('td').parent('tr').find('#secondhour'+num).val();
+
+                       if(num2=='max'){
+
+                        num2=0;
+                       }
 
                        var hou1=parseInt(num1);
                        var hou2=parseInt(num2);
@@ -182,7 +186,7 @@
 
                   var tr1 = $('#percentage tr:last');
                   var nexthour1 = tr1.find('input[name="hour2"]').val();
-                  if(nexthour1 == ""){ 
+                  if(nexthour1 == "" || nexthour1 == "max"){ 
                   
                   $('#addcondition').show();
                   $('#save').hide();  
@@ -210,6 +214,11 @@ $(document).on("click","#save", function(){
                 var id= <?php echo $id; ?>;
                 var hour1 = $(this).find("td").eq(0).find(":text").val();
                 var hour2 = $(this).find("td").eq(1).find(":text").val();
+
+                if(hour2=='max'){
+
+                  hour2='';
+                }
                 var rate = $(this).find("td").eq(2).find(":text").val();
                 var percentage = $(this).find("td").eq(3).find(":text").val();
                 $.ajax({
@@ -243,6 +252,7 @@ $(document).on("click","#save", function(){
             });
 
 
+
   $("input.lasthour").on("change", function(){ 
 
                         $('#save').hide(); 
@@ -251,7 +261,7 @@ $(document).on("click","#save", function(){
                    var tr12 = $('#percentage tr:last');
                    var nexthour12 = tr12.find('input[name="hour2"]').val();
                    
-                   if(nexthour12 == ""){ 
+                   if(nexthour12 == ""||nexthour12 == "max"){ 
                   
                    $('#addcondition').hide();
                    $('#update').show();
@@ -270,6 +280,11 @@ $(document).on("click","#save", function(){
                        var num = parseInt($(this).parent('td').parent('tr').find('#sno').val());
                        var num1 =$(this).parent('td').parent('tr').find('#firsthour'+num).val();
                        var num2= $(this).parent('td').parent('tr').find('#secondhour'+num).val();
+
+                        if(num2=='max'){
+
+                        num2=0;
+                       }
 
                        var num=parseInt(num);
                        var hou1=parseInt(num1);
@@ -304,6 +319,10 @@ $(document).on("click","#save", function(){
               var id= <?php echo $id; ?>;
                 var hour1 = $(this).find("td").eq(0).find(":text").val();
                 var hour2 = $(this).find("td").eq(1).find(":text").val();
+                if(hour2=='max'){
+
+                  hour2='';
+                }
                 var rate = $(this).find("td").eq(2).find(":text").val();
                 var percentage = $(this).find("td").eq(3).find(":text").val();
                 

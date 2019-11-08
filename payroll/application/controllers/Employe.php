@@ -113,6 +113,8 @@ class Employe extends CI_Controller {
 
      
      }
+
+
     public function deleteemplist() {
 
       $id=$_POST['id'];

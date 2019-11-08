@@ -78,9 +78,10 @@
 
 			<tr>
 
-				<td>  <select style="width: 110px;"   id="date" name="date" class="form-control dropdownselect">
+				<td>  <select style="width: 110px;"   id="date1" name="date" class="form-control dropdownselect">
             				<?php foreach($date2 as $row)
            					   { 
+                        echo '<option value="" selected disabled hidden>Select here</option>';
               					echo '<option value="'.$row->month.'-'.$row->year.'">'.$row->month.'-'.$row->year.'</option>';
             					}
            					 ?>
@@ -134,7 +135,7 @@
            var id = $(this).parent('td').parent('tr').find('#idddd').val();
            var des= $(this).parent('td').parent('tr').find('#des').val();
            var amount = $(this).parent('td').parent('tr').find('#amount').val();
-           var date= $(this).parent('td').parent('tr').find('#date').val();
+           var date= $(this).parent('td').parent('tr').find('#date1').val();
 
           
          $.ajax({
@@ -170,18 +171,22 @@
 
          
     $(document).ready(function () {
-        $(document).on('input change',"#date", function () {
-          $(document).on('input change',"#des",function(){
-            $(document).on('input change',"#amount",function(){ 
-            if ($(this).val() != '') {
+
+
+
+         $(document).on('input change',"#amount,#des,#date1", function () {
+         
+            if (document.getElementById("date1").value != "" && document.getElementById("des").value != "" && document.getElementById("amount").value != "") {
                 $(this).parent('td').parent('tr').find('#save').prop('disabled', false);
             }
             else {
                 $(this).parent('td').parent('tr').find('#save').prop('disabled', true);
             }
              });
-          });
-        });
+
+        
+
+
     });
 
 

@@ -92,15 +92,18 @@
  <?php } ?>
  </tbody>
 </table>
+<?php if (!empty($sresult)){ ?>
 <div>
-
- <!--  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;<a id="theLink">Total No of Billed Hours:</a>
+ 
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;<a id="theLink">Total No of Billed Hours:</a>
 <div id="theDiv">
 <br>
   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
   &emsp;&emsp;&emsp;
   <input type="text" id="count" name="amount"  value="<?php echo $totalhrs->Total; ?>" /></div>
-    </div> -->
+    </div> 
+
+   <?php } ?>  
    
    
    
@@ -140,9 +143,7 @@
 
 //tooltip
 
-$(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip();   
-});
+/*$(document).on("click", "#adddata", function() { 
 
 
 
@@ -436,13 +437,6 @@ abc++;
               });          
 });
 
-$(document).on("click", "#save", function() { 
-
-
-
-
-
-});
 
 
 
@@ -463,7 +457,7 @@ $(document).on("click", "#save", function() {
         var sno='<?php  $i++; echo $i; ?>';
         <?php  $abc= date("Y"); 
                //$abc1= date("F");
-               $yearArray = range(2015, 2100);
+               $yearArray = range(2017, 2100);
                $monthArray = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
         ?>
        //'.$selected.'
@@ -483,6 +477,16 @@ $(document).on("click", "#save", function() {
 
 
 
+         $(document).on('input change',"#year,#month,#billedhours1", function () {
+         
+            if (document.getElementById("billedhours1").value != "" && document.getElementById("month").value != "" && document.getElementById("year").value != "") {
+                $(this).parent('td').parent('tr').find('#save1').prop('disabled', false);
+            }
+            else {
+                $(this).parent('td').parent('tr').find('#save1').prop('disabled', true);
+            }
+             });
+
 
   });
 
@@ -493,7 +497,7 @@ $(document).on("click", "#save", function() {
 $(document).on("click", "#save", function() { 
            
 
-                   $("table tbody").each(function () {  
+                   $("table tbody tr").each(function () {  
 
                 var id = <?php echo $_GET['var1'];  ?>;
                 var mon = $(this).find("td").eq(1).find(":text").val();
@@ -508,12 +512,13 @@ $(document).on("click", "#save", function() {
                     cache: false,    
                     data: {id:id, rate:rate, billedhours:billedhours, totalamount:totalamount, mon:mon},
                     success: function(json){  
-                        alert("saved succesfully");
-                        location.reload();
+                        
                    } 
                 });
 
               });
+                    alert("updated succesfully");
+                        location.reload();
         });               
 
                
@@ -533,6 +538,7 @@ $(document).on("click", "#save", function() {
         });
     });
         
+
   $(document).on("click", "#save1", function() { 
 
 

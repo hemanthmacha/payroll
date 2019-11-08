@@ -36,7 +36,7 @@ class Employe_model extends CI_Model
     public function insert_into_employee($id,$billedhours,$totalamount,$month,$year,$rate){
  		
  		
-      $query1= "UPDATE `tbl_payrool_sheet` SET `rate_percent`='$rate',`hours`='$billedhours',`total`='$totalamount' WHERE id='$id' and year='$year' and month='$month'";
+      $query1= "UPDATE `tbl_payrool_sheet` SET `rate_percent`='$rate',`hours`='$billedhours' WHERE id='$id' and year='$year' and month='$month'";
 
        $this->db->query($query1);
        

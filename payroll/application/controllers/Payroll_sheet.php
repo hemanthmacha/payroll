@@ -80,9 +80,52 @@ class Payroll_sheet extends CI_Controller {
           $month      = $_POST['month'];
          $year      = $_POST['year'];
 
+
          $this->Balance_model->update_balance_payroll($id,$balance);
 
         $result['res'] = $this->Payroll_sheet_model->insert_into_payroll($id,$firstname,$lastname,$pay1,$pay2,$total,$status,$month,$year); 
+
+        ////updating balance
+
+         $data=$this->Balance_model->getallids();
+    
+    foreach ($data as $key => $val) {
+      
+      $id=$val->id;
+     
+      $total1=$this->Balance_model->totalamount($id);
+
+       $expenses1= $this->Balance_model->expenses($id);
+        $balance1= $this->Balance_model->balance($id);
+        $totalmonthlypay= $this->Balance_model->totalmonthlypay($id);
+     
+
+       foreach ($total1 as $key => $value) {
+
+        $total =$value->tm;
+
+       }
+       foreach ($totalmonthlypay as $key => $value) {
+
+        $totalmonpay =$value->totalmon;
+
+       }
+       foreach ($expenses1 as $key => $value) {
+
+        $expenses =$value->te;
+
+       }
+
+       foreach ($balance1 as $key => $value) {
+
+        $balance =$value->total;
+
+       }
+
+
+      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay);
+
+    }
          echo json_encode($result);
 
      }
