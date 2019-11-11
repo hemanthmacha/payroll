@@ -14,6 +14,30 @@ class Employe_model extends CI_Model
     }
 
 
+    public function getsingle_employe($id){
+    
+    $response = array();
+    $query="SELECT tbl_payrool_sheet.rate_percent, tbl_payrool_sheet.hours, IFNULL(tbl_payrool_sheet.total,0) as total, tbl_payrool_sheet.year, tbl_payrool_sheet.month,IFNULL(tbl_expenses.expenses,0)as expenses  FROM `tbl_payrool_sheet` left JOIN tbl_expenses ON (tbl_payrool_sheet.id=tbl_expenses.id1 and tbl_payrool_sheet.month=tbl_expenses.month and tbl_payrool_sheet.year=tbl_expenses.year) WHERE id='$id' ORDER BY year ASC, field(tbl_payrool_sheet.month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')";
+    $response= $this->db->query($query)->result();
+
+    return $response;
+       
+    
+    }
+
+    public function getsingle_employe_balance($id){
+    
+    $response1 = array();
+    $query1= "SELECT   `balance` FROM `tbl_balance` WHERE emp_id='$id'";
+    $response1= $this->db->query($query1)->result();
+    return $response1; 
+    }
+
+
+    
+
+    
+
     public function deleteemployee($id,$month,$year)
     {  
       $query1="DELETE FROM `tbl_payrool_sheet` WHERE id='$id' and month='$month' and year='$year'";

@@ -99,7 +99,7 @@
 		</table> 
 		
 		 <button class=" btn btn-primary add-row">  Add row </button> 
-	     <input type="button" class="btn btn-primary back" value="Back" onclick="history.back()">
+	     <a type="button" class="btn btn-primary buttondelete" href="javascript:window.history.go(-1);">Back</a>
 </div>
 </div>
 </div>

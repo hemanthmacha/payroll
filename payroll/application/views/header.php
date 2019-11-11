@@ -14,7 +14,7 @@
     <?php } ?>
 
        <?php if($this->session->userdata('role') == 'employee') { ?>  
-    <a href="<?=base_url()?>employee"><img class="nav navbar-nav navbar-left" src="<?= base_url();?>assests/images/logo.jpg" height="60" width="90" ></a>  <a class="navbar-brand"  style="color: black !important; font-family: ; font-size: 30px;" href="<?=base_url()?>employee">&nbsp;&nbsp;&nbsp;&nbsp;PAYROLL SYSTEM</a> 
+    <a href="<?=base_url()?>employe"><img class="nav navbar-nav navbar-left" src="<?= base_url();?>assests/images/logo.jpg" height="60" width="90" ></a>  <a class="navbar-brand"  style="color: black !important; font-family: ; font-size: 30px;" href="<?=base_url()?>employe">&nbsp;&nbsp;&nbsp;&nbsp;PAYROLL SYSTEM</a> 
     <?php } ?>
 
     </div>

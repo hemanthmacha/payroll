@@ -19,6 +19,18 @@
     padding:0px 10px;
   }
 
+  a:link {
+  color:white;
+}
+
+a:hover {
+   color:white;
+}
+
+a:visited {
+  color:red;
+}
+
 
 </style>
 
@@ -100,8 +112,8 @@
     <input type="button" class="btn btn-primary buttonsave" style="display: none"  name="save" id="save" value="save" />
     <button class="btn btn-primary buttonsave add-row" id="addcondition" style="display: none" >  Add condition </button>
      <input type="button" class="btn btn-primary buttondelete" style="display: none"  name="delete" id="delete" value="Delete"/>
-    <input type="button" class="btn btn-primary buttonback" value="Back" onclick="history.back()">
-   
+     <a type="button" class="btn btn-primary buttondelete" href="javascript:window.history.go(-1);">Back</a>
+
 
 
 
@@ -187,15 +199,8 @@
                   var tr1 = $('#percentage tr:last');
                   var nexthour1 = tr1.find('input[name="hour2"]').val();
                   if(nexthour1 == "" || nexthour1 == "max"){ 
-
-
-                       $("input.rate11").on("input change", function(){ 
-
-               $('#addcondition').show();
-            });
-
                   
-                 
+                  $('#addcondition').show();
                   $('#save').hide();  
 
                   }

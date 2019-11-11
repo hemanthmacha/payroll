@@ -83,7 +83,8 @@ class Employe extends CI_Controller {
 
           $id= $this->session->userdata('id');
           $this->load->view('header');
-          $data['sresult'] = $this->Employe_model->getemploye($id);
+          $data['sresult'] = $this->Employe_model->getsingle_employe($id);
+           $data['sresult1'] = $this->Employe_model->getsingle_employe_balance($id);
           $this->load->view('single_emp_view',$data);    
 
      }

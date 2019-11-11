@@ -118,13 +118,14 @@
    
   <button  class="btn btn-primary buttonsave" id="adddata">Add Data</button> 
   <button class="btn btn-primary buttonsave" id="save">Save</button>
-  <input type="button" class="btn btn-primary back" value="Back" onclick="history.back()">
+ <a type="button" class="btn btn-primary buttondelete" href="javascript:window.history.go(-1);" style="padding: 1px 12px;">Back</a>
+
   <!-- <button class="btn btn-primary buttonsave" id="update">Update</button> -->
 
-<br> <br>
- <form method="post" action="expense/?val1=<?php echo $_GET['var1'];?>">
-     <button  class="btn btn-primary buttonsave" id="addexp">Add Expense</button>
-  </form>
+
+ 
+     <a type="button" class="btn btn-primary buttonsave" id="addexp" href="expense/?val1=<?php echo $_GET['var1'];?>">Add Expense</a>
+   
 
   
  </div> 

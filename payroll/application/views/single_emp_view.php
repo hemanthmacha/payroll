@@ -23,10 +23,9 @@
       <th>Billed Month</th>
       <th>Billed Hours</th>
       <th>Rate</th>
-      <th>PCT</th>
-      <th>Total Amount</th>
+      <th>Monthly Pay</th>
       <th>Expenses</th>
-      <th >Balance</th>
+      
 </tr>
 
 
@@ -36,21 +35,46 @@
      <td><?php echo $i; ?></td>
       <input type="hidden" id="idd" value="<?=$val->id?>">
     <td><input type="text" id="billedmonth" name="month" value="<?php echo $val->month; echo $val->year; ?>"  disabled/></td>
-    <td><input type="text" id="billedhours" name="hours" value="<?php echo $val->billedhours; ?>"disabled/></td>
-    <td><input type="text" id="rate" name="rate" value="<?php echo $val->rate; ?>"disabled/></td>
-    <td><input type="text" id="pct" name="pct" value="<?php echo $val->percentamount; ?>"disabled /></td>
-    <td><input type="text" id="totalamount" name="total" value="<?php echo $val->totalamount; ?>"disabled/></td>
+    <td><input type="text" id="billedhours" name="hours" value="<?php echo $val->hours; ?>"disabled/></td>
+    <td><input type="text" id="rate" name="rate" value="<?php echo $val->rate_percent; ?>"disabled/></td>
+   <!-- // <td><input type="text" id="pct" name="pct" value="<?php echo $val->rate_percent; ?>"disabled /></td> -->
+    <td><input type="text" id="totalamount" name="total" value="<?php echo $val->total; ?>"disabled/></td>
     <td><input type="text" id="expenses" name="expenses" value="<?php echo $val->expenses; ?>"disabled/></td>
-    <td><input type="text" id="balance" name="balance" value="<?php echo $val->balance; ?>"disabled/></td>
+
 	</tr>
 
 	  <?php } ?>
+
 </table>
   <?php } ?>
+
+  <?php foreach($sresult1 as $key=>$val){?>
+  
+  <div class="abc">
+   Total Balance To Be Paid :<?php echo $val->balance; ?>
+ </div>
+
+  <?php } ?>
+  <br>
+  <br>
+  <br>
+
+  
 </div>
 </div> </div>
 
 
+<style>
+
+  .abc{
+  position: absolute;
+  bottom: 12px;
+  right: 77px;
+  border:none;
+  
+
+}
+</style>
 
 
 
