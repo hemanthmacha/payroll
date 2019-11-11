@@ -19,6 +19,7 @@
   .back{
   	height: 30px;
     padding:0px 10px;
+
   }
   .add-row{
   	height: 30px;

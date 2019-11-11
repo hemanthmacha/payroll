@@ -187,8 +187,15 @@
                   var tr1 = $('#percentage tr:last');
                   var nexthour1 = tr1.find('input[name="hour2"]').val();
                   if(nexthour1 == "" || nexthour1 == "max"){ 
+
+
+                       $("input.rate11").on("input change", function(){ 
+
+               $('#addcondition').show();
+            });
+
                   
-                  $('#addcondition').show();
+                 
                   $('#save').hide();  
 
                   }

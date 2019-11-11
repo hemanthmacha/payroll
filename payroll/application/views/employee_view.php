@@ -88,7 +88,7 @@
     <td>  <a href="<?= base_url();?>cal" data-toggle="tooltip" title="Find sample calculation!">Sample Calculation</a> </td>
 
      <?php } ?>
-     <?php if($abc[0]>$ttee) { ?>
+     <?php if($abc[0]>=$ttee) { ?>
 
     <td>   </td>
 
@@ -100,23 +100,21 @@
  </tbody>
 </table>
 <?php if (!empty($sresult)){ ?>
-  <table>
-<div>
- <tr>
+  
+ 
 
-  <td><a id="theLink">Total Billed Hours:</a> </td>
+ <a id="theLink">Total Billed Hours:</a>
 
-<td> <div id="theDiv">
 
- &emsp; &emsp; &emsp;  &emsp; &emsp;&emsp; &emsp;
-  <input type="text" id="count" name="amount"  style="border: none;" value="<?php echo $totalhrs->Total; ?>" /></div>
-    </div>  </td>
-  </tr>
+
+ &emsp; &emsp; &emsp;  &emsp; &emsp;&emsp; &emsp;  &emsp; &emsp;
+  <input type="text" id="count" name="amount"  style="border: none;" value="<?php echo $totalhrs->Total; ?>" />
+    
 
    <?php } ?>  
-  </table> 
+  
    
-   <br>
+   <br>  <br>
    
   <button  class="btn btn-primary buttonsave" id="adddata">Add Data</button> 
   <button class="btn btn-primary buttonsave" id="save">Save</button>
@@ -140,7 +138,7 @@
     padding:0px 10px;
 
   }
-  #theDiv {
+  #count {
     display: none;
 }
 
@@ -164,10 +162,10 @@
 ////// automatic calculations
 $("#theLink").hover(
         function () {
-            $("#theDiv").fadeIn();
+            $("#count").fadeIn();
         },
         function () {
-            $("#theDiv").fadeOut();
+            $("#count").fadeOut();
         }
     );                                  
 
@@ -488,8 +486,9 @@ abc++;
 
 
 
-         $(document).on('input change',"#year,#month,#billedhours1", function () {
-         
+         $(document).on('input change',"#year,#billedhours1", function () {
+
+          
             if (document.getElementById("billedhours1").value != "" && document.getElementById("month").value != "" && document.getElementById("year").value != "") {
                 $(this).parent('td').parent('tr').find('#save1').prop('disabled', false);
             }
@@ -534,21 +533,6 @@ $(document).on("click", "#save", function() {
 
                
 
-  $(document).ready(function () {
-        $(document).on('input change',"#year", function () {
-          $(document).on('input change',"#month",function(){ 
-            $(document).on('input change',"#billedhours1",function(){
-            if ($(this).val() != '') {
-                $(this).parent('td').parent('tr').find('#save1').prop('disabled', false);
-            }
-            else {
-                $(this).parent('td').parent('tr').find('#save1').prop('disabled', true);
-            }
-            });
-          });
-        });
-    });
-        
 
   $(document).on("click", "#save1", function() { 
 
