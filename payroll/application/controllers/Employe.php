@@ -19,6 +19,7 @@ class Employe extends CI_Controller {
         $id=$_GET['var1'];
          $this->load->view('header');
      	   $data['sresult'] = $this->Employe_model->getemploye($id);
+         $this->autobalancecal(); 
            $this->load->view('employee_view',$data);	 
      }
 
@@ -40,7 +41,8 @@ class Employe extends CI_Controller {
 
 
       // $this->Payroll_sheet_model->insert_rate_percent($id,$month,$year,$pct,$billedhours); 
-       $result['res'] = $this->Employe_model->insert_into_employee($id,$billedhours,$totalamount,$month,$year,$rate,$percentage1); 
+       $result['res'] = $this->Employe_model->insert_into_employee($id,$billedhours,$totalamount,$month,$year,$rate,$percentage1);
+        $this->autobalancecal(); 
          echo json_encode($result);
 
      }
@@ -53,52 +55,7 @@ class Employe extends CI_Controller {
       $year=$_POST['year'];
       $delete['data']= $this->Employe_model->deleteemployee($id,$month,$year);
 
-      // auto update the balance
-
-        $data=$this->Balance_model->getallids();
-    
-    foreach ($data as $key => $val) {
-      
-      $id=$val->id;
-     
-      $total1=$this->Balance_model->totalamount($id);
-
-       $expenses1= $this->Balance_model->expenses($id);
-        $balance1= $this->Balance_model->balance($id);
-        $totalmonthlypay= $this->Balance_model->totalmonthlypay($id);
-     
-
-       foreach ($total1 as $key => $value) {
-
-        $total =$value->tm;
-
-       }
-       foreach ($totalmonthlypay as $key => $value) {
-
-        $totalmonpay =$value->totalmon;
-
-       }
-       foreach ($expenses1 as $key => $value) {
-
-        $expenses =$value->te;
-
-       }
-
-       foreach ($balance1 as $key => $value) {
-
-        $balance =$value->total;
-
-       }
-
-
-      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay);
-
-    }
-
-
-
-        // auto update complete
-    
+       $this->autobalancecal();
       echo json_encode($delete);
      }
 
@@ -120,7 +77,7 @@ class Employe extends CI_Controller {
          $this->load->view('header');
          $data['sresult'] = $this->Employe_model->getemploye($id);
          $data['sresult1'] = $this->Employe_model->getemployerate($id);
-          $data['summdata'] = $this->Employe_model->getemployersum($id);
+         //$data['summdata'] = $this->Employe_model->getemployersum($id);
 
 
          $startmonth = $this->Employe_model->getemploye_firstmonth($id);
@@ -166,8 +123,10 @@ class Employe extends CI_Controller {
           $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Dec','Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov');
          }
     
-         
-
+         $data['summdata'] = $this->Employe_model->getemployersum($id);
+         /*print_r($data1);
+         die();
+*/
          $this->load->view('employee_view',$data);    
 
      }
@@ -269,7 +228,7 @@ class Employe extends CI_Controller {
         //$this->Balance_model->updatebalance($id,$balance);
         $result['res'] = $this->Employe_model->insert_newdata_employee($id,$billedhours,$totalamount,$month,$year,$fname,$lname,$rate,$percent); 
         //$this->Payroll_sheet_model->insert_rate_percent($id,$month,$year,$rate,$billedhours,$percent); 
-
+        $this->autobalancecal();
          echo json_encode($result);
 
      
@@ -300,6 +259,58 @@ class Employe extends CI_Controller {
      public function sample_cal()
      {
       $this->load->view('cal_view');
+     }
+
+
+
+     public function autobalancecal(){
+
+
+      // auto update the balance
+
+        $data=$this->Balance_model->getallids();
+    
+    foreach ($data as $key => $val) {
+      
+      $id=$val->id;
+     
+      $total1=$this->Balance_model->totalamount($id);
+
+       $expenses1= $this->Balance_model->expenses($id);
+        $balance1= $this->Balance_model->balance($id);
+        $totalmonthlypay= $this->Balance_model->totalmonthlypay($id);
+     
+
+       foreach ($total1 as $key => $value) {
+
+        $total =$value->tm;
+
+       }
+       foreach ($totalmonthlypay as $key => $value) {
+
+        $totalmonpay =$value->totalmon;
+
+       }
+       foreach ($expenses1 as $key => $value) {
+
+        $expenses =$value->te;
+
+       }
+
+       foreach ($balance1 as $key => $value) {
+
+        $balance =$value->total;
+
+       }
+
+
+      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay);
+
+    }
+
+
+
+        // auto update complete
      }
 
 

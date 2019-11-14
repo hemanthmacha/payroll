@@ -1,3 +1,4 @@
+<?php if($this->session->userdata('role') == 'admin') { ?>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -190,3 +191,10 @@
     </script>
 </body>
 </html>
+
+<?php }  else {
+
+  echo '<script>alert("Please Login");</script>';
+             echo '<script>window.open("'.base_url().'","_self");</script>';
+
+ } ?>

@@ -12,7 +12,7 @@
        <?php if($this->session->userdata('role') == 'admin') { ?>  
     <a href="<?=base_url()?>payroll"><img class="nav navbar-nav navbar-left" src="<?= base_url();?>assests/images/logo.jpg" height="60" width="90" ></a>  <a class="navbar-brand"  style="color: black !important; font-family: ; font-size: 30px;" href="<?=base_url()?>payroll">&nbsp;&nbsp;&nbsp;&nbsp;PAYROLL SYSTEM</a> 
 
-    <div class="logout1"><a href="<?=base_url()?>"> Logout </a> </div>
+    <div class="logout1"><a href="<?=base_url()?>logout"> Logout </a> </div>
     <?php } ?>
 
        <?php if($this->session->userdata('role') == 'employee') { ?>  
@@ -20,7 +20,7 @@
     
 
     </div>
-    <div class="logout"><h4><?php echo ($this->session->userdata('fname')); echo" "; echo ($this->session->userdata('lname')); ?> </h4><a href="<?=base_url()?>"> Logout </a> </div>
+    <div class="logout"><h4><?php echo ($this->session->userdata('fname')); echo" "; echo ($this->session->userdata('lname')); ?> </h4><a href="<?=base_url()?>logout"> Logout </a> </div>
 
    <?php } ?>
   </div>
@@ -42,6 +42,7 @@
   <?php } ?>
 
 </div>
+
 
 <style type="text/css">
 

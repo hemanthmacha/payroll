@@ -45,4 +45,8 @@ $route['cal']='Employe/sample_cal';
 
 $route['singleempexpenses']='Employe/singleempmonthexp';
 
+$route['logout']='Logout';
+
+
+
 

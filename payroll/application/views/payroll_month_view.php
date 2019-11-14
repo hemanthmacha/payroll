@@ -1,4 +1,4 @@
-
+<?php if($this->session->userdata('role') == 'admin') { ?> 
 <html>
 <title>Payroll Based On Month</title>
 <body>
@@ -26,5 +26,12 @@
 
 </body>
 </html>
+<?php }  else {
+
+  echo '<script>alert("Please Login");</script>';
+             echo '<script>window.open("'.base_url().'","_self");</script>';
+
+ } ?>
+
 
 

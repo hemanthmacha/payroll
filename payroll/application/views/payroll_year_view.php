@@ -1,4 +1,6 @@
-<?php
+<?php if($this->session->userdata('role') == 'admin') { ?> 
+
+	<?php
 
 $curYear = date('Y'); 
 ?>
@@ -19,3 +21,10 @@ $curYear = date('Y');
 </div>
 </div>
 </div>
+
+<?php }  else {
+
+  echo '<script>alert("Please Login");</script>';
+             echo '<script>window.open("'.base_url().'","_self");</script>';
+
+ } ?>

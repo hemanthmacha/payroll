@@ -1,3 +1,4 @@
+<?php if($this->session->userdata('role') == 'admin') { ?>  
 <html>
 <head>
 <title>Employe Summary</title>
@@ -207,7 +208,7 @@
     <br>
 
       <td style="font-size:14; display: none;">  &emsp;Total Hours : <input type="text" size="6" style="border: none;" value="<?php echo $value->billedhours; ?>" readonly/>  </td>
-      <td style="font-size:14;">&emsp;&nbsp;Total Amount : <input type="text" size="6"  style="border: none;" value="<?php echo $value->totalamount; ?>" readonly /></td>
+      <td style="font-size:14;">&emsp;&nbsp;Total Amount : <input type="text" size="6" id="totalamp" style="border: none;" value="<?php echo $value->totalamount; ?>" readonly /></td>
        <td style="font-size:14;">Total Pay : <input type="text"  style="border: none;" size="6" value="<?php echo $value->totalmonthpay; ?>" readonly/></td>
         <td style="font-size:14;"> &emsp; Total Expenses: <input type="text"  size="6" style="border: none;" value="<?php echo $value->exp; ?>" readonly/></td>
         <td style="font-size:14;"> &emsp; Balance : <input type="text"   size="6" style="border: none;" value="<?php echo $value->balance; ?>" readonly /></td>
@@ -538,7 +539,7 @@ abc++;
 
     }
 
-    $('#totalamount'+(i+1)).val(cal);
+    $('#totalamount'+(i+1)).val(Math.round(cal));
 
 
      }
@@ -706,9 +707,36 @@ $(document).on("click", "#save", function() {
        }
 
        });
-      });
+  });
+
+ /*$(document).ready(function(){
+
+           var sum1=0;
+         //  var sum2=0;
+         
+           var b= <?php echo $i; ?>;
+           for(var m=1; m<b; m++)
+           {
+            sum1=sum1 + parseInt($('#totalamount'+m).val());
+           
+
+           }
+
+           $('#totalamp').val(sum1);
+ });*/
+
+
+
+
 
 
 </script>
 </body>
 </html>
+<?php }  else {
+
+  echo '<script>alert("Please Login");</script>';
+             echo '<script>window.open("'.base_url().'","_self");</script>';
+
+ } ?>
+
