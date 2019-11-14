@@ -52,6 +52,53 @@ class Employe extends CI_Controller {
       $month=$_POST['month'];
       $year=$_POST['year'];
       $delete['data']= $this->Employe_model->deleteemployee($id,$month,$year);
+
+      // auto update the balance
+
+        $data=$this->Balance_model->getallids();
+    
+    foreach ($data as $key => $val) {
+      
+      $id=$val->id;
+     
+      $total1=$this->Balance_model->totalamount($id);
+
+       $expenses1= $this->Balance_model->expenses($id);
+        $balance1= $this->Balance_model->balance($id);
+        $totalmonthlypay= $this->Balance_model->totalmonthlypay($id);
+     
+
+       foreach ($total1 as $key => $value) {
+
+        $total =$value->tm;
+
+       }
+       foreach ($totalmonthlypay as $key => $value) {
+
+        $totalmonpay =$value->totalmon;
+
+       }
+       foreach ($expenses1 as $key => $value) {
+
+        $expenses =$value->te;
+
+       }
+
+       foreach ($balance1 as $key => $value) {
+
+        $balance =$value->total;
+
+       }
+
+
+      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay);
+
+    }
+
+
+
+        // auto update complete
+    
       echo json_encode($delete);
      }
 
@@ -73,6 +120,7 @@ class Employe extends CI_Controller {
          $this->load->view('header');
          $data['sresult'] = $this->Employe_model->getemploye($id);
          $data['sresult1'] = $this->Employe_model->getemployerate($id);
+          $data['summdata'] = $this->Employe_model->getemployersum($id);
 
 
          $startmonth = $this->Employe_model->getemploye_firstmonth($id);
@@ -125,13 +173,14 @@ class Employe extends CI_Controller {
      }
 
       public function empid(){
-
+          // single employee
 
           $id= $this->session->userdata('id');
           $this->load->view('header');
           $data['sresult'] = $this->Employe_model->getsingle_employe($id);
           $month1 = $this->Employe_model->getsingle_employe($id);
           $data['sresult11'] = $this->Employe_model->getemployerate($id);
+          $data['summdata'] = $this->Employe_model->getemployersum($id);
 
            $exp=array();
           foreach ($month1 as $key => $value) {

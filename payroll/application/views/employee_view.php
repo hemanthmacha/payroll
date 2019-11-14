@@ -70,7 +70,7 @@
 
             foreach ($sresult1 as $key => $val) { 
               if($val->percentage==0){
-                array_push($changevalue4,100000);
+                array_push($changevalue4,100);
               }
               else{
                array_push($changevalue4,"$val->percentage");
@@ -121,9 +121,6 @@
      
   <tbody>
    <?php $i=0; $mp=0; $abcd=0; $ttee=0; foreach($sresult as $key=>$val){ $i++; $ttee=$ttee+$val->billedhours; ?>
-     <?php
-        $totalhrs = $this->db->query( "SELECT SUM(billedhours) AS Total FROM `tbl_employee` WHERE id='".$val->id."'")->row_object();
-        ?>
 
     <tr>
      
@@ -161,7 +158,7 @@
              <?php }
 
                   if ($abcd>=1 && (sizeof($changevalue4)-1) > $abcd ){ $abcdtemp = $abcd+1;?>
-                 
+                  
                 <td><a href="#" class="hasTooltip">Calculation Change Here 
                     <span>Rate and Percentage are changed from <?php echo $changevalue3[($abcd)] ?> to <?php echo $changevalue3[$abcdtemp]; ?> and <?php echo $changevalue4[($abcd)]; ?> to <?php echo $changevalue4[$abcdtemp];?> </span>
                 </a> </td>
@@ -197,20 +194,32 @@
  <?php $mp= $mp +1 ;} ?>
  </tbody>
 </table>
+
+
+
+
 <?php if (!empty($sresult)){ ?>
   
  
+<button class="btn btn-primary buttonsave" id="Link">Total</button>
+ <?php foreach ($summdata as $key => $value) { ?>
+  <div class="counts" style="display: none">
+    <br>
 
- <a id="theLink">Total Billed Hours:</a>
+      <td style="font-size:14; display: none;">  &emsp;Total Hours : <input type="text" size="6" style="border: none;" value="<?php echo $value->billedhours; ?>" readonly/>  </td>
+      <td style="font-size:14;">&emsp;&nbsp;Total Amount : <input type="text" size="6"  style="border: none;" value="<?php echo $value->totalamount; ?>" readonly /></td>
+       <td style="font-size:14;">Total Pay : <input type="text"  style="border: none;" size="6" value="<?php echo $value->totalmonthpay; ?>" readonly/></td>
+        <td style="font-size:14;"> &emsp; Total Expenses: <input type="text"  size="6" style="border: none;" value="<?php echo $value->exp; ?>" readonly/></td>
+        <td style="font-size:14;"> &emsp; Balance : <input type="text"   size="6" style="border: none;" value="<?php echo $value->balance; ?>" readonly /></td>
+ 
+    </div>
+ <?php } ?>
+   <?php } ?> 
 
 
 
- &emsp; &emsp; &emsp;  &emsp; &emsp;&emsp; &emsp;  &emsp; &emsp;
-  <input type="text" id="count" name="amount"  style="border: none;" value="<?php echo $totalhrs->Total; ?>" />
-    
 
-   <?php } ?>  
-  
+ 
    
    <br>  <br>
    
@@ -258,17 +267,20 @@
 });
 */
 
-////// automatic calculations
-$("#theLink").hover(
-        function () {
-            $("#count").fadeIn();
-        },
-        function () {
-            $("#count").fadeOut();
-        }
-    );                                  
+ $("#Link").click(function(){
+    $(".counts").toggle();
+
+
+  });
+
+
+
+
+                                
 
 $(document).ready(function(){
+
+      $('.counts').hide();
 
   
              var hourstartarray=[];
@@ -565,7 +577,8 @@ abc++;
 
 
     $(document).on("click", "#adddata", function() { 
-      $('#count').hide();
+      $('.counts ').hide();
+      $('#Link').hide();
       $('#theLink').hide();
       $('#adddata').hide();
       $('#save').hide();
@@ -587,7 +600,7 @@ abc++;
         echo '<option value='.substr($month,0,3).'>'.$month.'</option>';
     }
     ?>
-    </select> </td>  <td><input type='text' id='billedhours1'onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='billhours' name='hours'> </td>   <td><input type='text' id='rate1' name='rate1' disabled> </td>  <td><input type='text' id='pct1' name='pct1' disabled> </td>  <td><input type='text' id='totalamount1' name='total' disabled> </td><td> </td> <td> </td> <td ><button class='btn btn-primary buttonsaveone' id='save1' disabled>Add</button></td> </tr>";
+    </select> </td>  <td><input type='text' size='8' id='billedhours1'onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='billhours' name='hours'> </td>   <td><input type='text' size='8' id='rate1' name='rate1' disabled> </td>  <td><input type='text'size='8' id='pct1' name='pct1' disabled> </td>  <td><input type='text' id='totalamount1' name='total' disabled> </td><td> </td> <td> </td> <td ><button class='btn btn-primary buttonsaveone' id='save1' disabled>Add</button></td> </tr>";
         tableBody = $("table"); 
         tableBody.append(markup);
 
@@ -664,7 +677,7 @@ $(document).on("click", "#save", function() {
            data: {id:id, rate:rate, billedhours:billedhours, totalamount:totalamount, month:month, year:year, pct:pct },
            success: function(json){    
 
-            alert(json);
+            alert("Data Saved");
             location.reload();
           } 
           });

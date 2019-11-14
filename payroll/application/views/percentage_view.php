@@ -19,18 +19,7 @@
     padding:0px 10px;
   }
 
-  a:link {
-  color:white;
-}
-
-a:hover {
-   color:white;
-}
-
-a:visited {
-  color:red;
-}
-
+ 
 
 </style>
 

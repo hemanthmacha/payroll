@@ -167,7 +167,14 @@ class Employe_model extends CI_Model
        $this->db->query($query6);
        return true;
     }
-
+   
+   public function getemployersum($id){
+    
+    $response = array();
+    $query=" SELECT  `tbl_balance`.`balance`, `tbl_balance`.`totalamount`, IFNULL(`tbl_balance`.`totalexpenses`,0) as exp, `tbl_balance`.`totalmonthpay` , sum(`tbl_employee`.`billedhours`) as billedhours FROM `tbl_balance` join tbl_employee on `tbl_balance`.`emp_id`= `tbl_employee`.`id` WHERE tbl_balance.emp_id='$id'";
+    $response= $this->db->query($query)->result();
+    return $response;
+    }
     
 
 

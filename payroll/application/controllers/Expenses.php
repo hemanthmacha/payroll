@@ -7,6 +7,7 @@ class Expenses extends CI_Controller {
     {
         parent::__construct();//call CodeIgniter's default Constructor
        $this->load->model('Expenses_model');
+       $this->load->model('Balance_model');
 
         error_reporting(0);
         
@@ -85,7 +86,7 @@ class Expenses extends CI_Controller {
     }
       public function addexp()
       {
-        
+     
 
          $expenses=$_POST['amount'];
          $date=$_POST['date'];
@@ -99,12 +100,59 @@ class Expenses extends CI_Controller {
 
         $data=$this->Expenses_model->update_employee_exp($id,$month,$year,$description,$expenses);
 
+            // auto update the balance
+
+        $data=$this->Balance_model->getallids();
+    
+    foreach ($data as $key => $val) {
+      
+      $id=$val->id;
+     
+      $total1=$this->Balance_model->totalamount($id);
+
+       $expenses1= $this->Balance_model->expenses($id);
+        $balance1= $this->Balance_model->balance($id);
+        $totalmonthlypay= $this->Balance_model->totalmonthlypay($id);
+     
+
+       foreach ($total1 as $key => $value) {
+
+        $total =$value->tm;
+
+       }
+       foreach ($totalmonthlypay as $key => $value) {
+
+        $totalmonpay =$value->totalmon;
+
+       }
+       foreach ($expenses1 as $key => $value) {
+
+        $expenses =$value->te;
+
+       }
+
+       foreach ($balance1 as $key => $value) {
+
+        $balance =$value->total;
+
+       }
+
+
+      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay);
+
+    }
+
+
+
+        // auto update complete
+
         echo json_encode($data);
 
       }
 
+
       public function deleteexp()
-      {
+      {   
           $id=$_POST['id'];
           $date=$_POST['date'];
 
@@ -115,6 +163,53 @@ class Expenses extends CI_Controller {
            $exp=$_POST['amount'];
 
           $delete=$this->Expenses_model->delete_expenses($id,$month,$year,$des,$exp);
+
+              // auto update the balance
+
+        $data=$this->Balance_model->getallids();
+    
+    foreach ($data as $key => $val) {
+      
+      $id=$val->id;
+     
+      $total1=$this->Balance_model->totalamount($id);
+
+       $expenses1= $this->Balance_model->expenses($id);
+        $balance1= $this->Balance_model->balance($id);
+        $totalmonthlypay= $this->Balance_model->totalmonthlypay($id);
+     
+
+       foreach ($total1 as $key => $value) {
+
+        $total =$value->tm;
+
+       }
+       foreach ($totalmonthlypay as $key => $value) {
+
+        $totalmonpay =$value->totalmon;
+
+       }
+       foreach ($expenses1 as $key => $value) {
+
+        $expenses =$value->te;
+
+       }
+
+       foreach ($balance1 as $key => $value) {
+
+        $balance =$value->total;
+
+       }
+
+
+      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay);
+
+    }
+
+
+
+        // auto update complete
+    
           echo json_encode($delete);
       }
       

@@ -51,7 +51,7 @@
     }
 
     .logout1{
-            padding-left: 1471px;
+            padding-left: 1401px;
     padding-top: 20px;
     }
 

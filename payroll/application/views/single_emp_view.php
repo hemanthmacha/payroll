@@ -53,7 +53,7 @@
 
             foreach ($sresult11 as $key => $val) { 
               if($val->percentage==0){
-                array_push($changevalue4,100000);
+                array_push($changevalue4,100);
               }
               else{
                array_push($changevalue4,"$val->percentage");
@@ -166,13 +166,25 @@
 </table>
   <?php } ?>
 
-  <?php foreach($sresult1 as $key=>$val){?>
+ <?php if (!empty($sresult)){ ?>
   
-  <div class="abc">
-   Total Balance To Be Paid :<?php echo $val->balance; ?>
- </div>
+ 
+<button class="btn btn-primary buttonsave" id="Link">click to know your total details</button>
+ <?php foreach ($summdata as $key => $value) { ?>
+  <div class="counts" style="display: none">
+    <br>
 
-  <?php } ?>
+      &emsp;&nbsp;&emsp;&nbsp;&emsp;&nbsp;&emsp;&nbsp;<td style="font-size:14;">  &emsp;Total Hours : <input type="text" size="6" style="border: none;" value="<?php echo $value->billedhours; ?>" readonly/>  </td>
+      <td style="font-size:14;">&emsp;&nbsp;Total Amount : <input type="text" size="6"  style="border: none;" value="<?php echo $value->totalamount; ?>" readonly/></td>
+       <td style="font-size:14;">Total Pay : <input type="text"  style="border: none;" size="6" value="<?php echo $value->totalmonthpay; ?>" readonly/></td>
+        <td style="font-size:14;"> &emsp; Total Expenses: <input type="text"  size="6" style="border: none;" value="<?php echo $value->exp; ?>" readonly/></td>
+        <td style="font-size:14;"> &emsp; Balance : <input type="text"   size="6" style="border: none;" value="<?php echo $value->balance; ?>" readonly/></td>
+ 
+    </div>
+ <?php } ?>
+   <?php } ?> 
+
+
   <br>
   <br>
   <br>
@@ -193,6 +205,20 @@
 
 }
 </style>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+
+      $('.counts').hide();
+    }); 
+  
+   $("#Link").click(function(){
+    $(".counts").toggle();
+
+
+  });
+</script>
 
 
 

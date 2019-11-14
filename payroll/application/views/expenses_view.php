@@ -21,11 +21,7 @@
     padding:0px 10px;
 
   }
-  .add-row{
-  	height: 30px;
-    padding:0px 6px;
-
-  }
+ 
     .buttondelete{
     height: 23px;
     padding:0px 10px;
@@ -98,7 +94,7 @@
 		</tbody>
 		</table> 
 		
-		 <button class=" btn btn-primary add-row">  Add row </button> 
+		 <button class=" btn btn-primary add-row buttondelete">  Add row </button> 
 	     <a type="button" class="btn btn-primary buttondelete" href="javascript:window.history.go(-1);">Back</a>
 </div>
 </div>
