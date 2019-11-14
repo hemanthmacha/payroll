@@ -7,7 +7,7 @@ class Payroll_sheet_model extends CI_Model
 
  		
  		$response = array();
-		$query="SELECT `sno`,`id`, `firstname`, `lastname`, `onestpay`, `onefivethpay`, `rate_percent`, `hours`, `total`,`balance`, `month`,`year`FROM `tbl_payrool_sheet` JOIN tbl_balance on tbl_payrool_sheet.id=tbl_balance.emp_id where month='$month' and year='$year' ";
+		$query="SELECT `sno`,`id`, `firstname`, `lastname`, `onestpay`, `onefivethpay`, `rate_percent`, `percentage`,`hours`, `total`,`balance`, `month`,`year`FROM `tbl_payrool_sheet` JOIN tbl_balance on tbl_payrool_sheet.id=tbl_balance.emp_id where month='$month' and year='$year' ";
 
 		$response = $this->db->query($query)->result();
 		return $response;
@@ -85,10 +85,10 @@ public function getting_last_id($month,$year){
        return $query;
     }
 
-      public function insert_rate_percent($id,$month,$year,$rate,$billedhours){
+      public function insert_rate_percent($id,$month,$year,$rate,$billedhours,$percent){
  		
  		   
-       $query= "UPDATE tbl_payrool_sheet SET `rate_percent`='$rate' , `hours`='$billedhours'WHERE id='$id' and month='$month' and year='$year'";
+       $query= "UPDATE tbl_payrool_sheet SET `rate_percent`='$rate' `percentage`='$percent' , `hours`='$billedhours'WHERE id='$id' and month='$month' and year='$year'";
 
        $this->db->query($query);
 

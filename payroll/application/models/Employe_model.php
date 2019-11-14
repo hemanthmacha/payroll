@@ -9,15 +9,35 @@ class Employe_model extends CI_Model
     $query=" SELECT `billedhours`, `mounthtotal`, `month`, `year`, `id`, `rate` FROM `tbl_employee` WHERE id='$id'  ORDER BY year ASC, field(month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec') ";
     $response= $this->db->query($query)->result();
     return $response;
-			 
-		
     }
+
+    public function getemploye_firstmonth($id){
+    
+    $response = array();
+    $query=" SELECT `month` FROM `tbl_employee` WHERE id='$id'  ORDER BY year ASC, field(month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec') ";
+    $response= $this->db->query($query)->result();
+    return $response;
+    }
+    
+     public function getemploye_totalmonthpay($id,$Jan,$Feb,$Mar,$Apr,$May, $Jun, $Jul, $Aug, $Sep, $Oct,$Nov, $Dec){
+    
+    $response = array();
+    $query=" SELECT IFNULL(total,0) as total FROM `tbl_payrool_sheet` WHERE id='$id'  ORDER BY year ASC, field(month, '$Jan', '$Feb', '$Mar', '$Apr','$May', '$Jun', '$Jul','$Aug', '$Sep','$Oct', '$Nov', '$Dec') ";
+    $response= $this->db->query($query)->result();
+    return $response;
+    }
+    
 
 
     public function getsingle_employe($id){
     
     $response = array();
-    $query="SELECT tbl_payrool_sheet.rate_percent, tbl_payrool_sheet.hours, IFNULL(tbl_payrool_sheet.total,0) as total, tbl_payrool_sheet.year, tbl_payrool_sheet.month,IFNULL(tbl_expenses.expenses,0)as expenses  FROM `tbl_payrool_sheet` left JOIN tbl_expenses ON (tbl_payrool_sheet.id=tbl_expenses.id1 and tbl_payrool_sheet.month=tbl_expenses.month and tbl_payrool_sheet.year=tbl_expenses.year) WHERE id='$id' ORDER BY year ASC, field(tbl_payrool_sheet.month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')";
+
+
+    $query="SELECT `tbl_employee`.`billedhours`, `tbl_employee`.`mounthtotal`, `tbl_employee`.`month`, `tbl_employee`.`year`, `tbl_employee`.`id`, `tbl_employee`.`rate`,`tbl_employee`.`percentage`,IFNULL(`tbl_payrool_sheet`.`total`,0) as total FROM `tbl_employee` join tbl_payrool_sheet on(`tbl_employee`.`id`=`tbl_payrool_sheet`.`id` and `tbl_employee`.`month`=`tbl_payrool_sheet`.`month` and `tbl_employee`.`year`=`tbl_payrool_sheet`.`year`)  WHERE tbl_employee.id='$id'  ORDER BY year ASC, field(`tbl_employee`.`month`, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec') ";
+
+
+
     $response= $this->db->query($query)->result();
 
     return $response;
@@ -25,10 +45,29 @@ class Employe_model extends CI_Model
     
     }
 
+    public function getsummonthpay($id,$month,$year){
+    
+    $response1 = array();
+    $query1= "SELECT IFNULL (sum(expenses),0) AS sum from tbl_expenses where id1='$id' and month='$month' and year='$year'";
+    $response1= $this->db->query($query1)->result();
+    return $response1; 
+    }
+
     public function getsingle_employe_balance($id){
     
     $response1 = array();
     $query1= "SELECT   `balance` FROM `tbl_balance` WHERE emp_id='$id'";
+    $response1= $this->db->query($query1)->result();
+    return $response1; 
+    }
+
+
+
+
+    public function monthlyexp($id,$month,$year){
+    
+    $response1 = array();
+    $query1= "SELECT `month`, `year`, `description`, `expenses` FROM `tbl_expenses` WHERE id1='$id' and month='$month' and year='$year'";
     $response1= $this->db->query($query1)->result();
     return $response1; 
     }
@@ -57,15 +96,15 @@ class Employe_model extends CI_Model
      
     }
 
-    public function insert_into_employee($id,$billedhours,$totalamount,$month,$year,$rate){
+    public function insert_into_employee($id,$billedhours,$totalamount,$month,$year,$rate,$percentage){
  		
  		
-      $query1= "UPDATE `tbl_payrool_sheet` SET `rate_percent`='$rate',`hours`='$billedhours' WHERE id='$id' and year='$year' and month='$month'";
+      $query1= "UPDATE `tbl_payrool_sheet` SET `rate_percent`='$rate',`hours`='$billedhours',`percentage`='$percentage' WHERE id='$id' and year='$year' and month='$month'";
 
        $this->db->query($query1);
        
 
-       $query= "UPDATE tbl_employee SET billedhours='$billedhours',mounthtotal='$totalamount',rate='$rate' WHERE id='$id' and month='$month' and year='$year'";
+       $query= "UPDATE tbl_employee SET billedhours='$billedhours',mounthtotal='$totalamount',rate='$rate',`percentage`='$percentage' WHERE id='$id' and month='$month' and year='$year'";
 
        $this->db->query($query);
        
@@ -73,7 +112,7 @@ class Employe_model extends CI_Model
     }
 
 
-      public function insert_newdata_employee($id,$billedhours,$totalamount,$month,$year,$fname,$lname,$pct){
+      public function insert_newdata_employee($id,$billedhours,$totalamount,$month,$year,$fname,$lname,$rate,$pct){
  		
  		
        
@@ -83,11 +122,11 @@ class Employe_model extends CI_Model
 
        $this->db->query($query);
 
-       $query= "INSERT INTO `tbl_employee`(`billedhours`, `mounthtotal`, `month`, `year`, `id`,`rate`) VALUES ('$billedhours','$totalamount','$month','$year','$id','$pct')";
+       $query1= "INSERT INTO `tbl_employee`(`billedhours`, `mounthtotal`, `month`, `year`, `id`,`rate`,`percentage`) VALUES ('$billedhours','$totalamount','$month','$year','$id','$rate','$pct')";
 
 
 
-       $this->db->query($query);
+       $this->db->query($query1);
        
        return  $query;
     }

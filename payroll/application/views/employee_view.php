@@ -21,20 +21,71 @@
     height: 25px;
     padding:0px 10px;
   }
+.hasTooltip span {
+    display: none;
+    color: #000;
+    text-decoration: none;
+    padding: 3px;
+}
+
+.hasTooltip:hover span {
+    display: block;
+    position: absolute;
+    background-color: #FFF;
+    border: 1px solid #CCC;
+    margin: 2px 10px;
+    width: 200px;
+}
+
 </style>
 <body>
 
     <div class="content"> 
     <div class="row"> 
-    <div class="col-sm-10">
+    <h4>Payroll Sheet of <?php echo $_GET['var2']; echo "  "; echo $_GET['var3']; ?></h4>
+    <div class="col-sm-12">
       
 
 <?php $abc=array();
-     
+      $changevalue1=array();
+      $changevalue2=array();
+      $changevalue3=array();
+      $changevalue4=array();
+
+            /*foreach ($sresult as $key => $val) { 
+            array_push($changevalue1,"$val->billedhours");
+            } 
+*/
             foreach ($sresult1 as $key => $val) { 
-            array_push($abc,"$val->hourstop");
-         
-      } ?>
+            array_push($changevalue1,"$val->hourstart");
+            } 
+
+            foreach ($sresult1 as $key => $val) { 
+            array_push($changevalue2,"$val->hourstop");
+            }
+
+            foreach ($sresult1 as $key => $val) { 
+            array_push($changevalue3,"$val->rate");
+            }
+
+            foreach ($sresult1 as $key => $val) { 
+              if($val->percentage==0){
+                array_push($changevalue4,100000);
+              }
+              else{
+               array_push($changevalue4,"$val->percentage");
+             }
+
+            }
+
+            // total month pay logic array
+            $monthtotalpay=array();
+            foreach ($monthpay as $key => $val) { 
+            array_push($monthtotalpay,"$val->total");
+            } 
+
+
+            ?>
 
 <table class="table text-center" align="center" id="customers">
   <thead>
@@ -47,7 +98,7 @@
       <th>
 
         <?php if (!empty($sresult1)){ ?>
-              <a href="<?=base_url()?>percentage/?var1=<?php echo$_GET['var1']; ?>"> RATE-PERCENTAGE</a>
+              <a href="<?=base_url()?>percentage/?var1=<?php echo$_GET['var1']; ?>"> RATE</a>
         <?php } ?>
 
         <?php if (empty($sresult1)){ ?>
@@ -55,8 +106,12 @@
         <?php } ?>
 
        </th>
-
+      <th><?php if (!empty($sresult1)){ ?>
+              Percentage
+        <?php } ?>
+      </th>
       <th>Total Amount</th>
+       <th>Amount Paid to individual</th>
       <th>Demo Calculation</th>
        <th>Delete</th>
      <!--  <th>Expenses</th> -->
@@ -65,7 +120,7 @@
 </tr>
      
   <tbody>
-   <?php $i=0; $ttee=0; foreach($sresult as $key=>$val){ $i++; $ttee=$ttee+$val->billedhours; ?>
+   <?php $i=0; $mp=0; $abcd=0; $ttee=0; foreach($sresult as $key=>$val){ $i++; $ttee=$ttee+$val->billedhours; ?>
      <?php
         $totalhrs = $this->db->query( "SELECT SUM(billedhours) AS Total FROM `tbl_employee` WHERE id='".$val->id."'")->row_object();
         ?>
@@ -78,25 +133,68 @@
       <input type="hidden" id="mon" value="<?=$val->month?>">
       <input type="hidden" id="yea" value="<?=$val->year?>">
 
-    <td><input type="text" id="billedmonth" name="month" value="<?php echo $val->month; echo "-"; echo $val->year; ?>"  disabled/></td>
-    <td><input type="text" id="billedhours<?php echo $i;?>"  name="hours" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="miles" value="<?php echo $val->billedhours;?>"/></td>
-    <td><input type="text" id="rate<?php echo $i;?>" class="rate" name="rate"  value="" disabled> </td>
+    <td><input type="text" size= "13" id="billedmonth" name="month" value="<?php echo $val->month; echo "-"; echo $val->year; ?>"  disabled/></td>
+    <td><input type="text" size= "8" id="billedhours<?php echo $i;?>"  name="hours" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="miles" value="<?php echo $val->billedhours;?>"/></td>
+    <td><input type="text" size= "8" id="rate<?php echo $i;?>" class="rate" name="rate"  value="" disabled> </td>
+    <td><input type="text" size= "8" id="percent<?php echo $i;?>" class="percent" name="percent"  value="" disabled> </td>
     <td><input type="text" id="totalamount<?php echo $i;?>" name="total" value="<?php echo $val->mounthtotal; ?>" disabled/></td>
-    
-    <?php if($abc[0]<$ttee) { ?>
+    <td><input type="text" id="totalmonthpay<?php echo $i;?>" name="total" value="<?php echo $monthtotalpay[$mp]; ?>" disabled/></td>
 
-    <td>  <a href="<?= base_url();?>cal" data-toggle="tooltip" title="Find sample calculation!">Sample Calculation</a> </td>
+    <!-- change rate alert display start -->
 
-     <?php } ?>
-     <?php if($abc[0]>=$ttee) { ?>
+ 
 
-    <td>   </td>
+    <?php  if($changevalue1[$abcd] <= $ttee) {
 
-     <?php } ?>
+              if($changevalue2[$abcd] >= $ttee) { ?>
+                <td>   </td>
+              <?php }
+
+              else{ 
+
+                if ((sizeof($changevalue4)-1) <= $abcdtemp) { 
+                  $abcd=$abcd+1; ?>
+                <td>  </td>
+
+                
+                
+             <?php }
+
+                  if ($abcd>=1 && (sizeof($changevalue4)-1) > $abcd ){ $abcdtemp = $abcd+1;?>
+                 
+                <td><a href="#" class="hasTooltip">Calculation Change Here 
+                    <span>Rate and Percentage are changed from <?php echo $changevalue3[($abcd)] ?> to <?php echo $changevalue3[$abcdtemp]; ?> and <?php echo $changevalue4[($abcd)]; ?> to <?php echo $changevalue4[$abcdtemp];?> </span>
+                </a> </td>
+
+                
+                <?php $abcd=$abcd+1; 
+              }
+
+                  if ($abcd==0) { 
+                  $abcd=$abcd+1; ?>
+                <td><a href="#" class="hasTooltip">Calculation Change Here 
+                    <span>Rate and Percentage are changed from <?php echo $changevalue3[(0)] ?> to <?php echo $changevalue3[1]; ?> and <?php echo $changevalue4[(0)]; ?> to <?php echo $changevalue4[1]; ?> </span>
+                </a> </td>
+
+
+                
+             <?php }     
+
+            }
+
+          }
+      ?>
+
+    <!-- change rate alert display end  --> 
+
+
+
+
+   
     <td> <button class="btn btn-primary buttonsave" id="delete" >Delete</button></td>
   </tr>
 
- <?php } ?>
+ <?php $mp= $mp +1 ;} ?>
  </tbody>
 </table>
 <?php if (!empty($sresult)){ ?>
@@ -411,6 +509,14 @@ abc++;
 
 
             $('#rate'+(i+1)).val(ratearray[q]); 
+
+            if(percentagearray[q]>0){
+            $('#percent'+(i+1)).val(percentagearray[q]); 
+             }
+
+             else{
+            $('#percent'+(i+1)).val(100); 
+             }
             
         }
 
@@ -427,18 +533,19 @@ abc++;
 
  $("table tbody tr").each(function () {  
 
-                var id = <?php echo $_GET['var1'];  ?>;
+             var id = <?php echo $_GET['var1'];  ?>;
                 var mon = $(this).find("td").eq(1).find(":text").val();
                 var billedhours = $(this).find("td").eq(2).find(":text").val();
                 var rate = $(this).find("td").eq(3).find(":text").val();
-                var totalamount = $(this).find("td").eq(4).find(":text").val();
+                var percentage1 = $(this).find("td").eq(4).find(":text").val();
+                var totalamount = $(this).find("td").eq(5).find(":text").val();
                 console.log(rate);
                 
                   $.ajax({
                     type: "post",
                     url: "<?= base_url();?>updateemployee",
                     cache: false,    
-                    data: {id:id, rate:rate, billedhours:billedhours, totalamount:totalamount, mon:mon},
+                    data: {id:id, rate:rate, billedhours:billedhours, totalamount:totalamount, mon:mon,percentage1:percentage1},
                     success: function(json){  
                       
                    } 
@@ -471,7 +578,7 @@ abc++;
                $monthArray = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
         ?>
        //'.$selected.'
-        markup = "<tr> <input type='hidden' id='idd1' value='<?=$val->id?>'><td> " + sno + "</td> <td> <select id='year' name='year'> <option value=''>Select Year</option> <?php foreach ($yearArray as $year) {
+        markup = "<tr> <input type='hidden' id='idd1' value='<?=$val->id?>'> <td> " + sno + "</td> <td> <select id='year' name='year'> <option value=''>Select Year</option> <?php foreach ($yearArray as $year) {
          $selected = ($year == $abc) ? 'selected' : '';
         echo '<option value='.$year.'>'.$year.'</option>';
         }
@@ -480,7 +587,7 @@ abc++;
         echo '<option value='.substr($month,0,3).'>'.$month.'</option>';
     }
     ?>
-    </select> </td>  <td><input type='text' id='billedhours1'onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='billhours' name='hours'> </td>   <td><input type='text' id='pct1' name='pct' disabled> </td>  <td><input type='text' id='totalamount1' name='total' disabled> </td> <td ><button class='btn btn-primary buttonsaveone' id='save1' disabled>Add</button></td> </tr>";
+    </select> </td>  <td><input type='text' id='billedhours1'onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='billhours' name='hours'> </td>   <td><input type='text' id='rate1' name='rate1' disabled> </td>  <td><input type='text' id='pct1' name='pct1' disabled> </td>  <td><input type='text' id='totalamount1' name='total' disabled> </td><td> </td> <td> </td> <td ><button class='btn btn-primary buttonsaveone' id='save1' disabled>Add</button></td> </tr>";
         tableBody = $("table"); 
         tableBody.append(markup);
 
@@ -514,14 +621,15 @@ $(document).on("click", "#save", function() {
                 var mon = $(this).find("td").eq(1).find(":text").val();
                 var billedhours = $(this).find("td").eq(2).find(":text").val();
                 var rate = $(this).find("td").eq(3).find(":text").val();
-                var totalamount = $(this).find("td").eq(4).find(":text").val();
-                console.log(rate);
+                 var percet11 = $(this).find("td").eq(4).find(":text").val();
+                var totalamount = $(this).find("td").eq(5).find(":text").val();
+                //console.log(rate);
                 
                   $.ajax({
                     type: "post",
                     url: "<?= base_url();?>updateemployee",
                     cache: false,    
-                    data: {id:id, rate:rate, billedhours:billedhours, totalamount:totalamount, mon:mon},
+                    data: {id:id, rate:rate, billedhours:billedhours, totalamount:totalamount, mon:mon,percet11:percet11},
                     success: function(json){  
                         
                    } 
@@ -542,8 +650,8 @@ $(document).on("click", "#save", function() {
            var billedhours = $(this).parent('td').parent('tr').find('#billedhours1').val();
            var month = $(this).parent('td').parent('tr').find('#month').val();
            var year = $(this).parent('td').parent('tr').find('#year').val();
-           //var rate= $(this).parent('td').parent('tr').find('#rate1').val();
-           var pct = $(this).parent('td').parent('tr').find('#pct1').val();
+           var rate = $(this).parent('td').parent('tr').find('#rate1').val();
+           var pct= $(this).parent('td').parent('tr').find('#pct1').val();
            var totalamount= $(this).parent('td').parent('tr').find('#totalamount1').val();
            //var expenses = $(this).parent('td').parent('tr').find('#expenses1').val();
            var balance= $(this).parent('td').parent('tr').find('#balance1').val();
@@ -553,10 +661,10 @@ $(document).on("click", "#save", function() {
            type: "post",
            url: "<?= base_url();?>addemployeedata",
            cache: false,    
-           data: {id:id, pct:pct, billedhours:billedhours, totalamount:totalamount,month:month,year,year },
+           data: {id:id, rate:rate, billedhours:billedhours, totalamount:totalamount, month:month, year:year, pct:pct },
            success: function(json){    
 
-            alert("Added Employee Data");
+            alert(json);
             location.reload();
           } 
           });

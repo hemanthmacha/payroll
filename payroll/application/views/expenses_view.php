@@ -68,8 +68,8 @@
 			 	<tr>
 			 		<input type="hidden" id="idddd" value="<?php echo $val->id; ?>">
             	<td><input type="text" id="date" value="<?php echo $val->month; ?>-<?php echo $val->year; ?>"  disabled/></td>
-				<td><input type="text"   value="<?php echo $val->description; ?>"disabled/></td>
-    			<td><input type="text"  value="<?php echo $val->expenses; ?>" disabled/></td>
+				<td><input type="text"   id="des"  value="<?php echo $val->description; ?>"disabled/></td>
+    			<td><input type="text"   id="amount" value="<?php echo $val->expenses; ?>" disabled/></td>
     			<td> <button class="btn btn-primary buttondelete" id="delete" >Delete</button></td>
     			
 		

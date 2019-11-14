@@ -23,13 +23,21 @@ class Login extends CI_Controller {
       $user=$this->input->post('username');
       $password=$this->input->post('password');
       $result = $this->Login_model->login($user,$password);
+      $name = $this->Login_model->name($user,$password);
+   
 
   if(!empty($result)){
       foreach ($result as $key => $value) {
       	$this->session->set_userdata(id,$value->id);
       	$this->session->set_userdata(role,$value->role);
       }
-      
+       foreach ($name as $key => $value) {
+        $this->session->set_userdata(fname,$value->firstname);
+        $this->session->set_userdata(lname,$value->lastname);
+      }
+      /*echo $this->session->userdata('role');
+      echo $this->session->userdata('fname');
+      die();*/
        $this->load->view('header');
    }
 

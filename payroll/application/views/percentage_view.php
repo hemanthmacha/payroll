@@ -170,7 +170,6 @@ a:visited {
 
 
 
-
           $("input.lasthour").on("change", function(){ 
    
                        var num = parseInt($(this).parent('td').parent('tr').find('#sno').val());
@@ -194,7 +193,7 @@ a:visited {
                 });
 
 
-           $("input.lasthour").on("keyup keydown", function(){ 
+           $("input.lasthour").on("input change keyup keydown", function(){ 
 
                   var tr1 = $('#percentage tr:last');
                   var nexthour1 = tr1.find('input[name="hour2"]').val();
@@ -211,10 +210,27 @@ a:visited {
 
 });
 
-
 $(document).on("click","#save", function(){
 
-              var id= <?php echo $id; ?>;
+              var temp=0;
+                $("table tbody tr").each(function () {
+          
+                var rate = $(this).find("td").eq(2).find(":text").val();
+                if(rate==''){
+
+                  temp=1; 
+                 // console.log(window.amp);
+                  alert('Please enter the rate');
+                  return false;
+                }
+
+                  });
+
+
+            if(temp==0) {
+
+
+                  var id= <?php echo $id; ?>;
                   $.ajax({
                       type: "post",
                       url: "<?= base_url();?>percentagedelete",
@@ -246,8 +262,9 @@ $(document).on("click","#save", function(){
               } 
 
           });
-        
-      });
+              
+        }
+  });
 
     $(document).on("click","#edit", function(){
 
@@ -319,6 +336,24 @@ $(document).on("click","#save", function(){
             
      $(document).on("click","#update", function(){
 
+
+
+       var temp1=0;
+                $("table tbody tr").each(function () {
+          
+                var rate = $(this).find("td").eq(2).find(":text").val();
+                if(rate==''){
+
+                  temp1=1; 
+                 // console.log(window.amp);
+                  alert('Please enter the rate');
+                  return false;
+                }
+
+                  });
+
+                if(temp1==0) {
+
               var id= <?php echo $id; ?>;
                   $.ajax({
                       type: "post",
@@ -351,7 +386,8 @@ $(document).on("click","#save", function(){
             location.reload();
                       } 
                       
-                   });             
+                   });     
+                 }          
             });
 
 

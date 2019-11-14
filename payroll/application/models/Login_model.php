@@ -14,6 +14,17 @@ class Login_model extends CI_Model {
   return $query;
  
   }
+
+   public function name($uname,$pass){
+
+   	$name=array();
+   	$query= "SELECT `lastname`, `firstname` FROM `tbl_users` WHERE username='$uname' and password='$pass'";
+
+     $name= $this->db->query($query)->result();
+    return $name; 
+ 
+  }
+
   
 
 }  

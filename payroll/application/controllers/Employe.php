@@ -19,7 +19,7 @@ class Employe extends CI_Controller {
         $id=$_GET['var1'];
          $this->load->view('header');
      	   $data['sresult'] = $this->Employe_model->getemploye($id);
-		    $this->load->view('employee_view',$data);	 
+           $this->load->view('employee_view',$data);	 
      }
 
      public function updateemp(){
@@ -28,7 +28,7 @@ class Employe extends CI_Controller {
          $id  = $_POST['id'];
         //$billedmonth      = $_POST['billedmonth'];
          $billedhours  = $_POST['billedhours'];
-         //$rate      = $_POST['rate'];
+         $percentage1      = $_POST['percentage1'];
          $rate  = $_POST['rate'];
          $totalamount      = $_POST['totalamount'];
          //$expenses  = $_POST['expenses'];
@@ -40,7 +40,7 @@ class Employe extends CI_Controller {
 
 
       // $this->Payroll_sheet_model->insert_rate_percent($id,$month,$year,$pct,$billedhours); 
-       $result['res'] = $this->Employe_model->insert_into_employee($id,$billedhours,$totalamount,$month,$year,$rate); 
+       $result['res'] = $this->Employe_model->insert_into_employee($id,$billedhours,$totalamount,$month,$year,$rate,$percentage1); 
          echo json_encode($result);
 
      }
@@ -72,7 +72,53 @@ class Employe extends CI_Controller {
          $this->session->set_userdata(lastname,$_GET['var3']);
          $this->load->view('header');
          $data['sresult'] = $this->Employe_model->getemploye($id);
-          $data['sresult1'] = $this->Employe_model->getemployerate($id);
+         $data['sresult1'] = $this->Employe_model->getemployerate($id);
+
+
+         $startmonth = $this->Employe_model->getemploye_firstmonth($id);
+         foreach ($startmonth as $key => $value) {
+           $month = $value->month;
+           break;
+         }
+
+         if($month=='Jan'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+         }
+         if($month=='Feb'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Feb','Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec','Jan');
+         }
+         if($month=='Mar'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Mar','Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec','Jan','Feb');
+         }
+         if($month=='Apr'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Apr','May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec','Jan','Feb', 'Mar');
+         }
+         if($month=='May'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'May','Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec','Jan','Feb', 'Mar', 'Apr', 'May');
+         }
+         if($month=='Jun'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec','Jan','Feb', 'Mar', 'Apr', 'May');
+         }
+         if($month=='Jul'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Jul','Aug', 'Sep', 'Oct', 'Nov', 'Dec','Jan','Feb', 'Mar', 'Apr', 'May', 'Jun');
+         }
+         if($month=='Aug'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Aug','Sep', 'Oct', 'Nov', 'Dec','Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul');
+         }
+         if($month=='Sep'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Sep','Oct', 'Nov', 'Dec','Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug');
+         }
+         if($month=='Oct'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Oct','Nov', 'Dec','Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep');
+         }
+         if($month=='Nov'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Nov','Dec','Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct');
+         }
+         if($month=='Dec'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Dec','Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov');
+         }
+    
+         
 
          $this->load->view('employee_view',$data);    
 
@@ -84,7 +130,72 @@ class Employe extends CI_Controller {
           $id= $this->session->userdata('id');
           $this->load->view('header');
           $data['sresult'] = $this->Employe_model->getsingle_employe($id);
-           $data['sresult1'] = $this->Employe_model->getsingle_employe_balance($id);
+          $month1 = $this->Employe_model->getsingle_employe($id);
+          $data['sresult11'] = $this->Employe_model->getemployerate($id);
+
+           $exp=array();
+          foreach ($month1 as $key => $value) {
+
+             $month= $value->month;
+             $year = $value->year;
+             $summ = $this->Employe_model->getsummonthpay($id,$month,$year);
+             
+             //print_r($summ);
+             foreach ($summ as $key => $value) {
+               array_push($exp,"$value->sum");
+
+             }
+            
+          }
+
+
+          $startmonth = $this->Employe_model->getemploye_firstmonth($id);
+         foreach ($startmonth as $key => $value) {
+           $month = $value->month;
+           break;
+         }
+
+         if($month=='Jan'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+         }
+         if($month=='Feb'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Feb','Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec','Jan');
+         }
+         if($month=='Mar'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Mar','Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec','Jan','Feb');
+         }
+         if($month=='Apr'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Apr','May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec','Jan','Feb', 'Mar');
+         }
+         if($month=='May'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'May','Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec','Jan','Feb', 'Mar', 'Apr', 'May');
+         }
+         if($month=='Jun'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec','Jan','Feb', 'Mar', 'Apr', 'May');
+         }
+         if($month=='Jul'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Jul','Aug', 'Sep', 'Oct', 'Nov', 'Dec','Jan','Feb', 'Mar', 'Apr', 'May', 'Jun');
+         }
+         if($month=='Aug'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Aug','Sep', 'Oct', 'Nov', 'Dec','Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul');
+         }
+         if($month=='Sep'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Sep','Oct', 'Nov', 'Dec','Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug');
+         }
+         if($month=='Oct'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Oct','Nov', 'Dec','Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep');
+         }
+         if($month=='Nov'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Nov','Dec','Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct');
+         }
+         if($month=='Dec'){
+          $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Dec','Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov');
+         }
+    
+
+          $data['sum']=$exp;
+ 
+          //$data['sresult1'] = $this->Employe_model->getsingle_employe_balance($id);
           $this->load->view('single_emp_view',$data);    
 
      }
@@ -93,8 +204,8 @@ class Employe extends CI_Controller {
 
          $id  = $_POST['id'];
          $billedhours  = $_POST['billedhours'];
-         //$rate      = $_POST['rate'];
-         $pct  = $_POST['pct'];
+         $percent      = $_POST['pct'];
+         $rate  = $_POST['rate'];
          $totalamount      = $_POST['totalamount'];
          //$expenses  = $_POST['expenses'];
          //$balance      = $_POST['balance'];
@@ -107,8 +218,8 @@ class Employe extends CI_Controller {
         $lname=$this->session->userdata('lastname');  
         
         //$this->Balance_model->updatebalance($id,$balance);
-        $result['res'] = $this->Employe_model->insert_newdata_employee($id,$billedhours,$totalamount,$month,$year,$fname,$lname,$pct); 
-        $this->Payroll_sheet_model->insert_rate_percent($id,$month,$year,$pct,$billedhours); 
+        $result['res'] = $this->Employe_model->insert_newdata_employee($id,$billedhours,$totalamount,$month,$year,$fname,$lname,$rate,$percent); 
+        //$this->Payroll_sheet_model->insert_rate_percent($id,$month,$year,$rate,$billedhours,$percent); 
 
          echo json_encode($result);
 
@@ -122,6 +233,20 @@ class Employe extends CI_Controller {
       $deletlist['data11']=$this->Employe_model->deleteemployeelist($id);
       echo json_encode($deletlist);   
      }
+
+
+     public function singleempmonthexp() {
+
+      $id=$_GET['val1'];
+      $month=$_GET['val2'];
+      $year=$_GET['val3'];
+
+      $monthlyexp['description']=$this->Employe_model->monthlyexp($id,$month,$year);
+      $this->load->view('singleemp_monthexp',$monthlyexp);
+     }
+
+
+
 
      public function sample_cal()
      {

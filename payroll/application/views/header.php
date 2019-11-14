@@ -11,15 +11,18 @@
     <div class="navbar-header">
        <?php if($this->session->userdata('role') == 'admin') { ?>  
     <a href="<?=base_url()?>payroll"><img class="nav navbar-nav navbar-left" src="<?= base_url();?>assests/images/logo.jpg" height="60" width="90" ></a>  <a class="navbar-brand"  style="color: black !important; font-family: ; font-size: 30px;" href="<?=base_url()?>payroll">&nbsp;&nbsp;&nbsp;&nbsp;PAYROLL SYSTEM</a> 
+
+    <div class="logout1"><a href="<?=base_url()?>"> Logout </a> </div>
     <?php } ?>
 
        <?php if($this->session->userdata('role') == 'employee') { ?>  
     <a href="<?=base_url()?>employe"><img class="nav navbar-nav navbar-left" src="<?= base_url();?>assests/images/logo.jpg" height="60" width="90" ></a>  <a class="navbar-brand"  style="color: black !important; font-family: ; font-size: 30px;" href="<?=base_url()?>employe">&nbsp;&nbsp;&nbsp;&nbsp;PAYROLL SYSTEM</a> 
-    <?php } ?>
+    
 
     </div>
-    <div class="logout"><a href="<?=base_url()?>"> Logout </a> </div>
-   
+    <div class="logout"><h4><?php echo ($this->session->userdata('fname')); echo" "; echo ($this->session->userdata('lname')); ?> </h4><a href="<?=base_url()?>"> Logout </a> </div>
+
+   <?php } ?>
   </div>
     </div>
     
@@ -35,7 +38,7 @@
  <?php } ?>
 
  <?php if($this->session->userdata('role') == 'employee') { ?>  
-  <a href="<?= base_url();?>employe"  class="nav-link nav-toggle  <?php if($this->uri->segment(1) == 'employe' || $this->uri->segment(1) == 'addemployee')  { echo 'active'; } ?>">BalanceSheet<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-envelope"></span></a>
+  <a href="<?= base_url();?>employe"  class="nav-link nav-toggle  <?php if($this->uri->segment(1) == 'employe' || $this->uri->segment(1) == 'addemployee'|| $this->uri->segment(1) == 'singleempexpenses')  { echo 'active'; } ?>">BalanceSheet<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-envelope"></span></a>
   <?php } ?>
 
 </div>
@@ -43,8 +46,13 @@
 <style type="text/css">
 
   .logout{
-        padding-left: 1450px;
-        padding-top: 20px;
+            padding-left: 1371px;
+    padding-top: 20px;
+    }
+
+    .logout1{
+            padding-left: 1471px;
+    padding-top: 20px;
     }
 
 
