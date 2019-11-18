@@ -62,9 +62,43 @@ class Employe extends CI_Controller {
 
 
      public function emplist(){
-    
-        $employe['data'] = $this->Employe_model->getemp();
-        $this->load->view('employee_list_view',$employe);
+
+
+                $config = array();
+                $config["base_url"] =base_url() . "employeelist";
+                $config["per_page"] = 4;
+                $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+                $config["total_rows"] = $this->Employe_model->getemp($config["per_page"],$page)
+                      ['numRows'];
+              
+                $config["uri_segment"] = 2;
+                $config['full_tag_open'] = "<ul class='pagination'>";
+                $config['full_tag_close'] = '</ul>';
+                $config['num_tag_open'] = '<li>';
+                $config['num_tag_close'] = '</li>';
+                $config['cur_tag_open'] = '<li class="active"><a href="#">';
+                $config['cur_tag_close'] = '</a></li>';
+                $config['prev_tag_open'] = '<li>';
+                $config['prev_tag_close'] = '</li>';
+                $config['first_tag_open'] = '<li>';
+                $config['first_tag_close'] = '</li>';
+                $config['last_tag_open'] = '<li>';
+                $config['last_tag_close'] = '</li>';
+
+                $config['next_link'] = 'Next Page';
+                $config['next_tag_open'] = '<li>';
+                $config['next_tag_close'] = '</li>';
+
+                $config['prev_link'] = 'Previous Page';
+                $config['prev_tag_open'] = '<li>';
+                $config['prev_tag_close'] = '</li>';
+
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+        $data["links"] = $this->pagination->create_links();
+        $data['data'] = $this->Employe_model->getemp($config["per_page"], $page)['result'];
+        $this->load->view('employee_list_view',$data);  
+
      }
 
 

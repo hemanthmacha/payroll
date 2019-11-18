@@ -131,7 +131,7 @@ class Employe_model extends CI_Model
        return  $query;
     }
 
-    public function getemp(){
+  /*  public function getemp(){
  		
  		$response = array();
  		
@@ -140,7 +140,23 @@ class Employe_model extends CI_Model
      	$query = $this->db->get();
 		$response = $query->result();
 		 return $response;
-    }
+    }*/
+
+
+      public function getemp($perpage,$limit){
+    
+      $response = array();
+    
+    $this->db->select(`firstname`, `lastname`, `id`);  
+    $this->db->from('tbl_users');
+    $query = $this->db->get();
+    $totalrecords = $query->num_rows();
+    $lastQeuryUsers = $this->db->last_query();
+    $paginationQuery = $this->db->select('firstname,lastname,id')->from('('.$lastQeuryUsers.') AS X')->limit($perpage,$limit)->get();
+    $response['numRows'] = $totalrecords;
+    $response['result'] = $paginationQuery->result();
+    return $response;
+}
 
 
     public function deleteemployeelist($id)

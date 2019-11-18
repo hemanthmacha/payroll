@@ -56,13 +56,86 @@ class Payroll_sheet extends CI_Controller {
            } 
        
 
-         }
+         } 
         
         $month=$this->uri->segment(2);
         $year=$_GET['var1'];
-        $data['sresult'] = $this->Payroll_sheet_model->getpayrolls($month,$year);
-		    $this->load->view('payroll_view',$data);	
+
+                $config = array();
+                $config['page_query_string'] = TRUE;
+                $config["base_url"] = base_url() . "month/$month/?var1=$year";
+                $config["per_page"] = 4;
+
+                $page = $_GET['per_page'];
+                if($per_page==0 || $per_page =''){
+
+                  $per_page==0;
+                }
+
+                else{
+                  $per_page = $_GET['page'];
+                  //$per_page = explode('/', $page); 
+                  
+                }
+              $config["total_rows"] = $this->Payroll_sheet_model->getpayrolls($month,$year,$config["per_page"], $page)['numRows'];
+       
+               // $config["uri_segment"] = 4;
+                $config['full_tag_open'] = "<ul class='pagination'>";
+                $config['full_tag_close'] = '</ul>';
+                $config['num_tag_open'] = '<li>';
+                $config['num_tag_close'] = '</li>';
+                $config['cur_tag_open'] = '<li class="active"><a href="#">';
+                $config['cur_tag_close'] = '</a></li>';
+                $config['prev_tag_open'] = '<li>';
+                $config['prev_tag_close'] = '</li>';
+                $config['first_tag_open'] = '<li>';
+                $config['first_tag_close'] = '</li>';
+                $config['last_tag_open'] = '<li>';
+                $config['last_tag_close'] = '</li>';
+
+                $config['next_link'] = 'Next Page';
+                $config['next_tag_open'] = '<li>';
+                $config['next_tag_close'] = '</li>';
+
+                $config['prev_link'] = 'Previous Page';
+                $config['prev_tag_open'] = '<li>';
+                $config['prev_tag_close'] = '</li>';
+
+        $this->pagination->initialize($config);
+             
+            $per_page = $_GET['per_page'];
+                if($per_page==0 || $per_page =''){
+
+                  $per_page==0;
+                }
+
+                else{
+                  $page = $_GET['per_page'];
+                   //$page = explode('/', $page);
+                    
+                }
+
+
+        $data["links"] = $this->pagination->create_links();
+      $data['sresult'] = $config["total_rows"] = $this->Payroll_sheet_model->getpayrolls($month,$year,$config["per_page"], $page)['result'];
+    //$usersData['result'] = $this->Retrive_model->getUserDetails();  
+     $this->load->view('payroll_view',$data);
+
+
+
+
+
+      // pagenation ends
+
      }
+
+
+
+
+
+
+
+
 
      public function update_payroll(){
 

@@ -8,7 +8,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'Login/loginuser';
 $route['payroll'] = 'Payroll_month';
 $route['month'] = 'Payroll_month/payrollmonth';
-$route['month/(:any)'] = 'Payroll_sheet';
+$route['month/(:any)'] = 'Payroll_sheet/index/$1/$2';
 $route['update']='Payroll_sheet/update_payroll';
 
 $route['updateemployee'] = 'Employe/updateemp';
@@ -20,6 +20,9 @@ $route['addemp'] = 'Addemploye/add';
 $route['addemployee'] = 'Addemploye/ademployee';
 
 $route['employeelist'] = 'Employe/emplist';
+
+$route['employeelist/(:any)'] = 'Employe/emplist/$1';
+
 $route['list'] = 'Employe/empdetails';
 
 

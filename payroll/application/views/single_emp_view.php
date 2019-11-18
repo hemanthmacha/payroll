@@ -1,4 +1,4 @@
-<?php if($this->session->userdata('role') == 'admin') { ?> 
+<?php if($this->session->userdata('role') == 'employee') { ?> 
 <html>
 <head>
 <title>Employe Summary</title>

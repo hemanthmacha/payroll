@@ -3,18 +3,25 @@
 class Payroll_sheet_model extends CI_Model 
 {
 
-	 public function getpayrolls($month,$year){
+	public function getpayrolls($month,$year,$perpage,$limit){
 
- 		
- 		$response = array();
-		$query="SELECT `sno`,`id`, `firstname`, `lastname`, `onestpay`, `onefivethpay`, `rate_percent`, `percentage`,`hours`, `total`,`balance`, `month`,`year`FROM `tbl_payrool_sheet` JOIN tbl_balance on tbl_payrool_sheet.id=tbl_balance.emp_id where month='$month' and year='$year' ";
+      $response = array();
+      $this->db->select('sno,id,firstname,lastname,onestpay,onefivethpay,rate_percent,percentage,hours,total,balance, month,year');
+      $this->db->from('tbl_payrool_sheet');
+      $this->db->join('tbl_balance AS tbl_balance','tbl_payrool_sheet.id=tbl_balance.emp_id');
+      $this->db->where('month', $month);
+      $this->db->where('year', $year);
+      $query = $this->db->get();
+    $totalrecords = $query->num_rows();
+    $lastQeuryUsers = $this->db->last_query();
+    $paginationQuery = $this->db->select('sno,id,firstname,lastname,onestpay,onefivethpay,rate_percent,percentage,hours,total,balance,month,year')->from('('.$lastQeuryUsers.') AS X')->limit($perpage,$limit)->get();
+    $responsex['numRows'] = $totalrecords;
+    $responsex['result'] = $paginationQuery->result();
+    return $responsex;
 
-		$response = $this->db->query($query)->result();
-		return $response;
 
 
     }
-
 
     public function checking_month($month,$year){
 

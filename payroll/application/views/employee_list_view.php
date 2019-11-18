@@ -35,6 +35,8 @@
   </tr>
 
     <?php } ?>
+
+    <tr><td colspan="6" class="text-right"><span class="pagination"><?=$links?></span></td></tr>
 </table>
   <?php } ?>
 </div>

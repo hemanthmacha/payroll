@@ -82,6 +82,8 @@ height:auto; "> </h3>
   </tr>
 
     <?php } ?>
+
+    <tr><td colspan="6" class="text-right"><span class="pagination"><?=$links?></span></td></tr>
 </table>
   <?php } ?>
   <input type="button" class="btn btn-primary buttonsave" value="Back" onclick="history.back()">
