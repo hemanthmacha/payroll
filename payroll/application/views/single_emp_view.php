@@ -164,6 +164,8 @@
 
 	  <?php $j = $j +1; } ?>
 
+       <tr><td colspan="6" class="text-right"><span class="pagination"><?=$links?></span></td></tr>
+
 </table>
   <?php } ?>
 

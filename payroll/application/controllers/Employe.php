@@ -231,7 +231,6 @@ class Employe extends CI_Controller {
 
           $id= $this->session->userdata('id');
           $this->load->view('header');
-          $data['sresult'] = $this->Employe_model->getsingle_employe($id);
           $month1 = $this->Employe_model->getsingle_employe($id);
           $data['sresult11'] = $this->Employe_model->getemployerate($id);
           $data['summdata'] = $this->Employe_model->getemployersum($id);
@@ -298,8 +297,51 @@ class Employe extends CI_Controller {
 
           $data['sum']=$exp;
  
-          //$data['sresult1'] = $this->Employe_model->getsingle_employe_balance($id);
-          $this->load->view('single_emp_view',$data);    
+
+
+
+
+                $config = array();
+               // $config['page_query_string'] = TRUE;
+                
+                $config["base_url"] = base_url() ."employe";
+                $config["per_page"] = 1;
+
+                $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+                $config["total_rows"] = $this->Employe_model->getsingle_employedata($id,$config["per_page"], $page)['numRows'];
+               // $config["uri_segment"] = 4;
+                $config['full_tag_open'] = "<ul class='pagination'>";
+                $config['full_tag_close'] = '</ul>';
+                $config['num_tag_open'] = '<li>';
+                $config['num_tag_close'] = '</li>';
+                $config['cur_tag_open'] = '<li class="active"><a href="#">';
+                $config['cur_tag_close'] = '</a></li>';
+                $config['prev_tag_open'] = '<li>';
+                $config['prev_tag_close'] = '</li>';
+                $config['first_tag_open'] = '<li>';
+                $config['first_tag_close'] = '</li>';
+                $config['last_tag_open'] = '<li>';
+                $config['last_tag_close'] = '</li>';
+
+                $config['next_link'] = 'Next Page';
+                $config['next_tag_open'] = '<li>';
+                $config['next_tag_close'] = '</li>';
+
+                $config['prev_link'] = 'Previous Page';
+                $config['prev_tag_open'] = '<li>';
+                $config['prev_tag_close'] = '</li>';
+
+                $this->pagination->initialize($config);
+          $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+        $data["links"] = $this->pagination->create_links();
+     $data['sresult'] = $config["total_rows"] = $this->Employe_model->getsingle_employedata($id,$config["per_page"], $page)['result'];
+    //$usersData['result'] = $this->Retrive_model->getUserDetails();  
+    $this->load->view('single_emp_view',$data);    
+
+
+
+
+          //$this->load->view('single_emp_view',$data);    
 
      }
 

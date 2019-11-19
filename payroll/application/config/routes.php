@@ -28,6 +28,7 @@ $route['list/(:any)'] = 'Employe/empdetails/$1';
 
 
 $route['employe'] = 'Employe/empid';
+$route['employe/(:any)'] = 'Employe/empid/$1';
 
 
 $route['percentage'] = 'Percentage';

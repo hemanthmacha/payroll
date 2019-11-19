@@ -53,21 +53,33 @@ class Employe_model extends CI_Model
     return $response;
     }
     
-
-
     public function getsingle_employe($id){
     
-    $response = array();
-
-
-    $query="SELECT `tbl_employee`.`billedhours`, `tbl_employee`.`mounthtotal`, `tbl_employee`.`month`, `tbl_employee`.`year`, `tbl_employee`.`id`, `tbl_employee`.`rate`,`tbl_employee`.`percentage`,IFNULL(`tbl_payrool_sheet`.`total`,0) as total FROM `tbl_employee` join tbl_payrool_sheet on(`tbl_employee`.`id`=`tbl_payrool_sheet`.`id` and `tbl_employee`.`month`=`tbl_payrool_sheet`.`month` and `tbl_employee`.`year`=`tbl_payrool_sheet`.`year`)  WHERE tbl_employee.id='$id'  ORDER BY year ASC, field(`tbl_employee`.`month`, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec') ";
-
-
-
+   $response = array();
+  $query="SELECT `tbl_employee`.`billedhours`, `tbl_employee`.`mounthtotal`, `tbl_employee`.`month`, `tbl_employee`.`year`, `tbl_employee`.`id`, `tbl_employee`.`rate`,`tbl_employee`.`percentage`,IFNULL(`tbl_payrool_sheet`.`total`,0) as total FROM `tbl_employee` join tbl_payrool_sheet on(`tbl_employee`.`id`=`tbl_payrool_sheet`.`id` and `tbl_employee`.`month`=`tbl_payrool_sheet`.`month` and `tbl_employee`.`year`=`tbl_payrool_sheet`.`year`)  WHERE tbl_employee.id='$id'  ORDER BY year ASC, field(`tbl_employee`.`month`, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec') ";
     $response= $this->db->query($query)->result();
 
     return $response;
-       
+  }
+
+    public function getsingle_employedata($id,$perpage,$limit){
+
+
+      $response = array();
+      
+      $this->db->select('tbl_employee.billedhours,tbl_employee.mounthtotal,tbl_employee.month,tbl_employee.year,tbl_employee.id,tbl_employee.rate,tbl_employee.percentage,IFNULL(tbl_payrool_sheet.total,0) as total');
+      $this->db->from('tbl_employee as tbl_employee');
+      $this->db->join('tbl_payrool_sheet AS tbl_payrool_sheet','tbl_employee.id=tbl_payrool_sheet.id and tbl_employee.month=tbl_payrool_sheet.month and tbl_employee.year=tbl_payrool_sheet.year');
+      $this->db->order_by("tbl_employee.year", "asc");
+      $this->db->order_by("field(tbl_employee.month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')");
+      $this->db->where('tbl_employee.id', $id); 
+    $query = $this->db->get();
+    $totalrecords = $query->num_rows();
+    $lastQeuryUsers = $this->db->last_query();
+    $paginationQuery = $this->db->select('*')->from('('.$lastQeuryUsers.') AS X')->limit($perpage,$limit)->get(); 
+    $responsex['numRows'] = $totalrecords;
+    $responsex['result'] = $paginationQuery->result();
+    return $responsex;
     
     }
 
