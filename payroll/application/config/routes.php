@@ -24,6 +24,7 @@ $route['employeelist'] = 'Employe/emplist';
 $route['employeelist/(:any)'] = 'Employe/emplist/$1';
 
 $route['list'] = 'Employe/empdetails';
+$route['list/(:any)'] = 'Employe/empdetails/$1';
 
 
 $route['employe'] = 'Employe/empid';

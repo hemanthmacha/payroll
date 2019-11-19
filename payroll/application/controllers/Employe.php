@@ -14,14 +14,14 @@ class Employe extends CI_Controller {
 
     }
 
-    public function index(){
+    /*public function index(){
 
         $id=$_GET['var1'];
          $this->load->view('header');
-     	   $data['sresult'] = $this->Employe_model->getemploye($id);
+    	   $data['sresult'] = $this->Employe_model->getemploye($id);
          $this->autobalancecal(); 
            $this->load->view('employee_view',$data);	 
-     }
+     }*/
 
      public function updateemp(){
 
@@ -108,8 +108,10 @@ class Employe extends CI_Controller {
          $id=$_GET['var1'];
          $this->session->set_userdata(firstname,$_GET['var2']);
          $this->session->set_userdata(lastname,$_GET['var3']);
+         $name1=$_GET['var2'];
+         $name2=$_GET['var3'];
          $this->load->view('header');
-         $data['sresult'] = $this->Employe_model->getemploye($id);
+         /*$data['sresult'] = $this->Employe_model->getemploye($id);*/
          $data['sresult1'] = $this->Employe_model->getemployerate($id);
          //$data['summdata'] = $this->Employe_model->getemployersum($id);
 
@@ -158,10 +160,69 @@ class Employe extends CI_Controller {
          }
     
          $data['summdata'] = $this->Employe_model->getemployersum($id);
-         /*print_r($data1);
-         die();
-*/
-         $this->load->view('employee_view',$data);    
+
+
+                 $config = array();
+                $config['page_query_string'] = TRUE;
+                
+                $config["base_url"] = base_url() ."list/?var1=$id&var2=$name1&var3=$name2";
+                $config["per_page"] = 4;
+
+                $page = $_GET['per_page'];
+                if($per_page==0 || $per_page =''){
+
+                  $per_page==0;
+                }
+
+                else{
+                  $per_page = $_GET['page'];
+                  //$per_page = explode('/', $page); 
+                  
+                }
+
+               $config["total_rows"] = $this->Employe_model->getemploye($id,$config["per_page"], $page)['numRows'];
+       
+               // $config["uri_segment"] = 4;
+                $config['full_tag_open'] = "<ul class='pagination'>";
+                $config['full_tag_close'] = '</ul>';
+                $config['num_tag_open'] = '<li>';
+                $config['num_tag_close'] = '</li>';
+                $config['cur_tag_open'] = '<li class="active"><a href="#">';
+                $config['cur_tag_close'] = '</a></li>';
+                $config['prev_tag_open'] = '<li>';
+                $config['prev_tag_close'] = '</li>';
+                $config['first_tag_open'] = '<li>';
+                $config['first_tag_close'] = '</li>';
+                $config['last_tag_open'] = '<li>';
+                $config['last_tag_close'] = '</li>';
+
+                $config['next_link'] = 'Next Page';
+                $config['next_tag_open'] = '<li>';
+                $config['next_tag_close'] = '</li>';
+
+                $config['prev_link'] = 'Previous Page';
+                $config['prev_tag_open'] = '<li>';
+                $config['prev_tag_close'] = '</li>';
+
+                $this->pagination->initialize($config);
+             
+            $per_page = $_GET['per_page'];
+                if($per_page==0 || $per_page =''){
+
+                  $per_page==0;
+                }
+
+                else{
+                  $page = $_GET['per_page'];
+                   //$page = explode('/', $page);
+                    
+                }
+
+
+        $data["links"] = $this->pagination->create_links();
+     $data['sresult'] = $config["total_rows"] = $this->Employe_model->getemploye($id,$config["per_page"], $page)['result'];
+    //$usersData['result'] = $this->Retrive_model->getUserDetails();  
+     $this->load->view('employee_view',$data);
 
      }
 

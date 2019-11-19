@@ -3,13 +3,39 @@
 class Employe_model extends CI_Model 
 {
 
-	 public function getemploye($id){
+	/* public function getemploye($id){
  		
  		$response = array();
     $query=" SELECT `billedhours`, `mounthtotal`, `month`, `year`, `id`, `rate` FROM `tbl_employee` WHERE id='$id'  ORDER BY year ASC, field(month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec') ";
     $response= $this->db->query($query)->result();
     return $response;
+    }*/
+
+      public function getemploye($id,$perpage,$limit){
+
+      $response = array();
+      $this->db->select('billedhours, mounthtotal,month, year, id,rate');
+      $this->db->from('tbl_employee');
+      $this->db->order_by("year", "asc");
+      $this->db->order_by("field(month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')");
+      $this->db->where('id', $id);
+      
+      $query = $this->db->get();
+    $totalrecords = $query->num_rows();
+    $lastQeuryUsers = $this->db->last_query();
+    $paginationQuery = $this->db->select('billedhours, mounthtotal,month, year, id,rate')->from('('.$lastQeuryUsers.') AS X')->limit($perpage,$limit)->get();
+    $responsex['numRows'] = $totalrecords;
+    $responsex['result'] = $paginationQuery->result();
+    return $responsex;
+
+
+
+
+
     }
+
+
+
 
     public function getemploye_firstmonth($id){
     

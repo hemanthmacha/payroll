@@ -194,9 +194,12 @@
 
  <?php $mp= $mp +1 ;} ?>
  </tbody>
+
+     
+
 </table>
 
-
+<div align="right"> <td colspan="6"><span class="pagination"><?=$links?></span></td> </div>
 
 
 <?php if (!empty($sresult)){ ?>
