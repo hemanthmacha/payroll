@@ -111,7 +111,7 @@ class Employe extends CI_Controller {
          $name1=$_GET['var2'];
          $name2=$_GET['var3'];
          $this->load->view('header');
-         /*$data['sresult'] = $this->Employe_model->getemploye($id);*/
+         $data['billedhou'] = $this->Employe_model->getbillhours($id);
          $data['sresult1'] = $this->Employe_model->getemployerate($id);
          //$data['summdata'] = $this->Employe_model->getemployersum($id);
 

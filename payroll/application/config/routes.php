@@ -34,8 +34,8 @@ $route['employe/(:any)'] = 'Employe/empid/$1';
 $route['percentage'] = 'Percentage';
 
 
-$route['list/expense'] = 'Expenses';
-$route['employee/expense'] = 'Expenses';
+$route['expense'] = 'Expenses/index';
+//$route['employee/expense'] = 'Expenses';
 $route['newexpenses'] = 'Expenses/addexp';
 $route['deleteexpenses']= 'Expenses/deleteexp';
 
@@ -51,6 +51,8 @@ $route['cal']='Employe/sample_cal';
 $route['singleempexpenses']='Employe/singleempmonthexp';
 
 $route['logout']='Logout';
+
+$route['unpaid']='Payroll_sheet/unpaid_emp';
 
 
 

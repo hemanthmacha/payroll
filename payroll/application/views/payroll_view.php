@@ -76,17 +76,28 @@ height:auto; "> </h3>
 
       <td >
         
-          <button class="btn btn-primary buttonsave" id="save" disabled>Save</button>  
+          <button class="btn btn-primary buttonsave" id="save" disabled>Save</button> 
+
         </td>
+
 
   </tr>
 
     <?php } ?>
 
-    <tr><td colspan="6" class="text-right"><span class="pagination"><?=$links?></span></td></tr>
+    <tr ><td colspan="12" class="text-right" ><span class="pagination"><?=$links?></span></td></tr>
 </table>
   <?php } ?>
-  <input type="button" class="btn btn-primary buttonsave" value="Back" onclick="history.back()">
+  <input type="button" class="btn btn-primary buttonsave" value="Back" onclick="history.back()">&nbsp;&nbsp;
+&nbsp; &nbsp;   <button class="btn btn-primary buttonsave" id="unpaid" >No. of unpaid</button> 
+
+   <div class="remaining" style="display: none">
+        <h4>Total Employees worked on <?php echo $unpid[3]; echo " "; echo $unpid[4]; echo " :"; echo $unpid[2]; ?></h4>
+        
+        <h4>1st Pay Remaining Employees: <?php echo $unpid[0]; ?></h4>
+        <h4>15th pay Remaining Employees: <?php echo $unpid[1]; ?> </h4>
+    </div>
+
 </div>
 </div> </div>
 </div>
@@ -96,6 +107,7 @@ height:auto; "> </h3>
     padding:0px 10px;
 
   }
+
 
 
 </style>
@@ -112,83 +124,83 @@ $(document).ready(function() {
 
       if(monthdis1=="Jan") {
         document.getElementById("monthdisplay").value = "January "+yeardisplay;
-        document.getElementById("monthfirstpay").value = "December 1st pay";
-        document.getElementById("monthsecondpay").value = "December 15th pay";
+        document.getElementById("monthfirstpay").value = "January 1st pay";
+        document.getElementById("monthsecondpay").value = "January 15th pay";
       }
 
       if(monthdis1=="Feb"){
        document.getElementById("monthdisplay").value = "February "+yeardisplay;
-       document.getElementById("monthfirstpay").value = "January 1st pay";
-       document.getElementById("monthsecondpay").value = "January 15th pay";
+       document.getElementById("monthfirstpay").value = "February 1st pay";
+       document.getElementById("monthsecondpay").value = "February 15th pay";
       }
 
       if(monthdis1=="Mar"){
         document.getElementById("monthdisplay").value = "March "+yeardisplay;
-        document.getElementById("monthfirstpay").value = "February 1st pay";
-        document.getElementById("monthsecondpay").value = "February 15th pay";
+        document.getElementById("monthfirstpay").value = "March 1st pay";
+        document.getElementById("monthsecondpay").value = "March 15th pay";
       }  
 
       if(monthdis1=="Apr"){
         document.getElementById("monthdisplay").value = "April "+yeardisplay;
-        document.getElementById("monthfirstpay").value = "March 1st pay";
-        document.getElementById("monthsecondpay").value = "March 15th pay";
+        document.getElementById("monthfirstpay").value = "April 1st pay";
+        document.getElementById("monthsecondpay").value = "April 15th pay";
        } 
         
       if(monthdis1=="May") {
        document.getElementById("monthdisplay").value = "May "+yeardisplay;
-       document.getElementById("monthfirstpay").value = "April 1st pay";
-       document.getElementById("monthsecondpay").value = "April 15th pay";
+       document.getElementById("monthfirstpay").value = "May 1st pay";
+       document.getElementById("monthsecondpay").value = "May 15th pay";
       }
 
       if(monthdis1=="Jun"){
         document.getElementById("monthdisplay").value = "June "+yeardisplay;
-        document.getElementById("monthfirstpay").value = "May 1st pay";
-        document.getElementById("monthsecondpay").value = "May 15th pay";
+        document.getElementById("monthfirstpay").value = "June 1st pay";
+        document.getElementById("monthsecondpay").value = "June 15th pay";
       }
 
       if(monthdis1=="Jul"){
         document.getElementById("monthdisplay").value = "July "+yeardisplay;
-        document.getElementById("monthfirstpay").value ="June 1st pay";
-        document.getElementById("monthsecondpay").value = "June 15th pay";
+        document.getElementById("monthfirstpay").value ="July 1st pay";
+        document.getElementById("monthsecondpay").value = "July 15th pay";
       }
 
       if(monthdis1=="Aug"){
         document.getElementById("monthdisplay").value = "August "+yeardisplay;
-        document.getElementById("monthfirstpay").value = "July 1st pay";
-        document.getElementById("monthsecondpay").value = "July 15th pay";
-      }
-
-      if(monthdis1=="Sep"){
-        document.getElementById("monthdisplay").value = "September "+yeardisplay;
         document.getElementById("monthfirstpay").value = "August 1st pay";
         document.getElementById("monthsecondpay").value = "August 15th pay";
       }
 
-      if(monthdis1=="Oct"){
-        document.getElementById("monthdisplay").value = "October "+yeardisplay;
+      if(monthdis1=="Sep"){
+        document.getElementById("monthdisplay").value = "September "+yeardisplay;
         document.getElementById("monthfirstpay").value = "September 1st pay";
         document.getElementById("monthsecondpay").value = "September 15th pay";
       }
 
+      if(monthdis1=="Oct"){
+        document.getElementById("monthdisplay").value = "October "+yeardisplay;
+        document.getElementById("monthfirstpay").value = "October 1st pay";
+        document.getElementById("monthsecondpay").value = "October 15th pay";
+      }
+
       if(monthdis1=="Nov"){
         document.getElementById("monthdisplay").value = "November "+yeardisplay;
-        document.getElementById("monthfirstpay").value = "October 1st pay ";
-        document.getElementById("monthsecondpay").value = "October 15th pay";
+        document.getElementById("monthfirstpay").value = "November 1st pay ";
+        document.getElementById("monthsecondpay").value = "November 15th pay";
       }
 
       if(monthdis1=="Dec"){
         document.getElementById("monthdisplay").value = "December "+yeardisplay;
-        document.getElementById("monthfirstpay").value = "November 1st pay";
-        document.getElementById("monthsecondpay").value = "November 15th pay";
+        document.getElementById("monthfirstpay").value = "December 1st pay";
+        document.getElementById("monthsecondpay").value = "December 15th pay";
       }
 });
   
 
-$(document).ready(function() {
+
     //this calculates values automatically 
     
    
-    $("input.paychange").on("change", function() {
+    $("input.paychange").on("keyup", function() {
 
       var balancearray=[];
     <?php foreach($sresult as $key=>$val){  ?>
@@ -199,6 +211,16 @@ $(document).ready(function() {
                index= parseInt(index)-1;
             var num1 = $(this).parent('td').parent('tr').find('#firsttpay').val();
             var num2 = $(this).parent('td').parent('tr').find('#secondpay').val();
+            if(num2==''){
+
+              num2=0;
+            }
+
+            if(num1==''){
+
+              num1=0;
+            }
+            
             //var bal = $(this).parent('td').parent('tr').find('#balance').val();
             var result = parseFloat(num1) + parseFloat(num2);
             //var result1 = parseFloat(bal)-parseFloat(result);  
@@ -213,9 +235,9 @@ $(document).ready(function() {
         
             }
         });
-});
+
 $(document).ready(function () {
-        $("input.paychange").on('change', function () {
+        $("#firsttpay,#secondpay").on('keyup', function () {
             if ($(this).val() != '') {
                 $(this).parent('td').parent('tr').find('#save').prop('disabled', false);
             }
@@ -260,7 +282,13 @@ $(document).on("click", "#save", function() {
          });
         
 
+$(document).on("click","#unpaid", function(){
 
+     
+
+     $('.remaining').toggle();
+
+});
 
 
 </script>

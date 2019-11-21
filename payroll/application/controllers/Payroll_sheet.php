@@ -14,10 +14,9 @@ class Payroll_sheet extends CI_Controller {
 
      public function index(){	
         $this->load->view('header');
-        $month= date('M');
-        $year= date('Y');
-
-        $data=$this->Payroll_sheet_model->checking_month($month,$year);
+        $month= $this->uri->segment(2);
+        $year= $_GET['var1'];
+        /*$data=$this->Payroll_sheet_model->checking_month($month,$year);
 
          if(empty($data)){
 
@@ -31,21 +30,45 @@ class Payroll_sheet extends CI_Controller {
                //$pct=$value->pct;
                $this->Payroll_sheet_model->addusers_payroll($first, $last,$id,$year,$month);
            } 
-         }
+         }*/
+                $users=$this->Payroll_sheet_model->getting_users();
+
+                foreach ($users as $key => $value) {
+               
+               //$first=$value->firstname;
+               //$last=$value->lastname;
+               $id=$value->id;
+               //$pct=$value->pct;
+              $check =  $this->Payroll_sheet_model->getting_users_not_in_this_month($id,$year,$month);
+
+              if(empty($check)){
+
+              
+               $first=$value->firstname;
+               $last=$value->lastname;
+               $id=$value->id;
+               //$pct=$value->pct;
+               $this->Payroll_sheet_model->addusers_payroll($first, $last,$id,$year,$month);
+              
+              }
+              
+           } 
+
+              $mon1=
+              $yea1=
+          
+              $data['unpid'] = $this->unpaid_emp($month,$year);
+     
 
 
-
-
-         else{
-
-                $data=$this->Payroll_sheet_model->getting_last_id($month,$year);
+                /*$data=$this->Payroll_sheet_model->getting_last_id($month,$year);
 
 
                  foreach ($data as $key => $value) {
                        $lastid=$value->id;
-                    }
+                    }*/
 
-                 $users=$this->Payroll_sheet_model->getting_last_users($lastid); 
+                 /*$users=$this->Payroll_sheet_model->getting_users_not_in_this_month($month,$year); 
                  foreach ($users as $key => $value) {
                
                           $first=$value->firstname;
@@ -53,10 +76,10 @@ class Payroll_sheet extends CI_Controller {
                           $id=$value->id;
                           //$pct=$value->pct;
                          $this->Payroll_sheet_model->addusers_payroll($first, $last,$id,$year,$month);
-           } 
+           } */
        
 
-         } 
+         
         
         $month=$this->uri->segment(2);
         $year=$_GET['var1'];
@@ -200,6 +223,110 @@ class Payroll_sheet extends CI_Controller {
 
     }
          echo json_encode($result);
+
+     }
+
+
+     public function unpaid_emp($month,$year){
+
+           $details=array(); 
+           $month=$month;
+           $year = $year;
+           $one=  $this->Payroll_sheet_model->getting_unpaid_emp_firstpay($month,$year);
+           foreach ($one as $key => $value) {
+                  $first= $value->one;
+            }
+           array_push($details,"$first");
+           
+           $two=$this->Payroll_sheet_model->getting_unpaid_emp_secondpay($month,$year);
+           foreach ($two as $key => $value) {
+                  $second= $value->two;
+            }
+           array_push($details,"$second");
+          
+           $yea1 = $year;
+           $yea=$year-1;
+
+            if($month=='Jan'){
+
+              $mon1='Dec';
+              $yea1=$yea;
+            }
+
+            if($month=='Feb'){
+
+              $mon1='Jan';
+            }
+
+            if($month=='Mar'){
+
+              $mon1='Feb';
+            }
+
+            if($month=='Apr'){
+
+              $mon1='Mar';
+            }
+
+            if($month=='May'){
+
+              $mon1='Apr';
+            }
+
+            if($month=='Jun'){
+
+              $mon1='May';
+            }
+
+            if($month=='Jul'){
+
+              $mon1='Jun';
+            }
+
+            if($month=='Aug'){
+
+              $mon1='Jul';
+            }
+
+            if($month=='Sep'){
+
+              $mon1='Aug';
+            }
+
+            if($month=='Oct'){
+
+              $mon1='Sep';
+            }
+
+            if($month=='Nov'){
+
+              $mon1='Oct';
+            }
+
+            if($month=='Dec'){
+
+              $mon1='Nov';
+            }
+
+            $worked= $this->Payroll_sheet_model->getting_previous_month_emp($mon1,$yea1);
+            foreach ($worked as $key => $value) {
+                  $work= $value->worked;
+            }
+            array_push($details,"$work");
+            array_push($details,"$mon1");
+            array_push($details,"$yea1");
+
+            
+
+         /*   print_r($details);
+            echo $month;
+            echo $year;
+            echo $mon1;
+            echo $yea1;
+            die();
+*/
+        
+            return $details;
 
      }
 

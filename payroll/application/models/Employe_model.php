@@ -23,9 +23,11 @@ class Employe_model extends CI_Model
       $query = $this->db->get();
     $totalrecords = $query->num_rows();
     $lastQeuryUsers = $this->db->last_query();
-    $paginationQuery = $this->db->select('billedhours, mounthtotal,month, year, id,rate')->from('('.$lastQeuryUsers.') AS X')->limit($perpage,$limit)->get();
+    $paginationQuery = $this->db->select('billedhours, mounthtotal,month, year, id,rate')->order_by("year", "asc")->order_by("field(month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')")->from('('.$lastQeuryUsers.') AS X')->limit($perpage,$limit)->get();
     $responsex['numRows'] = $totalrecords;
     $responsex['result'] = $paginationQuery->result();
+   /* print_r($responsex['result']);
+    die();*/
     return $responsex;
 
 
@@ -133,6 +135,18 @@ class Employe_model extends CI_Model
     return $response;
      
     }
+
+    public function getbillhours($id){
+    
+    $response = array();
+
+    $query=" SELECT billedhours FROM `tbl_employee` where id = '$id'  ORDER BY year ASC, field(month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec') ";
+    $response= $this->db->query($query)->result();
+    return $response;
+     
+    }
+
+
 
     public function insert_into_employee($id,$billedhours,$totalamount,$month,$year,$rate,$percentage){
  		

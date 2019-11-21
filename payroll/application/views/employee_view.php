@@ -52,6 +52,7 @@
       $changevalue2=array();
       $changevalue3=array();
       $changevalue4=array();
+      $billedhoursarray=array();
 
             /*foreach ($sresult as $key => $val) { 
             array_push($changevalue1,"$val->billedhours");
@@ -62,7 +63,15 @@
             } 
 
             foreach ($sresult1 as $key => $val) { 
-            array_push($changevalue2,"$val->hourstop");
+
+              if($val->hourstop==0){
+                array_push($changevalue2,100000);
+              }
+              else{
+               array_push($changevalue2,"$val->hourstop");
+             }
+
+            
             }
 
             foreach ($sresult1 as $key => $val) { 
@@ -77,6 +86,22 @@
                array_push($changevalue4,"$val->percentage");
              }
 
+            }
+
+            foreach($billedhou as $key=>$val){
+              array_push($billedhoursarray,"$val->billedhours");
+            }
+            if(!$_GET['per_page']){
+              $billsum=0;
+            }
+
+            else{
+              $billsum=$_GET['per_page'];
+            }
+              $hourssum=0;
+            for($i=0; $i<$billsum;$i++){
+
+              $hourssum = $hourssum + $billedhoursarray[$i];
             }
 
             // total month pay logic array
@@ -121,11 +146,20 @@
 </tr>
      
   <tbody>
-   <?php $i=0; $mp=0; $abcd=0; $ttee=0; foreach($sresult as $key=>$val){ $i++; $ttee=$ttee+$val->billedhours; ?>
+   <?php $snonum=$billsum; $i=0; 
+     if(!$_GET['per_page']){
+        $mp=0;
+      }
+
+      else{
+        $mp=$_GET['per_page'];
+      }
+
+      $abcd=0; $ttee=$hourssum; foreach($sresult as $key=>$val){ $snonum++; $i++; ?>
 
     <tr>
      
-     <td><?php echo $i; ?></td>
+     <td><?php echo $snonum; ?></td>
      <input type="hidden" id="sno" value="<?php echo $i; ?>">
     <input type="hidden" id="idd" value="<?=$val->id?>">
       <input type="hidden" id="mon" value="<?=$val->month?>">
@@ -142,47 +176,61 @@
 
  
 
-    <?php  if($changevalue1[$abcd] <= $ttee) {
+  <?php for($p=$abcd; $p<count($changevalue1); $p++){ if($changevalue1[$abcd]<=$ttee){
 
-              if($changevalue2[$abcd] >= $ttee) { ?>
-                <td>   </td>
-              <?php }
 
-              else{ 
+          if($changevalue2[$abcd]>=$ttee){
 
-                if ((sizeof($changevalue4)-1) <= $abcdtemp) { 
-                  $abcd=$abcd+1; ?>
-                <td>  </td>
+            $test = $abcd+1;
+            $ttee=$ttee+$val->billedhours;
 
-                
-                
-             <?php }
+            if($changevalue1[$test] <= $ttee){
 
-                  if ($abcd>=1 && (sizeof($changevalue4)-1) > $abcd ){ $abcdtemp = $abcd+1;?>
-                  
-                <td><a href="#" class="hasTooltip">Calculation Change Here 
-                    <span>Rate and Percentage are changed from <?php echo $changevalue3[($abcd)] ?> to <?php echo $changevalue3[$abcdtemp]; ?> and <?php echo $changevalue4[($abcd)]; ?> to <?php echo $changevalue4[$abcdtemp];?> </span>
+              if($changevalue2[$test]>=$ttee){  
+
+                  if($changevalue4[$test]==$changevalue4[$abcd]) {?>
+
+                      <td><a href="#" class="hasTooltip">Calculation Change Here 
+                    <span>Rate was changed from <?php echo $changevalue3[($abcd)] ?> to <?php echo $changevalue3[$test]; ?>  </span>
                 </a> </td>
 
-                
-                <?php $abcd=$abcd+1; 
-              }
+               <?php   } 
 
-                  if ($abcd==0) { 
-                  $abcd=$abcd+1; ?>
+              if($changevalue3[$test]==$changevalue3[$abcd] ) {  ?>
+
                 <td><a href="#" class="hasTooltip">Calculation Change Here 
-                    <span>Rate and Percentage are changed from <?php echo $changevalue3[(0)] ?> to <?php echo $changevalue3[1]; ?> and <?php echo $changevalue4[(0)]; ?> to <?php echo $changevalue4[1]; ?> </span>
-                </a> </td>
+                    <span>Percentage was changed from <?php echo $changevalue4[($abcd)]; ?> to <?php echo $changevalue4[$test];?> </span>
+                </a> </td> 
+
+              <?php  } 
 
 
-                
-             <?php }     
+              if($changevalue3[($abcd)]!=$changevalue3[$test] && $changevalue4[($abcd)]!=$changevalue4[$test] ) { ?>
+
+                <td><a href="#" class="hasTooltip">Calculation Change Here 
+                    <span>Rate and Percentage are changed from <?php echo $changevalue3[($abcd)] ?> to <?php echo $changevalue3[$test]; ?> and <?php echo $changevalue4[($abcd)]; ?> to <?php echo $changevalue4[$test];?> </span>
+                </a> </td> 
+
+             <?php } $abcd++; $p=count($changevalue1);}
+
 
             }
 
+            else{ ?>
+
+              <td> </td>
+          <?php  $p=count($changevalue1);}
           }
+
+          else{
+
+            $abcd++;
+            
+          }
+  } }
       ?>
 
+     
     <!-- change rate alert display end  --> 
 
 
@@ -230,12 +278,8 @@
   <button  class="btn btn-primary buttonsave" id="adddata">Add Data</button> 
   <button class="btn btn-primary buttonsave" id="save">Save</button>
  <a type="button" class="btn btn-primary buttondelete" href="javascript:window.history.go(-1);" style="padding: 1px 12px;">Back</a>
+  <a type="button" class="btn btn-primary buttonsave" id="addexp" href="<?= base_url();?>expense/?val1=<?php echo $_GET['var1'];?>">Add Expense</a>
 
-  <!-- <button class="btn btn-primary buttonsave" id="update">Update</button> -->
-
-
- 
-     <a type="button" class="btn btn-primary buttonsave" id="addexp" href="expense/?val1=<?php echo $_GET['var1'];?>">Add Expense</a>
    
 
   
@@ -295,7 +339,7 @@ $(document).ready(function(){
 
              
 
-      <?php foreach ($sresult as $key => $val) { ?>
+      <?php foreach ($billedhou as $key => $val) { ?>
            hours.push(<?php echo $val->billedhours; ?>);
       <?php } ?>
 
@@ -314,30 +358,31 @@ $(document).ready(function(){
             percentagearray.push(<?php echo $val->percentage;?>);
 
      <?php } ?>
-
+     var storeid = 1;
      var temp = 0;
-     var temp1 = 0;
+     var temp1 = <?php echo $hourssum; ?>;
+     var variable= <?php echo $billsum; ?>;
      var abc=0;
-     for(var i = 0; i <hours.length;i++ ){
+     for(var i = 0, m=variable ; m <hours.length;i++ , m++ ){
       var cal=0;
       var temp3=0;
       var temp6=0;
       var temp7=0;
       var temp5=0;
 
-       temp = hours[i];
-       temp1 = temp1 + hours[i];
+       temp = hours[m];
+       temp1 = temp1 + hours[m];
 
        for(var j = 0; j<hourstartarray.length;j++){
 
-          if(abc == 0){
+          if(abc == 0 && m==0){
 
-              if(temp >= hourstartarray[j]){
+              if(temp >= hourstartarray[j] ){
 
                 if(temp <= hourstoparray[j]){
 
 
-                  if(i != 0){
+                  if(i != 0 && i!=m ){
 
                     temp3 = temp - hourstoparray[j-1];
                     if(percentagearray[j]==0){
@@ -524,14 +569,14 @@ abc++;
            if(hourstoparray[q]>temp1 || hourstoparray[q]==temp1){
 
 
-            $('#rate'+(i+1)).val(ratearray[q]); 
+            $('#rate'+(storeid)).val(ratearray[q]); 
 
             if(percentagearray[q]>0){
-            $('#percent'+(i+1)).val(percentagearray[q]); 
+            $('#percent'+(storeid)).val(percentagearray[q]); 
              }
 
              else{
-            $('#percent'+(i+1)).val(100); 
+            $('#percent'+(storeid)).val(100); 
              }
             
         }
@@ -542,9 +587,9 @@ abc++;
 
     }
 
-    $('#totalamount'+(i+1)).val(Math.round(cal));
+    $('#totalamount'+(storeid)).val(Math.round(cal));
 
-
+   storeid = storeid +1;
      }
 
  $("table tbody tr").each(function () {  

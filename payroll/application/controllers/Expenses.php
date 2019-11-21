@@ -79,7 +79,7 @@ class Expenses extends CI_Controller {
        
 
           $date['date1']= $this->Expenses_model->getmonth($id1);
-         $date['date2']= $this->Expenses_model->getmonthfromemployee($id1,$month1,$month2,$month3,$month4,$month5,$month6,$month7,$month8,$month9,$month10,$month11,$month12);
+          $date['date2']= $this->Expenses_model->getmonthfromemployee($id1);
 
           $this->load->view('expenses_view',$date);
 

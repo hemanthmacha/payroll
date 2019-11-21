@@ -63,7 +63,7 @@
 		    <?php $i=0;foreach($date1 as $key=>$val){ $i++; ?>
 		    	<?php if(!empty($val->description)){?>
 			 	<tr>
-			 		<input type="hidden" id="idddd" value="<?php echo $val->id; ?>">
+			 		<input type="hidden" id="idddd" value="<?php echo $val->id1; ?>">
             	<td><input type="text" id="date" value="<?php echo $val->month; ?>-<?php echo $val->year; ?>"  disabled/></td>
 				<td><input type="text"   id="des"  value="<?php echo $val->description; ?>"disabled/></td>
     			<td><input type="text"   id="amount" value="<?php echo $val->expenses; ?>" disabled/></td>
@@ -130,7 +130,7 @@
 
         $(document).on("click", "#save", function() { 
            
-           var id = $(this).parent('td').parent('tr').find('#idddd').val();
+           var id = <?php echo $_GET['val1']; ?> ;
            var des= $(this).parent('td').parent('tr').find('#des').val();
            var amount = $(this).parent('td').parent('tr').find('#amount').val();
            var date= $(this).parent('td').parent('tr').find('#date1').val();
@@ -142,7 +142,7 @@
            cache: false,    
            data: {id:id, des:des, amount:amount, date:date},
            success: function(json){      
-            alert('Expenses Updated');
+            alert("Expense added");
             location.reload();
           } 
           });
