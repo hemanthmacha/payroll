@@ -271,11 +271,11 @@ $("input.percent").on("keyup", function(){
      
       if(temp5 > 0)
          $('#tiz'+(num)).val(temp15);
-      if(temp5==0) {
+      /*if(temp5==0) {
         $('#tiz'+(num)).prop('disabled', false);
         $('#percent'+(num)).prop('disabled', true);
 
-       }
+       }*/
          
      
 
@@ -492,7 +492,7 @@ $(document).on("click","#save", function(){
    
                        var num = parseInt($(this).parent('td').parent('tr').find('#sno').val());
                        var temp =$(this).parent('td').parent('tr').find('#tiz'+num).val();
-                       console.log(temp);
+                       //console.log(temp);
                        //var num2= $(this).parent('td').parent('tr').find('#secondhour'+num).val();
 
                        if(temp != ''){

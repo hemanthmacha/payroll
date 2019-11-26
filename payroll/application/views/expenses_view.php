@@ -63,11 +63,11 @@
 		    <?php $i=0;foreach($date1 as $key=>$val){ $i++; ?>
 		    	<?php if(!empty($val->description)){?>
 			 	<tr>
-           <td><input type="checkbox" class= "chkBox" id="checkboxid" ></td>
+           <td><input type="checkbox" class= "chkBox" id="checkboxid" value="<?php echo $i; ?>" ></td> 
 			 		<input type="hidden" id="idddd" value="<?php echo $val->id1; ?>">
-            	<td><input type="text" style="border: 0"  id="date" value="<?php echo $val->month; ?>-<?php echo $val->year; ?>"  readonly/></td>
-				<td><input type="text"  style="border: 0"  id="des"  value="<?php echo $val->description; ?>"readonly/></td>
-    			<td><input type="text"  style="border: 0"  id="amount" value="<?php echo $val->expenses; ?>" readonly/></td>
+            	<td><input type="text" style="border: 0"  id="date<?php echo $i; ?>" value="<?php echo $val->month; ?>-<?php echo $val->year; ?>"  readonly/></td>
+				<td><input type="text"  style="border: 0"  id="des<?php echo $i; ?>"  value="<?php echo $val->description; ?>"readonly/></td>
+    			<td><input type="text"  style="border: 0"  id="amount<?php echo $i; ?>" value="<?php echo $val->expenses; ?>" readonly/></td>
     			
     			
 		
@@ -102,7 +102,7 @@
 
         <button class=" btn btn-primary add-row buttondelete"><span class="glyphicon glyphicon-plus"></span> Add row </button>
 
-     <button class="btn btn-primary buttondelete"id="delete" onclick="deleteCheckBox()"><i class="fa fa-trash-o"></i> Delete</button>
+     <button class="btn btn-primary buttondelete"id="delete" onclick="deleteRow('customers')"><i class="fa fa-trash-o"></i> Delete</button>
      
       <a type="button" class="btn btn-primary buttondelete" href="javascript:window.history.go(-1);"><span class="glyphicon glyphicon-arrow-left"></span> Back</a>
 </div>
@@ -176,46 +176,6 @@
 
 
 
-         $(".chkBox").click(function (){
-  
-           var id = $(this).parent('td').parent('tr').find('#idddd').val();
-           var date1= $(this).parent('td').parent('tr').find('#date').val();
-           var des= $(this).parent('td').parent('tr').find('#des').val();
-           var amount = $(this).parent('td').parent('tr').find('#amount').val();
-            var check1 = $('input[type="checkbox"]:checked').length;
-
-
-           
-             $(document).on("click", "#delete", function(){
-
-              if ($('.chkBox:checked').length != 0) {
-                 var check = $('input[type="checkbox"]:checked').length;
-
-              $.ajax({
-              type:'POST',
-              url: "<?= base_url();?>deleteexpenses", 
-              data: {id:id, date:date1, des:des, amount:amount,},
-               success: function(json){
-    
-             }
-
-           });
-               if(check1==check){
-           alert('Expenses Deleted');
-           location.reload();
-         }
-       }
-      }); 
-    });
-
-         $("#delete").click(function(){
-
-           if($('.chkBox:checked').length == 0){
-           alert("Please select atleast one row to delete");
-}
-
-});
-
 
 
 
@@ -238,6 +198,47 @@
 
 
     });
+
+
+    function deleteRow(tableID)  {
+        var table = document.getElementById(tableID).tBodies[0];
+        var rowCount = table.rows.length;
+
+        for(var i=0; i<rowCount; i++) {
+            var row = table.rows[i];
+            var chkbox = row.cells[0].getElementsByTagName('input')[0];
+            if(null != chkbox && true == chkbox.checked) {
+                
+                 var abc = i;
+                 abc= abc+1;
+                 var id = $('#idddd').val();
+                 var date1=$('#date'+abc).val();
+                 var des=$('#des'+abc).val();
+                 var amount=$('#amount'+abc).val();
+                $.ajax({
+                     type:'POST',
+                     url: "<?= base_url();?>deleteexpenses", 
+                     data: {id:id, date:date1, des:des, amount:amount,},
+                      success: function(json){
+    
+                    }
+                });
+          
+             }
+        }
+       if(abc>0){
+
+         alert("Expense Deleted");
+         location.reload();
+       } 
+} 
+    
+
+         $("#delete").click(function(){
+           if($('.chkBox:checked').length == 0){
+           alert("Please select atleast one row to delete");
+          } 
+      });
 
 
     </script>

@@ -144,7 +144,7 @@ class Expenses extends CI_Controller {
        }
 
 
-      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay);
+      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay,$totalbillhours);
 
     }
 

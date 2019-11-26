@@ -137,12 +137,12 @@
            $abcd=0; $ttee=$hourssum; foreach($sresult as $key=>$val){ $snonum++; $i++; ?>
 
     <tr>
-     <td><input type="checkbox" class= "chkBox" id="checkboxid" ></td> 
+     <td><input type="checkbox" class= "chkBox" id="checkboxid" value="<?php echo $i; ?>" ></td> 
      <td><?php echo $snonum; ?></td>
       <input type="hidden" id="sno" value="<?php echo $i; ?>">
       <input type="hidden" id="idd" value="<?=$val->id?>">
-      <input type="hidden" id="mon" value="<?=$val->month?>">
-      <input type="hidden" id="yea" value="<?=$val->year?>">
+      <input type="hidden" id="mon<?php echo $i;?>" value="<?=$val->month?>">
+      <input type="hidden" id="yea<?php echo $i;?>" value="<?=$val->year?>">
     <td style="display: none"><input type="text" id="tiz<?php echo $i;?>" value=""  readonly/></td>
     <td><input type="text" style="border: 0" size= "13" id="billedmonth" name="month" value="<?php echo $val->month; echo "-"; echo $val->year; ?>"  readonly/></td>
     <td><input type="text" size= "8" id="billedhours<?php echo $i;?>"  name="hours" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="miles" value="<?php echo $val->billedhours;?>"/></td>
@@ -263,7 +263,7 @@
 
   <a type="button" class="btn btn-primary buttonsave" id="addexp" href="<?= base_url();?>expense/?val1=<?php echo $_GET['var1'];?>"><span class="glyphicon glyphicon-plus"></span>Add Expense</a>
 
-  <button class="btn btn-primary buttonsave"id="delete" ><i class="fa fa-trash-o"></i> Delete</button>
+  <button class="btn btn-primary buttonsave"id="delete" onclick="deleteRow('customers')"><i class="fa fa-trash-o"></i> Delete</button>
  <button type="button" id="back" class="btn btn-primary buttonsave" onclick="history.back()"> <span class="glyphicon glyphicon-arrow-left"></span> Back </button>
 
    
@@ -737,44 +737,41 @@ $(document).on("click", "#save", function() {
 */
 
 
-  $(".chkBox").click(function () {
-  
-     var id = $(this).parent('td').parent('tr').find('#idd').val();
-     var month=$(this).parent('td').parent('tr').find('#mon').val();
-     var year=$(this).parent('td').parent('tr').find('#yea').val();
-     
-     var check1 = $('input[type="checkbox"]:checked').length;
-     //console.log(check1);
-    
+function deleteRow(tableID)  {
+        var table = document.getElementById(tableID).tBodies[0];
+        var rowCount = table.rows.length;
 
-     
+        for(var i=0; i<rowCount; i++) {
+            var row = table.rows[i];
+            var chkbox = row.cells[0].getElementsByTagName('input')[0];
+            if(null != chkbox && true == chkbox.checked) {
+                
+                 var abc = i;
+                 abc= abc+1;
+                 var id = $('#idd').val();
+                 var month=$('#mon'+abc).val();
+                 var year=$('#yea'+abc).val();
 
-      $(document).on("click", "#delete", function(){
-
-        if ($('.chkBox:checked').length != 0) {
-       var check = $('input[type="checkbox"]:checked').length;
-       //console.log(check);
-       //console.log(check1);
-
-     $.ajax({
-    type:'POST',
-    url:"<?= base_url();?>deleteemployee",
-    data:{month:month, year:year,id:id },
-    success: function(json){
+                 $.ajax({
+                    type:'POST',
+                    url:"<?= base_url();?>deleteemployee",
+                    data:{month:month, year:year,id:id },
+                    success: function(json){
       
+                     }
+                  });
           
-       }
+             }
+        }
+       if(abc>0){
 
-       });
-     if(check1==check){
-
-      alert("Data Deleted");
+         alert("Data Deleted");
       location.reload();
-     }
-        }   
-      });    
-});
- 
+       } 
+}
+
+
+
   $("#delete").click(function(){
 
  if ($('.chkBox:checked').length == 0) {
