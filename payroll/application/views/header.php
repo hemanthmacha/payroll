@@ -20,17 +20,14 @@
     <a href="<?=base_url()?>employe"><img class="nav navbar-nav navbar-left" src="<?= base_url();?>assests/images/logo.jpg" height="60" width="90" ></a>  <a class="navbar-brand"  style="color: black !important; font-family: ; font-size: 30px;" href="<?=base_url()?>employe">&nbsp;&nbsp;&nbsp;&nbsp;PAYROLL SYSTEM</a> 
     
 
-    </div>
-
-    <!-- <div class="logout"><a href="<?=base_url()?>logout"> <button type="button" class="btn btn-default btn-sm"> <span class="glyphicon">&#xe017;</span> Logout</button></a></div>
- -->
-    <div class="logout"><h4><?php echo ($this->session->userdata('fname')); echo" "; echo ($this->session->userdata('lname')); ?><a href="<?=base_url()?>logout"> <button type="button" class="btn btn-default btn-sm"> <span class="glyphicon">&#xe017;</span> Logout</button></a></div>
-
-   <?php } ?>
+     <div class="logout"><h4><?php echo ($this->session->userdata('fname')); echo" "; echo ($this->session->userdata('lname')); ?><a href="<?=base_url()?>logout"> <button type="button" class="btn btn-default btn-sm"> <span class="glyphicon">&#xe017;</span> Logout</button></a></div>
+        <?php } ?>
+    
+ 
   </div>
     </div>
     
-  </div>
+  
 </nav>
 <div class="navbar navbar-inverse sidebar" style="background-color:#26344B; border-color: white; ">
   <?php if($this->session->userdata('role') == 'admin') { ?>  

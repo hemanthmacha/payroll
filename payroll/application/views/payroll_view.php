@@ -142,8 +142,8 @@ height:auto; "> </h3>
     <br>
         <h4>Total Employees worked on <?php echo $unpid[3]; echo " "; echo $unpid[4]; echo " :"; echo $unpid[2]; ?></h4>
         
-        <h4>1st Pay Remaining Employees: <?php echo $unpid[0]; ?></h4>
-        <h4>15th pay Remaining Employees: <?php echo $unpid[1]; ?> </h4>
+        <h4>1st Pay Remaining Employees: <?php $temp =$unpid[3]-$unpid[0]; echo $temp; ?></h4>
+        <h4>15th pay Remaining Employees: <?php $temp1 =$unpid[3]-$unpid[1]; echo $temp1; ?> </h4>
     </div>
 
 </div>

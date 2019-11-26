@@ -67,7 +67,7 @@ class Employe extends CI_Controller {
 
                 $config = array();
                 $config["base_url"] =base_url() . "employeelist";
-                $config["per_page"] = 4;
+                $config["per_page"] = 10;
                 $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
                 $config["total_rows"] = $this->Employe_model->getemp($config["per_page"],$page)
                       ['numRows'];
@@ -112,6 +112,7 @@ class Employe extends CI_Controller {
          $name1=$_GET['var2'];
          $name2=$_GET['var3'];
          $this->load->view('header');
+         $this->autobalancecal();
          $data['billedhou'] = $this->Employe_model->getbillhours($id);
          $data['sresult1'] = $this->Employe_model->getemployerate($id);
          //$data['summdata'] = $this->Employe_model->getemployersum($id);
@@ -160,7 +161,7 @@ class Employe extends CI_Controller {
           $data['monthpay']  = $this->Employe_model->getemploye_totalmonthpay($id,'Dec','Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov');
          }
     
-         $data['summdata'] = $this->Employe_model->getemployersum($id);
+         
 
 
                  $config = array();
@@ -183,7 +184,7 @@ class Employe extends CI_Controller {
 
                $config["total_rows"] = $this->Employe_model->getemploye($id,$config["per_page"], $page)['numRows'];
        
-               // $config["uri_segment"] = 4;
+               // $config["uri_segment"] = 10;
                 $config['full_tag_open'] = "<ul class='pagination'>";
                 $config['full_tag_close'] = '</ul>';
                 $config['num_tag_open'] = '<li>';
@@ -221,17 +222,25 @@ class Employe extends CI_Controller {
 
 
         $data["links"] = $this->pagination->create_links();
+        $data['summdata'] = $this->Employe_model->getemployersum($id);
       $data['sresult'] = $config["total_rows"] = $this->Employe_model->getemploye($id,$config["per_page"], $page)['result'];
     //$usersData['result'] = $this->Retrive_model->getUserDetails();  
      $this->load->view('employee_view',$data);
 
      }
 
+     public function total(){
+          $id= $_POST['id'];
+          $sum = $this->Employe_model->getemployersum($id);
+          echo json_encode($sum); 
+
+     }
+
       public function empid(){
           // single employee
-
-          $id= $this->session->userdata('id');
           $this->load->view('header');
+          $id= $this->session->userdata('id');
+          
           $data['billedhou'] = $this->Employe_model->getbillhours($id);
           $month1 = $this->Employe_model->getsingle_employe($id);
           $data['sresult11'] = $this->Employe_model->getemployerate($id);
@@ -307,7 +316,7 @@ class Employe extends CI_Controller {
                // $config['page_query_string'] = TRUE;
                 
                 $config["base_url"] = base_url() ."employe";
-                $config["per_page"] = 1;
+                $config["per_page"] = 10;
 
                 $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
                 $config["total_rows"] = $this->Employe_model->getsingle_employedata($id,$config["per_page"], $page)['numRows'];

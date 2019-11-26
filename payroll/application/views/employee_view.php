@@ -101,11 +101,11 @@
       <th>
 
         <?php if (!empty($sresult1)){ ?>
-              <a href="<?=base_url()?>percentage/?var1=<?php echo$_GET['var1']; ?>"> RATE</a>
+              <a href="<?=base_url()?>percentage/?var1=<?php echo$_GET['var1']; ?>&var2=<?php echo$_GET['var2']; ?>&var3=<?php echo$_GET['var3']; ?>"> RATE</a>
         <?php } ?>
 
         <?php if (empty($sresult1)){ ?>
-               <a href="<?=base_url()?>percentage/?var1=<?php echo$_GET['var1']; ?>"> SET RATE-PERCENTAGE</a>
+               <a href="<?=base_url()?>percentage/?var1=<?php echo$_GET['var1']; ?>&var2=<?php echo$_GET['var2']; ?>&var3=<?php echo$_GET['var3']; ?>"> SET RATE-PERCENTAGE</a>
         <?php } ?>
 
        </th>
@@ -231,23 +231,21 @@
 <div align="right"> <td colspan="6"><span class="pagination"><?=$links?></span></td> </div>
 
 
-<?php if (!empty($sresult)){ ?>
+
   
  
 <button class="btn btn-primary buttonsave" id="Link">Total</button>
- <?php foreach ($summdata as $key => $value) { ?>
+
   <div class="counts" style="display: none">
     <br>
 
-      <td style="font-size:14; display: none;">  &emsp;Total Hours : <input type="text" size="6" style="border: none;" value="<?php echo $value->billedhours; ?>" readonly/>  </td>
-      <td style="font-size:14;">&emsp;&nbsp;Total Amount : <input type="text" size="6" id="totalamp" style="border: none;" value="<?php echo $value->totalamount; ?>" readonly /></td>
-       <td style="font-size:14;">Total Pay : <input type="text"  style="border: none;" size="6" value="<?php echo $value->totalmonthpay; ?>" readonly/></td>
-        <td style="font-size:14;"> &emsp; Total Expenses: <input type="text"  size="6" style="border: none;" value="<?php echo $value->exp; ?>" readonly/></td>
-        <td style="font-size:14;"> &emsp; Balance : <input type="text"   size="6" style="border: none;" value="<?php echo $value->balance; ?>" readonly /></td>
- 
+      <td style="font-size:14; display: none;">  &emsp;Total Hours : <input id= "th" type="text" size="6" style="border: none;" value="" readonly/>  </td>
+      <td style="font-size:14;">&emsp;&nbsp;Total Amount : <input type="text" id="ta" size="6" style="border: none;" value="" readonly /></td>
+       <td style="font-size:14;">Total Pay : <input type="text"  id="tp" style="border: none;" size="6" value="" readonly/></td>
+        <td style="font-size:14;"> &emsp; Total Expenses: <input type="text" id="te" size="6" style="border: none;" value="" readonly/></td>
+        <td style="font-size:14;"> &emsp; Balance : <input type="text"  id="b" size="6" style="border: none;" value="" readonly /></td> 
     </div>
- <?php } ?>
-   <?php } ?> 
+
 
 
 
@@ -289,8 +287,25 @@
 
  $("#Link").click(function(){
     $(".counts").toggle();
+    var id = <?php echo $_GET['var1']; ?>;
 
+      $.ajax({
+                    
+                    type: "post",
+                    url: "<?= base_url();?>test",
+                    cache: false,
+                    data: {id:id},
+                    dataType: "json",   
+                    
+                    success: function(json){ 
 
+                      $('#b').val(json[0].balance);
+                      $('#ta').val(json[0].totalamount);
+                      $('#te').val(json[0].exp);
+                      $('#tp').val(json[0].totalmonthpay);
+                      $('#th').val(json[0].billedhours);
+                   } 
+                });
   });
 
 

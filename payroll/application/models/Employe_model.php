@@ -242,7 +242,7 @@ class Employe_model extends CI_Model
    public function getemployersum($id){
     
     $response = array();
-    $query=" SELECT  `tbl_balance`.`balance`, `tbl_balance`.`totalamount`, IFNULL(`tbl_balance`.`totalexpenses`,0) as exp, `tbl_balance`.`totalmonthpay` , sum(`tbl_employee`.`billedhours`) as billedhours FROM `tbl_balance` join tbl_employee on `tbl_balance`.`emp_id`= `tbl_employee`.`id` WHERE tbl_balance.emp_id='$id'";
+    $query=" SELECT  IFNULL(`tbl_balance`.`balance`,0) as balance, IFNULL(`tbl_balance`.`totalamount`,0) as totalamount, IFNULL(`tbl_balance`.`totalexpenses`,0) as exp, IFNULL(`tbl_balance`.`totalmonthpay`,0) as totalmonthpay, IFNULL(sum(`tbl_employee`.`billedhours`),0) as billedhours FROM `tbl_balance` join tbl_employee on `tbl_balance`.`emp_id`= `tbl_employee`.`id` WHERE tbl_balance.emp_id='$id'";
     $response= $this->db->query($query)->result();
     return $response;
     }

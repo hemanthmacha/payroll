@@ -54,6 +54,8 @@ $route['logout']='Logout';
 
 $route['unpaid']='Payroll_sheet/unpaid_emp';
 
+$route['test']='Employe/total';
+
 
 
 

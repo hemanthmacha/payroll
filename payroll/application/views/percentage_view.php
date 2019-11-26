@@ -19,6 +19,60 @@
     height: 28px;
     padding:0px 10px;
   }
+  #edit {
+  opacity: 0.8;
+  filter: alpha(opacity=50); 
+}
+
+#edit:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100); 
+}
+  #delete {
+  opacity: 0.8;
+  filter: alpha(opacity=50); 
+}
+
+#delete:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100); 
+}
+ #back {
+  opacity: 0.8;
+  filter: alpha(opacity=50); 
+}
+
+#back:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100); 
+}
+ #update {
+  opacity: 0.8;
+  filter: alpha(opacity=50); 
+}
+
+#update:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100); 
+}
+ #addcondition {
+  opacity: 0.8;
+  filter: alpha(opacity=50); 
+}
+
+#addcondition:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100); 
+}
+ #save {
+  opacity: 0.8;
+  filter: alpha(opacity=50); 
+}
+
+#save:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100); 
+}
 
  
 
@@ -34,8 +88,9 @@
   <div class="container-flud">
     <div class="content">   
     <div class="row"> 
-    <div class="col-sm-4">
 
+    <div class="col-sm-4">
+     <h3>Percentage View Of <?php echo $_GET['var2']; echo "  "; echo $_GET['var3']; ?></h3>
   <form class="form-signin">
     <div class="page-header">
     <h3>Conditions </h3>
@@ -109,12 +164,23 @@
      
      
     </form>
-    <input style="display: none" class="btn btn-primary buttonsave"  type="button" name="edit" id="edit" value="Edit"/>
+
+     <button style="display: none" class="btn btn-primary buttonsave"  name="edit" id="edit"><i class='fas fa-marker'></i> Edit </button>
+    <!-- <input style="display: none" class="btn btn-primary buttonsave"  type="button" name="edit" id="edit" value="Edit"/> -->
+    <button class="btn btn-primary buttonsave" style="display: none"  name="update" id="update"> <i class='fas fa-sync'>Update</i> </button>
+
+    <button class="btn btn-primary buttonsave" style="display: none" id="save" name="save" id="save"><i class="fa fa-save"></i> Save</button>
+   <button class="btn btn-primary buttonsave add-row" id="addcondition" style="display: none" ><span class="glyphicon glyphicon-plus"></span>  Add condition </button>
+     <button class="btn btn-primary buttondelete"id="delete" style="display: none"><i class="fa fa-trash-o"></i> Delete</button>
+    <button type="button" id="back" class="btn btn-primary buttonsave" onclick="history.back()"> <span class="glyphicon glyphicon-arrow-left"></span> Back </button>
+
+
+   <!--  <input style="display: none" class="btn btn-primary buttonsave"  type="button" name="edit" id="edit" value="Edit"/>
     <input type="button" class="btn btn-primary buttonsave" style="display: none"  name="update" id="update" value="Update" />
     <input type="button" class="btn btn-primary buttonsave" style="display: none"  name="save" id="save" value="save" />
     <button class="btn btn-primary buttonsave add-row" id="addcondition" style="display: none" >  Add condition </button>
      <input type="button" class="btn btn-primary buttondelete" style="display: none"  name="delete" id="delete" value="Delete"/>
-     <a type="button" class="btn btn-primary buttondelete" href="javascript:window.history.go(-1);">Back</a>
+     <a type="button" class="btn btn-primary buttondelete" href="javascript:window.history.go(-1);">Back</a> -->
 
 
 
@@ -378,7 +444,7 @@ $(document).on("click","#save", function(){
 
 
 
-  $("input.lasthour").on("keydown", function(){ 
+  $("input.lasthour").on("change", function(){ 
 
                         $('#save').hide(); 
                         $('#addcondition').show(); 

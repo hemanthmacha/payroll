@@ -113,7 +113,7 @@ class Payroll_sheet extends CI_Controller {
                 }
               $config["total_rows"] = $this->Payroll_sheet_model->getpayrolls($month,$year,$config["per_page"], $page)['numRows'];
        
-               // $config["uri_segment"] = 4;
+               // $config["uri_segment"] = 10;
                 $config['full_tag_open'] = "<ul class='pagination'>";
                 $config['full_tag_close'] = '</ul>';
                 $config['num_tag_open'] = '<li>';

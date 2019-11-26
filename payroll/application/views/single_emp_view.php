@@ -258,14 +258,7 @@
 
 <style>
 
-  .abc{
-  position: absolute;
-  bottom: 12px;
-  right: 77px;
-  border:none;
-  
 
-}
 </style>
 
 <script type="text/javascript">

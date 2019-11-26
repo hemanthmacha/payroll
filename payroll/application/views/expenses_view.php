@@ -28,6 +28,17 @@
     padding:0px 10px;
 
   }
+
+  .buttondelete{
+  opacity: 0.8;
+  filter: alpha(opacity=50); 
+}
+
+.buttondelete:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100); 
+}
+
 	</style>
 
 </head>
