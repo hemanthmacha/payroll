@@ -6,13 +6,14 @@
 
 
 <nav class="navbar navbar-default" style="background-color:#e9edf0;">
-  <div class="container-fluid">
+  <div class="container-fluid abc">
   
     <div class="navbar-header">
        <?php if($this->session->userdata('role') == 'admin') { ?>  
-    <a href="<?=base_url()?>payroll"><img class="nav navbar-nav navbar-left" src="<?= base_url();?>assests/images/logo.jpg" height="60" width="90" ></a>  <a class="navbar-brand"  style="color: black !important; font-family: ; font-size: 30px;" href="<?=base_url()?>payroll">&nbsp;&nbsp;&nbsp;&nbsp;PAYROLL SYSTEM</a> 
+    <a href="<?=base_url()?>payroll"><img class="nav navbar-nav navbar-left" src="<?= base_url();?>assests/images/logo.jpg" height="60" width="90" style=""></a>  <a class="navbar-brand"  style="color: black !important; font-family:webkit-pictograph  ; font-size: 37px;" href="<?=base_url()?>payroll">&nbsp;&nbsp;&nbsp;&nbsp;PAYROLL SYSTEM</a> 
 
-    <div class="logout1"><a href="<?=base_url()?>logout"> Logout </a> </div>
+   <!--  <div class="logout1"><a href="<?=base_url()?>logout"> Logout </a> </div> -->
+    <div class="logout1"><a href="<?=base_url()?>logout"> <button type="button" class="btn btn-default btn-sm"> <span class="glyphicon">&#xe017;</span> Logout</button></a></div>
     <?php } ?>
 
        <?php if($this->session->userdata('role') == 'employee') { ?>  
@@ -20,7 +21,10 @@
     
 
     </div>
-    <div class="logout"><h4><?php echo ($this->session->userdata('fname')); echo" "; echo ($this->session->userdata('lname')); ?> </h4><a href="<?=base_url()?>logout"> Logout </a> </div>
+
+    <!-- <div class="logout"><a href="<?=base_url()?>logout"> <button type="button" class="btn btn-default btn-sm"> <span class="glyphicon">&#xe017;</span> Logout</button></a></div>
+ -->
+    <div class="logout"><h4><?php echo ($this->session->userdata('fname')); echo" "; echo ($this->session->userdata('lname')); ?><a href="<?=base_url()?>logout"> <button type="button" class="btn btn-default btn-sm"> <span class="glyphicon">&#xe017;</span> Logout</button></a></div>
 
    <?php } ?>
   </div>
@@ -28,7 +32,7 @@
     
   </div>
 </nav>
-<div class="navbar navbar-inverse sidebar" style="background-color:#e9edf0; border-color: white; ">
+<div class="navbar navbar-inverse sidebar" style="background-color:#26344B; border-color: white; ">
   <?php if($this->session->userdata('role') == 'admin') { ?>  
   <a href="<?= base_url();?>payroll" class="nav-link nav-toggle <?php if($this->uri->segment(1) == 'payroll'|| $this->uri->segment(1) == 'month' || $this->uri->segment(1) == 'updateemployee'|| $this->uri->segment(1) == 'update' || $this->uri->segment(1) == 'employee') { echo 'active'; } ?>" >Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a>
   
@@ -66,7 +70,7 @@
   margin: 0;
   padding: 0;
   width: 200px;
-  background-color: blue;
+  background-color: #26344B;
   position: absolute;
   height: 100%;
   overflow: auto;
@@ -74,8 +78,8 @@
 
 .sidebar a {
   display: block;
-  color: black;
-  padding: 16px;
+    color: white;
+    padding: 19px;
   text-decoration: none;
 }
  
@@ -137,10 +141,23 @@ div.content {
   color: black;
   style=width:2%;
 }
-
+.abc {
+    padding-right: 15px;
+    padding-left: 36px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: #e2e2e2;
+}
 
 table td ::hover{
   font-size: 15px;
+}
+.navbar-brand {
+    float: left;
+    height: 50px;
+    padding: 21px 20px;
+    font-size: 18px;
+    line-height: 20px;
 }
 
 </style>

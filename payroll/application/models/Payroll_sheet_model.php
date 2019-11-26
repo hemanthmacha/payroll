@@ -6,7 +6,7 @@ class Payroll_sheet_model extends CI_Model
 	public function getpayrolls($month,$year,$perpage,$limit){
 
       $response = array();
-      $this->db->select('sno,id,firstname,lastname,onestpay,onefivethpay,rate_percent,percentage,hours,total,balance, month,year');
+      $this->db->select('sno,id,firstname,lastname,onestpay,onefivethpay,rate_percent,percentage,hours,IFNULL(total,0) as total,balance, month,year,totalbilled_hours,`tbl_balance`.`current_percent`,`tbl_balance`.`curent_rate`,`tbl_payrool_sheet`.`tiz_share`');
       $this->db->from('tbl_payrool_sheet');
       $this->db->join('tbl_balance AS tbl_balance','tbl_payrool_sheet.id=tbl_balance.emp_id');
       $this->db->where('month', $month);
@@ -14,7 +14,7 @@ class Payroll_sheet_model extends CI_Model
       $query = $this->db->get();
     $totalrecords = $query->num_rows();
     $lastQeuryUsers = $this->db->last_query();
-    $paginationQuery = $this->db->select('sno,id,firstname,lastname,onestpay,onefivethpay,rate_percent,percentage,hours,total,balance,month,year')->from('('.$lastQeuryUsers.') AS X')->limit($perpage,$limit)->get();
+    $paginationQuery = $this->db->select('*')->from('('.$lastQeuryUsers.') AS X')->limit($perpage,$limit)->get();
     $responsex['numRows'] = $totalrecords;
     $responsex['result'] = $paginationQuery->result();
     return $responsex;
@@ -132,6 +132,44 @@ public function getting_last_id($month,$year){
       return $response;
 
     }
+
+    public function getting_month_total($month,$year){
+      
+      $query="SELECT  SUM(onestpay) as firstsum, SUM(onefivethpay) as secondsum, SUM(total) as totalmonthsum FROM `tbl_payrool_sheet` where month='$month' and year='$year'";
+      $response = $this->db->query($query)->result();
+      return $response;
+
+    }
+
+     public function getting_total_hours(){
+      
+      $query="SELECT  SUM(hours) as totalhours  FROM `tbl_payrool_sheet`";
+      $response = $this->db->query($query)->result();
+      return $response;
+
+    }
+
+    public function getting_total_balance(){
+      
+      $query="SELECT  SUM(balance) as totalbalance  FROM `tbl_balance`";
+      $response = $this->db->query($query)->result();
+      return $response;
+
+    }
+
+     public function getting_total_hours_by_order(){
+      
+      $query="SELECT  emp_id,totalbilled_hours FROM `tbl_balance`";
+      $response = $this->db->query($query)->result();
+      return $response;
+
+    }
+
+
+
+
+
+
 
 
 }

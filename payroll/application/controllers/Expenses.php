@@ -113,6 +113,12 @@ class Expenses extends CI_Controller {
        $expenses1= $this->Balance_model->expenses($id);
         $balance1= $this->Balance_model->balance($id);
         $totalmonthlypay= $this->Balance_model->totalmonthlypay($id);
+         $totalbilledhours= $this->Balance_model->totalbilledhours($id);
+         foreach ($totalbilledhours as $key => $value) {
+
+        $totalbillhours =$value->billhours;
+
+       }
      
 
        foreach ($total1 as $key => $value) {

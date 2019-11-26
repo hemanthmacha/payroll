@@ -27,8 +27,9 @@ class Percentage extends CI_Controller {
         $hour2 =$_POST['hour2'];
         $per =$_POST['percentage'];
         $rate =$_POST['rate'];
+        $tiz =$_POST['tiz'];
        
-        $data['rate']=$this->Percentage_model->insertpercent($id,$hour1,$hour2,$per,$rate);
+        $data['rate']=$this->Percentage_model->insertpercent($id,$hour1,$hour2,$per,$rate,$tiz);
         echo json_encode($data);
 
     }

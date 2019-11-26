@@ -39,18 +39,32 @@
       $changevalue2=array();
       $changevalue3=array();
       $changevalue4=array();
+      $billedhoursarray=array();
 
       foreach ($sresult11 as $key => $val) { 
             array_push($changevalue1,"$val->hourstart");
             } 
 
             foreach ($sresult11 as $key => $val) { 
-            array_push($changevalue2,"$val->hourstop");
+
+              if($val->hourstop==0){
+                array_push($changevalue2,100000);
+              }
+              else{
+               array_push($changevalue2,"$val->hourstop");
+             }
+
+            
             }
+
+
+
 
             foreach ($sresult11 as $key => $val) { 
             array_push($changevalue3,"$val->rate");
             }
+
+
 
             foreach ($sresult11 as $key => $val) { 
               if($val->percentage==0){
@@ -60,6 +74,24 @@
                array_push($changevalue4,"$val->percentage");
              }
 
+            }
+
+
+            foreach($billedhou as $key=>$val){
+              array_push($billedhoursarray,"$val->billedhours");
+            }
+            
+            if(!$this->uri->segment(2)){
+              $billsum=0;
+            }
+
+            else{
+              $billsum=$this->uri->segment(2);
+            }
+              $hourssum=0;
+            for($i=0; $i<$billsum;$i++){
+
+              $hourssum = $hourssum + $billedhoursarray[$i];
             }
 
 
@@ -94,69 +126,96 @@
 </tr>
 
 
-   <?php $i=0; $j=0;$abcd=0; $ttee=0;foreach($sresult as $key=>$val){ $i++; $ttee=$ttee+$val->billedhours; ?>
+   <?php $snonum=$billsum; $i=0; 
+     if(!$this->uri->segment(2)){
+        $mp=0;
+        $temp=0;
+      }
+
+      else{
+        $mp=$this->uri->segment(2);
+        $temp=$this->uri->segment(2);
+      }
+
+      $abcd=0; $ttee=$hourssum; foreach($sresult as $key=>$val){ $snonum++; $i++; ?>
 	<tr>
      
-     <td><?php echo $i; ?></td>
+     <td><?php $temp=$temp+1; echo $temp; ?></td>
       <input type="hidden" id="idd" value="<?=$val->id?>">
-    <td><input type="text" id="billedmonth" name="month" value="<?php echo $val->month; echo $val->year; ?>"  disabled/></td>
-    <td><input type="text" id="billedhours" size="5" name="hours" value="<?php echo $val->billedhours; ?>"disabled/></td>
-    <td><input type="text" id="rate" size="5" name="rate" value="<?php echo $val->rate; ?>"disabled/></td>
+    <td><input type="text" style="border:0"  id="billedmonth" name="month" value="<?php echo $val->month; echo $val->year; ?>"  readonly/></td>
+    <td><input type="text" style="border:0"  id="billedhours" size="5" name="hours" value="<?php echo $val->billedhours; ?>"readonly/></td>
+    <td><input type="text" style="border:0"  id="rate" size="5" name="rate" value="<?php echo $val->rate; ?>"readonly/></td>
     <?php if($val->percentage > 0){ ?>
-      <td><input type="text" id="pct" size="5" name="pct" value="<?php echo ($val->rate*($val->percentage/100)); ?>"disabled /></td> 
+      <td><input type="text" style="border:0"  id="pct" size="5" name="pct" value="<?php echo ($val->rate*($val->percentage/100)); ?>"readonly /></td> 
      <?php } ?>
 
      <?php if($val->percentage == 0){ ?>
-      <td><input type="text" id="pct" size="5" name="pct" value="<?php echo $val->rate; ?>"disabled /></td> 
+      <td><input type="text" style="border:0"  id="pct" size="5" name="pct" value="<?php echo $val->rate; ?>"readonly /></td> 
      <?php } ?>
    
-    <td><input type="text" id="totalamount" size="8" name="total" value="<?php echo $val->mounthtotal; ?>"disabled/></td>
+    <td><input type="text" style="border:0" id="totalamount" size="8" name="total" value="<?php echo $val->mounthtotal; ?>"readonly/></td>
 
-    <?php  if($changevalue1[$abcd] <= $ttee) {
+    <!-- change alert start-->
 
-              if($changevalue2[$abcd] >= $ttee) { ?>
-                <td>   </td>
-              <?php }
+  <?php for($p=$abcd; $p<count($changevalue1); $p++){ if($changevalue1[$abcd]<=$ttee){
 
-              else{ 
 
-                if ((sizeof($changevalue4)-1) <= $abcdtemp) { 
-                  $abcd=$abcd+1; ?>
-                <td>  </td>
+          if($changevalue2[$abcd]>=$ttee){
 
-                
-                
-             <?php }
+            $test = $abcd+1;
+            $ttee=$ttee+$val->billedhours;
 
-                  if ($abcd>=1 && (sizeof($changevalue4)-1) > $abcd ){ $abcdtemp = $abcd+1;?>
-                 
-                <td><a href="#" class="hasTooltip">Calculation Change Here 
-                    <span>Rate and Percentage are changed from <?php echo $changevalue3[($abcd)] ?> to <?php echo $changevalue3[$abcdtemp]; ?> and <?php echo $changevalue4[($abcd)]; ?> to <?php echo $changevalue4[$abcdtemp];?> </span>
+            if($changevalue1[$test] <= $ttee){
+
+              if($changevalue2[$test]>=$ttee){  
+
+                  if($changevalue4[$test]==$changevalue4[$abcd]) {?>
+
+                      <td><a href="#" class="hasTooltip">Calculation Change Here 
+                    <span>Rate was changed from <?php echo $changevalue3[($abcd)] ?> to <?php echo $changevalue3[$test]; ?>  </span>
                 </a> </td>
 
-                
-                <?php $abcd=$abcd+1; 
-              }
+               <?php   } 
 
-                  if ($abcd==0) { 
-                  $abcd=$abcd+1; ?>
+              if($changevalue3[$test]==$changevalue3[$abcd] ) {  ?>
+
                 <td><a href="#" class="hasTooltip">Calculation Change Here 
-                    <span>Rate and Percentage are changed from <?php echo $changevalue3[(0)] ?> to <?php echo $changevalue3[1]; ?> and <?php echo $changevalue4[(0)]; ?> to <?php echo $changevalue4[1]; ?> </span>
-                </a> </td>
+                    <span>Percentage was changed from <?php echo $changevalue4[($abcd)]; ?> to <?php echo $changevalue4[$test];?> </span>
+                </a> </td> 
+
+              <?php  } 
 
 
-                
-             <?php }     
+              if($changevalue3[($abcd)]!=$changevalue3[$test] && $changevalue4[($abcd)]!=$changevalue4[$test] ) { ?>
+
+                <td><a href="#" class="hasTooltip">Calculation Change Here 
+                    <span>Rate and Percentage are changed from <?php echo $changevalue3[($abcd)] ?> to <?php echo $changevalue3[$test]; ?> and <?php echo $changevalue4[($abcd)]; ?> to <?php echo $changevalue4[$test];?> </span>
+                </a> </td> 
+
+             <?php } $abcd++; $p=count($changevalue1);}
+
 
             }
 
+            else{ ?>
+
+              <td> </td>
+          <?php  $p=count($changevalue1);}
           }
+
+          else{
+
+            $abcd++;
+            
+          }
+  } }
       ?>
+      <!-- change alert ends-->
 
 
-    <td><input type="text" id="monthpay" size="8" name="total" value="<?php echo $monthtotalpay[$j];  ?>"disabled/></td>
+    <td><input type="text" style="border:0"  id="monthpay" size="8" name="total" value="<?php echo $monthtotalpay[$mp];  ?>"readonly/></td>
 
-    <td><input type="text" id="expenses" size="8" name="expenses" value="<?php echo $expp[$j]; ?>"disabled/>&nbsp;&nbsp;<a href="singleempexpenses/?val1=<?php echo $val->id;?>&val2=<?php echo $val->month;?>&val3=<?php echo $val->year;?>"> know expenses </a></td>
+    <td><input type="text" style="border:0"  id="expenses" size="8" name="expenses" value="<?php echo $expp[$mp]; ?>"readonly />&nbsp;&nbsp;<a href="singleempexpenses/?val1=<?php echo $val->id;?>&val2=<?php echo $val->month;?>&val3=<?php echo $val->year;?>"> know expenses </a></td>
     
 
 

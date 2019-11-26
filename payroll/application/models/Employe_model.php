@@ -14,19 +14,22 @@ class Employe_model extends CI_Model
       public function getemploye($id,$perpage,$limit){
 
       $response = array();
-      $this->db->select('billedhours, mounthtotal,month, year, id,rate');
-      $this->db->from('tbl_employee');
-      $this->db->order_by("year", "asc");
-      $this->db->order_by("field(month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')");
-      $this->db->where('id', $id);
+      $this->db->select('tbl_employee.billedhours,tbl_employee.mounthtotal,tbl_employee.month,tbl_employee.year,tbl_employee.id,tbl_employee.rate,tbl_employee.percentage, IFNULL(tbl_payrool_sheet.onestpay,0) as onestpay,IFNULL(tbl_payrool_sheet.onefivethpay,0)as onefivethpay, IFNULL(tbl_payrool_sheet.total,0) as total');
+      $this->db->from('tbl_employee as tbl_employee');
+      $this->db->join('tbl_payrool_sheet AS tbl_payrool_sheet','tbl_employee.id=tbl_payrool_sheet.id and tbl_employee.month=tbl_payrool_sheet.month and tbl_employee.year=tbl_payrool_sheet.year');
+      $this->db->order_by("tbl_employee.year", "asc");
+      $this->db->order_by("field(tbl_employee.month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')");
+      $this->db->where('tbl_employee.id', $id); 
       
-      $query = $this->db->get();
+    $query = $this->db->get();
     $totalrecords = $query->num_rows();
     $lastQeuryUsers = $this->db->last_query();
-    $paginationQuery = $this->db->select('billedhours, mounthtotal,month, year, id,rate')->order_by("year", "asc")->order_by("field(month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')")->from('('.$lastQeuryUsers.') AS X')->limit($perpage,$limit)->get();
+    /*print_r($lastQeuryUsers);
+    die();*/
+    $paginationQuery = $this->db->select('*')->order_by("year", "asc")->order_by("field(month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')")->from('('.$lastQeuryUsers.') AS X')->limit($perpage,$limit)->get();
     $responsex['numRows'] = $totalrecords;
     $responsex['result'] = $paginationQuery->result();
-   /* print_r($responsex['result']);
+   /*print_r($responsex['result']);
     die();*/
     return $responsex;
 
@@ -130,7 +133,7 @@ class Employe_model extends CI_Model
     
     $response = array();
 
-    $query=" SELECT  `hourstart`, `hourstop`, `percentage`, `rate` FROM `tbl_percentage` WHERE id1='$id' ORDER BY  hourstart ASC ";
+    $query=" SELECT  `hourstart`, `hourstop`, `percentage`, `rate`,`tiz_share` FROM `tbl_percentage` WHERE id1='$id' ORDER BY  hourstart ASC ";
     $response= $this->db->query($query)->result();
     return $response;
      
@@ -148,10 +151,10 @@ class Employe_model extends CI_Model
 
 
 
-    public function insert_into_employee($id,$billedhours,$totalamount,$month,$year,$rate,$percentage){
+    public function insert_into_employee($id,$billedhours,$totalamount,$month,$year,$rate,$percentage,$tiz){
  		
  		
-      $query1= "UPDATE `tbl_payrool_sheet` SET `rate_percent`='$rate',`hours`='$billedhours',`percentage`='$percentage' WHERE id='$id' and year='$year' and month='$month'";
+      $query1= "UPDATE `tbl_payrool_sheet` SET `rate_percent`='$rate',`hours`='$billedhours',`percentage`='$percentage',`tiz_share`='$tiz' WHERE id='$id' and year='$year' and month='$month'";
 
        $this->db->query($query1);
        

@@ -35,13 +35,14 @@ class Employe extends CI_Controller {
          //$expenses  = $_POST['expenses'];
          //$balance      = $_POST['balance'];
          $date = $_POST['mon'];
+         $tiz = $_POST['tiz'];
          $date = explode("-", $date);
          $month      = $date[0];
          $year  = $date[1];
 
 
       // $this->Payroll_sheet_model->insert_rate_percent($id,$month,$year,$pct,$billedhours); 
-       $result['res'] = $this->Employe_model->insert_into_employee($id,$billedhours,$totalamount,$month,$year,$rate,$percentage1);
+       $result['res'] = $this->Employe_model->insert_into_employee($id,$billedhours,$totalamount,$month,$year,$rate,$percentage1,$tiz);
         $this->autobalancecal(); 
          echo json_encode($result);
 
@@ -220,7 +221,7 @@ class Employe extends CI_Controller {
 
 
         $data["links"] = $this->pagination->create_links();
-     $data['sresult'] = $config["total_rows"] = $this->Employe_model->getemploye($id,$config["per_page"], $page)['result'];
+      $data['sresult'] = $config["total_rows"] = $this->Employe_model->getemploye($id,$config["per_page"], $page)['result'];
     //$usersData['result'] = $this->Retrive_model->getUserDetails();  
      $this->load->view('employee_view',$data);
 
@@ -231,6 +232,7 @@ class Employe extends CI_Controller {
 
           $id= $this->session->userdata('id');
           $this->load->view('header');
+          $data['billedhou'] = $this->Employe_model->getbillhours($id);
           $month1 = $this->Employe_model->getsingle_employe($id);
           $data['sresult11'] = $this->Employe_model->getemployerate($id);
           $data['summdata'] = $this->Employe_model->getemployersum($id);
@@ -411,11 +413,12 @@ class Employe extends CI_Controller {
       
       $id=$val->id;
      
-      $total1=$this->Balance_model->totalamount($id);
+       $total1=$this->Balance_model->totalamount($id);
 
-       $expenses1= $this->Balance_model->expenses($id);
+        $expenses1= $this->Balance_model->expenses($id);
         $balance1= $this->Balance_model->balance($id);
         $totalmonthlypay= $this->Balance_model->totalmonthlypay($id);
+        $totalbilledhours= $this->Balance_model->totalbilledhours($id);
      
 
        foreach ($total1 as $key => $value) {
@@ -426,6 +429,11 @@ class Employe extends CI_Controller {
        foreach ($totalmonthlypay as $key => $value) {
 
         $totalmonpay =$value->totalmon;
+
+       }
+       foreach ($totalbilledhours as $key => $value) {
+
+        $totalbillhours =$value->billhours;
 
        }
        foreach ($expenses1 as $key => $value) {
@@ -441,7 +449,7 @@ class Employe extends CI_Controller {
        }
 
 
-      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay);
+      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay,$totalbillhours);
 
     }
 

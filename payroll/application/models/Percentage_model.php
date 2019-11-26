@@ -6,15 +6,15 @@ class Percentage_model extends CI_Model
 
 	{    
 		$response = array();
-		$query="SELECT `id1`, `hourstart`, `hourstop`, `percentage`, `rate` FROM `tbl_percentage` WHERE id1='$id' ORDER BY  hourstart ASC ";
+		$query="SELECT `id1`, `hourstart`, `hourstop`, `percentage`, `rate`, `tiz_share` FROM `tbl_percentage` WHERE id1='$id' ORDER BY  hourstart ASC ";
         $response = $this->db->query($query)->result();
 		return $response;
 
 	}
 
-	public function insertpercent($id,$hour1,$hour2,$per,$rate)
+	public function insertpercent($id,$hour1,$hour2,$per,$rate,$tiz)
 	{    
-		$query="INSERT INTO `tbl_percentage`(`id1`, `hourstart`, `hourstop`, `percentage`, `rate`) VALUES ('$id','$hour1','$hour2','$per','$rate')";
+		$query="INSERT INTO `tbl_percentage`(`id1`, `hourstart`, `hourstop`, `percentage`, `rate`,`tiz_share`) VALUES ('$id','$hour1','$hour2','$per','$rate','$tiz')";
        $this->db->query($query);
 		return true;
 

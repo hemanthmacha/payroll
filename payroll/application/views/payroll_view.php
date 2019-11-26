@@ -25,42 +25,70 @@ height:auto; "> </h3>
       <th>Last Name</th>
       <th>Rate</th>
       <th>Percentage</th>
+      <th>Tiz</th>
 
       <!-- <th>Hours</th> -->
       <th><input type="text" id="monthfirstpay" value=""  size="13" style="border: none" readonly></th>
       <th><input type="text" id="monthsecondpay" value=""  size="13" style="border: none" readonly></th>
       <th>Total</th>
      <!--  <th>Status</th> -->
-      
+      <th>Total Hours</th>
       <th>Balance</th>
       <th>Link</th>
 </tr>
 
 
-   <?php $i=0;foreach($sresult as $key=>$val){ $i++; ?>
+   <?php if(!$_GET['per_page']){
+       
+        $temp=0;
+      }
+
+      else{
+        
+        $temp=$_GET['per_page'];
+      }
+
+
+      $i=0;foreach($sresult as $key=>$val){ $i++; ?>
   <tr>
-    <td><?=$i?></td>
-    <input type="hidden" id="sno" value="<?=$i?>">
+    <td><?php $temp=$temp+1; echo $temp; ?></td>
+    <input type="hidden" style="border: 0" id="sno" value="<?=$i?>">
     <input type="hidden" id="idd" value="<?=$val->id?>">
     <input type="hidden" id="expences" value="<?=$val->expences?>">
     <input type="hidden" id="month" value="<?=$val->month?>">
     <input type="hidden" id="year" value="<?=$val->year?>">
     
-    <td><input type="text" id="fname"  value="<?php echo $val->firstname; ?>"  disabled/></td>
-    <td><input type="text" id="lname" value="<?php echo $val->lastname; ?>"disabled/></td>
-    <td><input type="text" id="rate" size="8" value="<?php echo $val->rate_percent; ?>" disabled/> </td>
+    <td><input type="text" style="border: 0" id="fname"  value="<?php echo $val->firstname; ?>"  readonly/></td>
+    <td><input type="text" style="border: 0" id="lname" value="<?php echo $val->lastname; ?>"readonly/></td>
+
+    <?php if($val->hours==0) { ?>
+    <td><input type="text" style="border: 0" id="rate" size="8" value="<?php echo $val->curent_rate; ?>" readonly/> </td>
     <?php if($val->percentage >0) { ?>
-    <td><input type="text" id="percent"  size="8" value="<?php echo $val->percentage; ?>" disabled/></td>
+    <td><input type="text" style="border: 0" id="percent"  size="8" value="<?php echo $val->current_percent; ?>" readonly/></td>
     <?php } ?>
 
     <?php if($val->percentage ==0) { ?>
-    <td><input type="text" id="percent"  size="8" value="100" disabled/></td>
+    <td><input type="text" style="border: 0" id="percent"  size="8" value="100" readonly/></td>
+    <?php } } ?>
+
+     <?php if($val->hours>0) { ?>
+      <td><input type="text" style="border: 0" id="rate" size="8" value="<?php echo $val->rate_percent; ?>" readonly/> </td>
+    <?php if($val->percentage >0) { ?>
+    <td><input type="text" style="border: 0" id="percent"  size="8" value="<?php echo $val->percentage; ?>" readonly/></td>
     <?php } ?>
+
+    <?php if($val->percentage ==0) { ?>
+    <td><input type="text" style="border: 0" id="percent"  size="8" value="100" readonly/></td>
+    <?php } } ?>
+
+     <td><input type="text" style="border: 0" id="tiz_share" size="8" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+
+    
     <!-- <td><input type="text" id="hours"  value="<?php echo $val->hours; ?>" disabled/></td> -->
   <!-- <td><input type="text" id="pct"  value="<?php echo $val->percentage; ?>" disabled/></td> -->
-    <td><input type="text" id="firsttpay" class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onestpay; ?>"/></td>
-    <td><input type="text" id="secondpay"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onefivethpay; ?>"/></td>
-    <td><input type="text" id="total" value="<?php echo $val->total; ?>" disabled/></td>
+    <td><input type="text"  id="firsttpay" class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onestpay; ?>"/></td>
+    <td><input type="text"  id="secondpay"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onefivethpay; ?>"/></td>
+    <td><input type="text" style="border: 0" id="total" value="<?php echo $val->total; ?>" readonly/></td>
     <!-- <td>
       <select style="width: 90px;"   id="status"  class="form-control dropdownselect">
             <option value="Active" <?php if($val->status == 'Active') { echo 'selected'; } ?>>Active</option>
@@ -70,8 +98,8 @@ height:auto; "> </h3>
        </select>
     </td> -->
 
-    
-    <td><input type="text" id="balance" name="name" value="<?php echo $val->balance; ?>" disabled/></td>
+    <td><input type="text" style="border: 0" id="totalbilled" name="name" value="<?php echo $val->totalbilled_hours; ?>" readonly/></td>
+    <td><input type="text" style="border: 0" id="balance" name="name" value="<?php echo $val->balance; ?>" readonly/></td>
     <td><a href="<?=base_url()?>list/?var1=<?=$val->id?>&var2=<?=$val->firstname?>&var3=<?=$val->lastname?>">See More</a></td>
 
       <td >
@@ -85,13 +113,33 @@ height:auto; "> </h3>
 
     <?php } ?>
 
-    <tr ><td colspan="12" class="text-right" ><span class="pagination"><?=$links?></span></td></tr>
+          <td colspan="12" class="text-right" ><span class="pagination"><?=$links?></span></td></tr>
 </table>
   <?php } ?>
-  <input type="button" class="btn btn-primary buttonsave" value="Back" onclick="history.back()">&nbsp;&nbsp;
-&nbsp; &nbsp;   <button class="btn btn-primary buttonsave" id="unpaid" >No. of unpaid</button> 
+
+  <button class="btn btn-primary buttonsave" id="total">Total</button>&nbsp; &nbsp; &nbsp; &nbsp; 
+
+
+ <button type="button" id="back" class="btn btn-primary buttonsave" onclick="history.back()"> <span class="glyphicon glyphicon-arrow-left"></span> Back </button>&nbsp;&nbsp;
+&nbsp; &nbsp;   <button class="btn btn-primary buttonsave" id="unpaid" >No. of Unpaid Employes</button> 
+     
+    <div class="counts" style="display: none">
+       <br>
+      <h4>  <?php foreach ($monthpay as $key => $value) { ?>
+       Total Firstpay : &nbsp; <?php echo $value->firstsum; ?>;&nbsp;&nbsp; 
+       Total Secondpay : &nbsp;<?php echo $value->secondsum; ?>;&nbsp;&nbsp; 
+       Total Pay :&nbsp; <?php echo $value->totalmonthsum; ?>;&nbsp;&nbsp; 
+       <?php break; } foreach($totalhours as $key => $value) {?>
+        Total hours: &nbsp;<?php echo $value->totalhours; ?>;&nbsp;&nbsp; 
+
+        <?php break; } foreach ($totalbalance as $key => $value) { ?>
+        Total Balance : &nbsp;<?php echo $value->totalbalance; ?>
+         <?php } ?> </h4> 
+ 
+    </div>  
 
    <div class="remaining" style="display: none">
+    <br>
         <h4>Total Employees worked on <?php echo $unpid[3]; echo " "; echo $unpid[4]; echo " :"; echo $unpid[2]; ?></h4>
         
         <h4>1st Pay Remaining Employees: <?php echo $unpid[0]; ?></h4>
@@ -115,7 +163,19 @@ height:auto; "> </h3>
 <script type="text/javascript">
 
 
+
+  $(document).on("click","#unpaid", function(){   
+     $('.remaining').toggle();
+});
+
+
+$(document).on("click","#total", function(){
+     $(".counts").toggle();
+});
+
+
 $(document).ready(function() {
+
 
 
     var monthdis1="<?php echo $this->uri->segment(2);?>";
@@ -281,15 +341,6 @@ $(document).on("click", "#save", function() {
           });
          });
         
-
-$(document).on("click","#unpaid", function(){
-
-     
-
-     $('.remaining').toggle();
-
-});
-
 
 </script>
 

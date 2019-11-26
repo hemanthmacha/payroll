@@ -3,19 +3,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Payroll_sheet extends CI_Controller {
 
-	    public function __construct()
-	{
-		parent::__construct();//call CodeIgniter's default Constructor
+      public function __construct()
+  {
+    parent::__construct();//call CodeIgniter's default Constructor
         $this->load->model('Payroll_sheet_model');
+        $this->load->model('Employe_model');
         $this->load->model('Balance_model');//load Model
         error_reporting(0);
 
     }
 
-     public function index(){	
+     public function index(){ 
         $this->load->view('header');
         $month= $this->uri->segment(2);
         $year= $_GET['var1'];
+        $data['monthpay']=$this->Payroll_sheet_model->getting_month_total($month,$year);
+
+        $data['totalhours']=$this->Payroll_sheet_model->getting_total_hours();
+
+        $data['totalbalance']=$this->Payroll_sheet_model->getting_total_balance();
+
+
+
+
+
+
         /*$data=$this->Payroll_sheet_model->checking_month($month,$year);
 
          if(empty($data)){
@@ -54,8 +66,7 @@ class Payroll_sheet extends CI_Controller {
               
            } 
 
-              $mon1=
-              $yea1=
+             
           
               $data['unpid'] = $this->unpaid_emp($month,$year);
      
@@ -80,7 +91,7 @@ class Payroll_sheet extends CI_Controller {
        
 
          
-        
+        $this->update_rate();
         $month=$this->uri->segment(2);
         $year=$_GET['var1'];
 
@@ -140,7 +151,7 @@ class Payroll_sheet extends CI_Controller {
 
 
         $data["links"] = $this->pagination->create_links();
-      $data['sresult'] = $config["total_rows"] = $this->Payroll_sheet_model->getpayrolls($month,$year,$config["per_page"], $page)['result'];
+        $data['sresult'] = $config["total_rows"] = $this->Payroll_sheet_model->getpayrolls($month,$year,$config["per_page"], $page)['result'];
     //$usersData['result'] = $this->Retrive_model->getUserDetails();  
      $this->load->view('payroll_view',$data);
 
@@ -194,6 +205,12 @@ class Payroll_sheet extends CI_Controller {
        $expenses1= $this->Balance_model->expenses($id);
         $balance1= $this->Balance_model->balance($id);
         $totalmonthlypay= $this->Balance_model->totalmonthlypay($id);
+         $totalbilledhours= $this->Balance_model->totalbilledhours($id);
+         foreach ($totalbilledhours as $key => $value) {
+
+        $totalbillhours =$value->billhours;
+
+       }
      
 
        foreach ($total1 as $key => $value) {
@@ -219,7 +236,7 @@ class Payroll_sheet extends CI_Controller {
        }
 
 
-      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay);
+      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay,$totalbillhours);
 
     }
          echo json_encode($result);
@@ -327,6 +344,78 @@ class Payroll_sheet extends CI_Controller {
 */
         
             return $details;
+
+     }
+
+     public function update_rate(){
+
+        
+        $hour=$this->Payroll_sheet_model->getting_total_hours_by_order();
+
+        foreach ($hour as $key => $value) {
+         $id = $value->emp_id;
+
+          $sresult1 = $this->Employe_model->getemployerate($id);
+
+            $changevalue1=array();
+            $changevalue2=array();
+            $changevalue3=array();
+            $changevalue4=array();
+
+            foreach ($sresult1 as $key => $val) { 
+            array_push($changevalue1,"$val->hourstart");
+            } 
+
+            foreach ($sresult1 as $key => $val) { 
+
+              if($val->hourstop==0){
+                array_push($changevalue2,100000);
+              }
+              else{
+               array_push($changevalue2,"$val->hourstop");
+             }
+
+            
+            }
+
+            foreach ($sresult1 as $key => $val) { 
+            array_push($changevalue3,"$val->rate");
+            }
+
+            foreach ($sresult1 as $key => $val) { 
+              if($val->percentage==0){
+                array_push($changevalue4,100);
+              }
+              else{
+               array_push($changevalue4,"$val->percentage");
+             }
+
+            }
+
+         $totalhour = $value->totalbilled_hours;
+
+
+            for($i=0; $i<count($changevalue1);$i++){
+
+          if($changevalue1[$i]< $totalhour || $changevalue1[$i] == $totalhour){
+
+           if($changevalue2[$i]>$totalhour || $changevalue2[$i] == $totalhour){
+
+
+            $rate11=$changevalue3[$i];
+            $percent11=$changevalue4[$i];
+            
+            
+        }
+
+      }
+
+    }
+
+         $this->Balance_model->update_rate_percentage($id,$rate11,$percent11);
+        }
+
+
 
      }
 

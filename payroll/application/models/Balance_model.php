@@ -48,12 +48,19 @@ class Balance_model extends CI_Model {
       return $totalpay;
 }
 
+  public function totalbilledhours($id){
+
+
+    $query5="SELECT IFNULL(sum(billedhours),0) as billhours from tbl_employee WHERE id='$id'";
+    $totalbill=$this->db->query($query5)->result();
+      return $totalbill;
+}
 
       
- public function update_balance($id,$balance,$totalamount,$totalexpenses,$totalmonthpay){
+ public function update_balance($id,$balance,$totalamount,$totalexpenses,$totalmonthpay,$totalbillhours){
 
 
-        $query=" UPDATE `tbl_balance` SET `balance`='$balance',`totalamount`='$totalamount',`totalexpenses`='$totalexpenses', `totalmonthpay`='$totalmonthpay' WHERE emp_id='$id' ";
+        $query=" UPDATE `tbl_balance` SET `balance`='$balance',`totalamount`='$totalamount',`totalexpenses`='$totalexpenses', `totalmonthpay`='$totalmonthpay',`totalbilled_hours`='$totalbillhours' WHERE emp_id='$id' ";
        
         $this->db->query($query);
  
@@ -62,14 +69,13 @@ class Balance_model extends CI_Model {
  }
 
  public function update_balance_payroll($id,$balance){
-
-
         $query=" UPDATE `tbl_balance` SET `balance`='$balance' WHERE emp_id='$id' ";
-       
-        $this->db->query($query);
- 
- 
+         $this->db->query($query);
+ }
 
+ public function update_rate_percentage($id,$rate,$percent){
+        $query=" UPDATE `tbl_balance` SET `curent_rate`='$rate',`current_percent`='$percent' WHERE emp_id='$id' ";
+         $this->db->query($query);
  }
   
 

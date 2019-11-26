@@ -10,35 +10,11 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="<?=base_url('assests/css/empview.css')?>">
 
 
 </head>
-<style >
-  div.box div.overlay
-{
-    display:none;
-}
-.back{
-    height: 25px;
-    padding:0px 10px;
-  }
-.hasTooltip span {
-    display: none;
-    color: #000;
-    text-decoration: none;
-    padding: 3px;
-}
 
-.hasTooltip:hover span {
-    display: block;
-    position: absolute;
-    background-color: #FFF;
-    border: 1px solid #CCC;
-    margin: 2px 10px;
-    width: 200px;
-}
-
-</style>
 <body>
 
     <div class="content"> 
@@ -114,9 +90,10 @@
             ?>
 
 <table class="table text-center" align="center" id="customers">
-  <thead>
+  <thead style="background-color: gainsboro;">
 <tr>
       <?php $id=0; ?>
+      <th></th>
       <th>Sno</th>  
       <th>Billed Month</th>
       <th>Billed Hours</th>
@@ -137,9 +114,11 @@
         <?php } ?>
       </th>
       <th>Total Amount</th>
+        <th>1st Pay</th>
+        <th>15th Pay</th>
        <th>Amount Paid to individual</th>
       <th>Demo Calculation</th>
-       <th>Delete</th>
+       
      <!--  <th>Expenses</th> -->
      <!--  <th >Balance</th> -->
      </thead>
@@ -155,22 +134,24 @@
         $mp=$_GET['per_page'];
       }
 
-      $abcd=0; $ttee=$hourssum; foreach($sresult as $key=>$val){ $snonum++; $i++; ?>
+           $abcd=0; $ttee=$hourssum; foreach($sresult as $key=>$val){ $snonum++; $i++; ?>
 
     <tr>
-     
+     <td><input type="checkbox" class= "chkBox" id="checkboxid" ></td> 
      <td><?php echo $snonum; ?></td>
-     <input type="hidden" id="sno" value="<?php echo $i; ?>">
-    <input type="hidden" id="idd" value="<?=$val->id?>">
+      <input type="hidden" id="sno" value="<?php echo $i; ?>">
+      <input type="hidden" id="idd" value="<?=$val->id?>">
       <input type="hidden" id="mon" value="<?=$val->month?>">
       <input type="hidden" id="yea" value="<?=$val->year?>">
-
-    <td><input type="text" size= "13" id="billedmonth" name="month" value="<?php echo $val->month; echo "-"; echo $val->year; ?>"  disabled/></td>
+    <td style="display: none"><input type="text" id="tiz<?php echo $i;?>" value=""  readonly/></td>
+    <td><input type="text" style="border: 0" size= "13" id="billedmonth" name="month" value="<?php echo $val->month; echo "-"; echo $val->year; ?>"  readonly/></td>
     <td><input type="text" size= "8" id="billedhours<?php echo $i;?>"  name="hours" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="miles" value="<?php echo $val->billedhours;?>"/></td>
-    <td><input type="text" size= "8" id="rate<?php echo $i;?>" class="rate" name="rate"  value="" disabled> </td>
-    <td><input type="text" size= "8" id="percent<?php echo $i;?>" class="percent" name="percent"  value="" disabled> </td>
-    <td><input type="text" id="totalamount<?php echo $i;?>" name="total" value="<?php echo $val->mounthtotal; ?>" disabled/></td>
-    <td><input type="text" id="totalmonthpay<?php echo $i;?>" name="total" value="<?php echo $monthtotalpay[$mp]; ?>" disabled/></td>
+    <td><input type="text" style="border: 0" size= "8" id="rate<?php echo $i;?>" class="rate" name="rate"  value="" readonly> </td>
+    <td><input type="text" style="border: 0" size= "8" id="percent<?php echo $i;?>" class="percent" name="percent"  value="" readonly> </td>
+    <td><input type="text"style="border: 0" size= "8" id="totalamount<?php echo $i;?>" name="total" value="<?php echo $val->mounthtotal; ?>" readonly/></td>
+    <td><input type="text"style="border: 0" size= "8" id="totalamount<?php echo $i;?>" name="total" value="<?php echo $val->onestpay; ?>" readonly/></td>
+    <td><input type="text"style="border: 0" size= "8" id="totalamount<?php echo $i;?>" name="total" value="<?php echo $val->onefivethpay; ?>" readonly/></td>
+    <td><input type="text"style="border: 0"  size= "8" id="totalmonthpay<?php echo $i;?>" name="total" value="<?php echo $monthtotalpay[$mp]; ?>" readonly/></td>
 
     <!-- change rate alert display start -->
 
@@ -237,7 +218,7 @@
 
 
    
-    <td> <button class="btn btn-primary buttonsave" id="delete" >Delete</button></td>
+   <!--  <td> <button class="btn btn-primary buttonsave" id="delete" >Delete</button></td> -->
   </tr>
 
  <?php $mp= $mp +1 ;} ?>
@@ -275,10 +256,15 @@
    
    <br>  <br>
    
-  <button  class="btn btn-primary buttonsave" id="adddata">Add Data</button> 
-  <button class="btn btn-primary buttonsave" id="save">Save</button>
- <a type="button" class="btn btn-primary buttondelete" href="javascript:window.history.go(-1);" style="padding: 1px 12px;">Back</a>
-  <a type="button" class="btn btn-primary buttonsave" id="addexp" href="<?= base_url();?>expense/?val1=<?php echo $_GET['var1'];?>">Add Expense</a>
+  <!-- <button  class="btn btn-primary buttonsave" id="adddata"><span class="glyphicon glyphicon-plus"></span>Add Data</button>  -->
+  <button class="btn btn-primary buttonsave" id="save"><i class="fa fa-save"></i>Save</button>
+ <!-- <a type="button" class="btn btn-primary buttondelete" href="javascript:window.history.go(-1);" style="padding: 1px 12px;">Back</a>
+ <input type="button" class="btn btn-primary buttondelete" style="display: none"  name="delete" id="delete" value="Delete"/> -->
+
+  <a type="button" class="btn btn-primary buttonsave" id="addexp" href="<?= base_url();?>expense/?val1=<?php echo $_GET['var1'];?>"><span class="glyphicon glyphicon-plus"></span>Add Expense</a>
+
+  <button class="btn btn-primary buttonsave"id="delete" ><i class="fa fa-trash-o"></i> Delete</button>
+ <button type="button" id="back" class="btn btn-primary buttonsave" onclick="history.back()"> <span class="glyphicon glyphicon-arrow-left"></span> Back </button>
 
    
 
@@ -287,20 +273,6 @@
 
 </div>
 </div> </div>
-
-<style type="text/css">
-  .buttonsave{
-    height: 23px;
-    padding:0px 10px;
-
-  }
-  #count {
-    display: none;
-}
-
-
-</style>
-
 
 
 
@@ -336,6 +308,7 @@ $(document).ready(function(){
              var ratearray=[];
              var percentagearray=[];
              var hours = [];
+              var tiz = [];
 
              
 
@@ -356,6 +329,7 @@ $(document).ready(function(){
                        // hourstoparray.push(<?php echo $val->hourstop;?>);
             ratearray.push(<?php echo $val->rate;?>);
             percentagearray.push(<?php echo $val->percentage;?>);
+            tiz.push(<?php echo $val->tiz_share;?>);
 
      <?php } ?>
      var storeid = 1;
@@ -570,6 +544,7 @@ abc++;
 
 
             $('#rate'+(storeid)).val(ratearray[q]); 
+            $('#tiz'+(storeid)).val(tiz[q]);
 
             if(percentagearray[q]>0){
             $('#percent'+(storeid)).val(percentagearray[q]); 
@@ -594,19 +569,20 @@ abc++;
 
  $("table tbody tr").each(function () {  
 
-             var id = <?php echo $_GET['var1'];  ?>;
-                var mon = $(this).find("td").eq(1).find(":text").val();
-                var billedhours = $(this).find("td").eq(2).find(":text").val();
-                var rate = $(this).find("td").eq(3).find(":text").val();
-                var percentage1 = $(this).find("td").eq(4).find(":text").val();
-                var totalamount = $(this).find("td").eq(5).find(":text").val();
-                console.log(rate);
+                var id = <?php echo $_GET['var1'];  ?>;
+                var tiz = $(this).find("td").eq(2).find(":text").val();
+                var mon = $(this).find("td").eq(3).find(":text").val();
+                var billedhours = $(this).find("td").eq(4).find(":text").val();
+                var rate = $(this).find("td").eq(5).find(":text").val();
+                var percentage1 = $(this).find("td").eq(6).find(":text").val();
+                var totalamount = $(this).find("td").eq(7).find(":text").val();
+                //console.log(rate);
                 
                   $.ajax({
                     type: "post",
                     url: "<?= base_url();?>updateemployee",
                     cache: false,    
-                    data: {id:id, rate:rate, billedhours:billedhours, totalamount:totalamount, mon:mon,percentage1:percentage1},
+                    data: {id:id, rate:rate, billedhours:billedhours, totalamount:totalamount, mon:mon,percentage1:percentage1,tiz:tiz},
                     success: function(json){  
                       
                    } 
@@ -625,7 +601,7 @@ abc++;
    // adding new data
 
 
-    $(document).on("click", "#adddata", function() { 
+/*    $(document).on("click", "#adddata", function() { 
       $('.counts ').hide();
       $('#Link').hide();
       $('#theLink').hide();
@@ -669,7 +645,7 @@ abc++;
 
 
   });
-
+*/
 
 
 // save data
@@ -679,19 +655,21 @@ $(document).on("click", "#save", function() {
 
                    $("table tbody tr").each(function () {  
 
+  
+                var tiz = $(this).find("td").eq(2).find(":text").val();
                 var id = <?php echo $_GET['var1'];  ?>;
-                var mon = $(this).find("td").eq(1).find(":text").val();
-                var billedhours = $(this).find("td").eq(2).find(":text").val();
-                var rate = $(this).find("td").eq(3).find(":text").val();
-                 var percet11 = $(this).find("td").eq(4).find(":text").val();
-                var totalamount = $(this).find("td").eq(5).find(":text").val();
-                //console.log(rate);
+                var mon = $(this).find("td").eq(3).find(":text").val();
+                var billedhours = $(this).find("td").eq(4).find(":text").val();
+                var rate = $(this).find("td").eq(5).find(":text").val();
+                 var percet11 = $(this).find("td").eq(6).find(":text").val();
+                var totalamount = $(this).find("td").eq(7).find(":text").val();
+                //console.log(tiz);
                 
                   $.ajax({
                     type: "post",
                     url: "<?= base_url();?>updateemployee",
                     cache: false,    
-                    data: {id:id, rate:rate, billedhours:billedhours, totalamount:totalamount, mon:mon,percet11:percet11},
+                    data: {id:id, rate:rate, billedhours:billedhours, totalamount:totalamount, mon:mon,percet11:percet11,tiz:tiz},
                     success: function(json){  
                         
                    } 
@@ -737,7 +715,7 @@ $(document).on("click", "#save", function() {
 
 
 
-
+/*
  $(document).on("click", "#delete", function(){
 
      var id = $(this).parent('td').parent('tr').find('#idd').val();
@@ -756,24 +734,56 @@ $(document).on("click", "#save", function() {
 
        });
   });
+*/
 
- /*$(document).ready(function(){
 
-           var sum1=0;
-         //  var sum2=0;
+  $(".chkBox").click(function () {
+  
+     var id = $(this).parent('td').parent('tr').find('#idd').val();
+     var month=$(this).parent('td').parent('tr').find('#mon').val();
+     var year=$(this).parent('td').parent('tr').find('#yea').val();
+     
+     var check1 = $('input[type="checkbox"]:checked').length;
+     //console.log(check1);
+    
+
+     
+
+      $(document).on("click", "#delete", function(){
+
+        if ($('.chkBox:checked').length != 0) {
+       var check = $('input[type="checkbox"]:checked').length;
+       //console.log(check);
+       //console.log(check1);
+
+     $.ajax({
+    type:'POST',
+    url:"<?= base_url();?>deleteemployee",
+    data:{month:month, year:year,id:id },
+    success: function(json){
+      
+          
+       }
+
+       });
+     if(check1==check){
+
+      alert("Data Deleted");
+      location.reload();
+     }
+        }   
+      });    
+});
+ 
+  $("#delete").click(function(){
+
+ if ($('.chkBox:checked').length == 0) {
          
-           var b= <?php echo $i; ?>;
-           for(var m=1; m<b; m++)
-           {
-            sum1=sum1 + parseInt($('#totalamount'+m).val());
-           
-
-           }
-
-           $('#totalamp').val(sum1);
- });*/
-
-
+         alert("please select atleast one row to delete");
+         }      
+    }); 
+  
+  
 
 
 

@@ -45,10 +45,12 @@
        <thead> 
 
       <tr>
+        
         <th>Start Hour</th>
         <th>Ending Hour</th>
         <th> Rate </th>
         <th> Percentage </th>
+        <th> Tiz Share</th>
        
       </tr>
 
@@ -75,15 +77,25 @@
         <?php } ?>
 
         <td> <input type="text"  id="rate<?php echo $i; ?>" name="rate" class="ratee" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->rate; ?>" disabled> </td>
-
-        <td style="display: none"> <input  type="text"  id="percent<?php echo $i; ?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->percentage; ?>"> </td>
+<!-- 
+        <td style="display: none"> <input  type="text"  class="percent11"  id="percent<?php echo $i; ?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->percentage; ?>"> </td> -->
        
 
         <?php if($a != 0){ ?>  
            <td>
-         <input type="text"  id="percent<?php echo $i; ?>" value="<?php echo $val->percentage; ?>" disabled>
+         <input type="text" class="percent11" id="percent<?php echo $i; ?>" value="<?php echo $val->percentage; ?>" disabled>
+          </td>  
+         <?php } 
+          if($a == 0){ ?>  
+           <td >
+           <input type="text" class="percent11" id="percent<?php echo $i; ?>" value="0" disabled>
           </td>  
          <?php } ?>
+
+
+         <td>
+         <input type="text"  class="tiz" id="tiz<?php echo $i;?>" value="<?php echo $val->tiz_share; ?>" disabled>
+          </td>  
 
              
 
@@ -113,6 +125,36 @@
 </div>
 
 <script type="text/javascript">
+
+
+
+$("input.percent11").on("keyup", function(){ 
+
+     var sno =$(this).parent('td').parent('tr').find('#sno').val();
+     var rate1 =$(this).parent('td').parent('tr').find('#rate'+sno).val();
+     var percent1 =$(this).parent('td').parent('tr').find('#percent'+sno).val();
+     var temp5 = rate1 * (percent1/100);
+     
+     var temp15 = rate1 - temp5;
+       //console.log(temp15);
+
+      
+      if(temp5 > 0)
+         $('#tiz'+(sno)).val(temp15);
+      /*if(temp5==0) {
+        $('#tiz'+(sno)).prop('disabled', false);
+        $('#percent'+(sno)).prop('disabled', true);
+
+       }*/
+         
+     
+
+
+});
+
+
+
+
   $(document).ready(function () {
 
     <?php if (empty($rate)){ ?>
@@ -154,7 +196,7 @@
                   }
 
                
-                markup = "<tr> <input type='hidden' id='sno' name='sno' value="+sno+">  <td> <input type='text' id='firsthour"+sno+"' name='firsthour"+sno+"' value="+nexthour+" disabled> </td> <td> <input type='text' id='secondhour"+sno+"' onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='lasthour' name='hour2'>   </td> <td> <input type='text' id='rate"+sno+"' onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='rate11' name='rate'> </td>    <td> <input type='text'  id='percent"+sno+"' onkeypress='return event.charCode >= 48 && event.charCode <= 57' name='percent'> </td>  <td> </tr>";
+                markup = "<tr> <input type='hidden' id='sno' name='sno' value="+sno+">  <td> <input type='text' id='firsthour"+sno+"' name='firsthour"+sno+"' value="+nexthour+" disabled> </td> <td> <input type='text' id='secondhour"+sno+"' onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='lasthour' name='hour2'>   </td> <td> <input type='text' id='rate"+sno+"' onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='rate11' name='rate'> </td>    <td> <input type='text'  id='percent"+sno+"' onkeypress='return event.charCode >= 48 && event.charCode <= 57' name='percent' class='percent'> </td>  <td> <input type='text'  id='tiz"+sno+"' onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='tiz' name='tiz'> </td> </tr>";
                 tableBody = $("table tbody"); 
                 tableBody.append(markup); 
 
@@ -183,6 +225,65 @@
                 });
 
 
+    $("input.tiz").on("keyup", function(){ 
+   
+                       var num = parseInt($(this).parent('td').parent('tr').find('#sno').val());
+                       var temp =$(this).parent('td').parent('tr').find('#tiz'+num).val();
+                       //console.log(temp);
+                       //var num2= $(this).parent('td').parent('tr').find('#secondhour'+num).val();
+
+                       if(temp != ''){
+
+                       $('#percent'+num).hide(); 
+                       }
+                       if(temp == ''){
+
+                       $('#percent'+num).show(); 
+                       }        
+                });
+
+    $("input.percent").on("keyup", function(){ 
+   
+                       var num = parseInt($(this).parent('td').parent('tr').find('#sno').val());
+                       var temp =$(this).parent('td').parent('tr').find('#percent'+num).val();
+                       //console.log(temp);
+                       //var num2= $(this).parent('td').parent('tr').find('#secondhour'+num).val();
+
+                       if(temp != ''){
+
+                       $('#tiz'+num).hide(); 
+                       }
+                       if(temp == ''){
+
+                       $('#tiz'+num).show(); 
+                       }        
+                });
+
+$("input.percent").on("keyup", function(){ 
+          
+     var num = parseInt($(this).parent('td').parent('tr').find('#sno').val());
+     var rate1 =$(this).parent('td').parent('tr').find('#rate'+num).val();
+     var percent1 =$(this).parent('td').parent('tr').find('#percent'+num).val();
+     var temp5 = rate1 * (percent1/100);
+
+    
+      var temp15 = rate1 - temp5;
+     
+      if(temp5 > 0)
+         $('#tiz'+(num)).val(temp15);
+      if(temp5==0) {
+        $('#tiz'+(num)).prop('disabled', false);
+        $('#percent'+(num)).prop('disabled', true);
+
+       }
+         
+     
+
+});
+
+          
+
+
            $("input.lasthour").on("input change keyup keydown", function(){ 
 
                   var tr1 = $('#percentage tr:last');
@@ -196,11 +297,12 @@
                 });
        
 
-             });  
+             });
 
 });
 
 $(document).on("click","#save", function(){
+
 
               var temp=0;
                 $("table tbody tr").each(function () {
@@ -216,6 +318,7 @@ $(document).on("click","#save", function(){
 
                   });
 
+                
 
             if(temp==0) {
 
@@ -239,11 +342,12 @@ $(document).on("click","#save", function(){
                 }
                 var rate = $(this).find("td").eq(2).find(":text").val();
                 var percentage = $(this).find("td").eq(3).find(":text").val();
+                var tiz = $(this).find("td").eq(4).find(":text").val();
                 $.ajax({
                       type: "post",
                       url: "<?= base_url();?>percentageupdate",
                       cache: false,    
-                      data: {id:id, hour1:hour1, hour2:hour2, percentage:percentage, rate:rate},
+                      data: {id:id, hour1:hour1, hour2:hour2, percentage:percentage, rate:rate,tiz:tiz},
                    });
                 
                 })
@@ -259,8 +363,10 @@ $(document).on("click","#save", function(){
     $(document).on("click","#edit", function(){
 
                 $('#percentage').find('input[type="text"]').prop('disabled', false);
-                $('td:nth-child(5)').show();
-                $('td:nth-child(6)').hide();
+                $("#percentage").css("border", "0");
+                
+                /*$('td:nth-child(5)').show();
+                $('td:nth-child(6)').hide();*/
                 $('#addcondition').show();
                 $('#edit').hide();
                 $('#save').hide();
@@ -272,7 +378,7 @@ $(document).on("click","#save", function(){
 
 
 
-  $("input.lasthour").on("change", function(){ 
+  $("input.lasthour").on("keydown", function(){ 
 
                         $('#save').hide(); 
                         $('#addcondition').show(); 
@@ -362,12 +468,13 @@ $(document).on("click","#save", function(){
                 }
                 var rate = $(this).find("td").eq(2).find(":text").val();
                 var percentage = $(this).find("td").eq(3).find(":text").val();
+                var tiz = $(this).find("td").eq(4).find(":text").val();
                 
                     $.ajax({
                       type: "post",
                      url: "<?= base_url();?>percentageupdate",
                       cache: false,    
-                      data: {id:id, hour1:hour1, hour2:hour2, percentage:percentage, rate:rate},
+                      data: {id:id, hour1:hour1, hour2:hour2, percentage:percentage, rate:rate,tiz:tiz},
                       
                    });
                 
@@ -379,6 +486,44 @@ $(document).on("click","#save", function(){
                    });     
                  }          
             });
+
+
+ $("input.tiz").on("change", function(){ 
+   
+                       var num = parseInt($(this).parent('td').parent('tr').find('#sno').val());
+                       var temp =$(this).parent('td').parent('tr').find('#tiz'+num).val();
+                       console.log(temp);
+                       //var num2= $(this).parent('td').parent('tr').find('#secondhour'+num).val();
+
+                       if(temp != ''){
+
+                       $('#percent'+num).hide(); 
+                       }
+                       if(temp == ''){
+
+                       $('#percent'+num).show(); 
+                       }
+
+                       
+                     
+                });
+
+     $("input.percent11").on("keyup", function(){ 
+   
+                       var num = parseInt($(this).parent('td').parent('tr').find('#sno').val());
+                       var temp =$(this).parent('td').parent('tr').find('#percent'+num).val();
+                       //console.log(temp);
+                       //var num2= $(this).parent('td').parent('tr').find('#secondhour'+num).val();
+
+                       if(temp != ''){
+
+                       $('#tiz'+num).hide(); 
+                       }
+                       if(temp == ''){
+
+                       $('#tiz'+num).show(); 
+                       }        
+                });
 
 
      $(document).on("click","#delete",function(){
