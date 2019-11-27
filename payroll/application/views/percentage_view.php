@@ -133,7 +133,7 @@
         </td>
         <?php } ?>
 
-        <td> <input type="text" style="border: 0" style="border: 0"  id="rate<?php echo $i; ?>" name="rate" class="ratee" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->rate; ?>" readonly> </td>
+        <td> <input type="text" style="border: 0"  id="rate<?php echo $i; ?>" name="rate" class="ratee" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->rate; ?>" readonly> </td>
 <!-- 
         <td style="display: none"> <input  type="text"  class="percent11"  id="percent<?php echo $i; ?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->percentage; ?>"> </td> -->
        
