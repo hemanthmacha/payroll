@@ -6,6 +6,7 @@
 <title></title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <style type="text/css">
   .buttonsave{
     height: 28px;
@@ -89,11 +90,12 @@
     <div class="content">   
     <div class="row"> 
 
-    <div class="col-sm-4">
-     <h3>Percentage View Of <?php echo $_GET['var2']; echo "  "; echo $_GET['var3']; ?></h3>
+    <div class="col-sm-6">
+   <!--   <h4>Percentage/Rate Conditions Of <?php echo $_GET['var2']; echo "  "; echo $_GET['var3']; ?></h4> -->
   <form class="form-signin">
     <div class="page-header">
-    <h3>Conditions </h3>
+      <h4>Percentage & Rate Conditions Of <?php echo $_GET['var2']; echo "  "; echo $_GET['var3']; ?></h4>
+    <!-- <h3>Conditions </h3> -->
       </div>      
   
     <table  class="table text-center" align="center" id="percentage">
@@ -123,33 +125,33 @@
         <td> <input type="text" id="firsthour<?php echo $i;?>" name= "firsthour" value="<?php echo $val->hourstart; ?>" disabled>  </td>
         
         <?php if($max != 0){ ?> 
-        <td> <input type="text" id="secondhour<?php echo $i;?>" class="lasthour" name="hour2" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->hourstop; ?>" disabled></td>
+        <td> <input type="text" style="border: 0" id="secondhour<?php echo $i;?>" class="lasthour" name="hour2" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->hourstop; ?>" readonly></td>
         <?php } ?>
 
         <?php if($max == 0){ ?> 
-        <td> <input type="text" id="secondhour<?php echo $i;?>" class="lasthour" name="hour2" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="max" disabled>
+        <td> <input type="text" style="border: 0" id="secondhour<?php echo $i;?>" class="lasthour" name="hour2" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="max" readonly>
         </td>
         <?php } ?>
 
-        <td> <input type="text"  id="rate<?php echo $i; ?>" name="rate" class="ratee" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->rate; ?>" disabled> </td>
+        <td> <input type="text" style="border: 0" style="border: 0"  id="rate<?php echo $i; ?>" name="rate" class="ratee" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->rate; ?>" readonly> </td>
 <!-- 
         <td style="display: none"> <input  type="text"  class="percent11"  id="percent<?php echo $i; ?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->percentage; ?>"> </td> -->
        
 
         <?php if($a != 0){ ?>  
            <td>
-         <input type="text" class="percent11" id="percent<?php echo $i; ?>" value="<?php echo $val->percentage; ?>" disabled>
+         <input type="text" style="border: 0" class="percent11" id="percent<?php echo $i; ?>" value="<?php echo $val->percentage; ?>" readonly>
           </td>  
          <?php } 
           if($a == 0){ ?>  
            <td >
-           <input type="text" class="percent11" id="percent<?php echo $i; ?>" value="0" disabled>
+           <input type="text" style="border: 0" class="percent11" id="percent<?php echo $i; ?>" value="0" readonly>
           </td>  
          <?php } ?>
 
 
          <td>
-         <input type="text"  class="tiz" id="tiz<?php echo $i;?>" value="<?php echo $val->tiz_share; ?>" disabled>
+         <input type="text" style="border: 0"  class="tiz" id="tiz<?php echo $i;?>" value="<?php echo $val->tiz_share; ?>" readonly>
           </td>  
 
              
@@ -165,9 +167,9 @@
      
     </form>
 
-     <button style="display: none" class="btn btn-primary buttonsave"  name="edit" id="edit"><i class='fas fa-marker'></i> Edit </button>
+     <button style="display: none" class="btn btn-primary buttonsave"  name="edit" id="edit"><i class="fa fa-edit"></i> Edit </button>
     <!-- <input style="display: none" class="btn btn-primary buttonsave"  type="button" name="edit" id="edit" value="Edit"/> -->
-    <button class="btn btn-primary buttonsave" style="display: none"  name="update" id="update"> <i class='fas fa-sync'>Update</i> </button>
+    <button class="btn btn-primary buttonsave" style="display: none"  name="update" id="update"><i class="fa fa-edit"></i> Update </button>
 
     <button class="btn btn-primary buttonsave" style="display: none" id="save" name="save" id="save"><i class="fa fa-save"></i> Save</button>
    <button class="btn btn-primary buttonsave add-row" id="addcondition" style="display: none" ><span class="glyphicon glyphicon-plus"></span>  Add condition </button>
@@ -428,8 +430,8 @@ $(document).on("click","#save", function(){
 
     $(document).on("click","#edit", function(){
 
-                $('#percentage').find('input[type="text"]').prop('disabled', false);
-                $("#percentage").css("border", "0");
+                $('#percentage').find('input[type="text"]').css({"border": "0.5px solid"}); 
+                $('#percentage').find('input[type="text"]').prop('readonly', false);
                 
                 /*$('td:nth-child(5)').show();
                 $('td:nth-child(6)').hide();*/

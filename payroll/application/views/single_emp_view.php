@@ -112,7 +112,7 @@
    <?php if(!empty($sresult)){ ?>
 
 <table class="table text-center " align="center" id="customers">
-<tr>
+<tr style="background-color: gainsboro;">
       <th>Sno</th>  
       <th>Billed Month</th>
       <th>Billed Hours</th>

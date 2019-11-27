@@ -54,7 +54,7 @@
 
 	  
 		<table  class="table text-center" align="center" id="customers">
-			 <thead> 
+			 <thead style="background-color: gainsboro;"> 
 			<tr>
 				
 				<th>Date</th>
@@ -69,9 +69,9 @@
 		    	<?php if(!empty($val->description)){?>
 			 	<tr>
 			 		
-        	      <td> <input type="text" id="date" value="<?php echo $val->month; ?>-<?php echo $val->year; ?>"  disabled/></td>
-				  <td><input type="text"  id="des"  value="<?php echo $val->description; ?>"disabled/></td>
-    			<td><input type="text"  id="amount" value="<?php echo $val->expenses; ?>" disabled/></td>
+        	      <td> <input type="text" style="border: 0" id="date" value="<?php echo $val->month; ?>-<?php echo $val->year; ?>"  readonly/></td>
+				  <td><input type="text" style="border: 0"  id="des"  value="<?php echo $val->description; ?>"readonly/></td>
+    			<td><input type="text" style="border: 0"  id="amount" value="<?php echo $val->expenses; ?>" readonly/></td>
     		
          
     			
@@ -84,7 +84,8 @@
 		</table> 
 		
 	
-	   <a type="button" class="btn btn-primary buttondelete" href="javascript:window.history.go(-1);" style="padding: 1px 12px;">Back</a>
+	  <!--  <a type="button" class="btn btn-primary buttondelete" href="javascript:window.history.go(-1);" style="padding: 1px 12px;">Back</a> -->
+	    <button type="button" id="back" class="btn btn-primary buttonsave" onclick="history.back()"> <span class="glyphicon glyphicon-arrow-left"></span> Back </button>
 </div>
 </div>
 </div>

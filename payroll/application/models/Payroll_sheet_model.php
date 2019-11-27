@@ -135,7 +135,7 @@ public function getting_last_id($month,$year){
 
     public function getting_month_total($month,$year){
       
-      $query="SELECT  SUM(onestpay) as firstsum, SUM(onefivethpay) as secondsum, SUM(total) as totalmonthsum FROM `tbl_payrool_sheet` where month='$month' and year='$year'";
+      $query="SELECT  IFNULL(SUM(onestpay),0) as firstsum, SUM(onefivethpay) as secondsum, SUM(total) as totalmonthsum FROM `tbl_payrool_sheet` where month='$month' and year='$year'";
       $response = $this->db->query($query)->result();
       return $response;
 

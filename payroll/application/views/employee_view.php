@@ -19,8 +19,9 @@
 
     <div class="content"> 
     <div class="row"> 
-    <h4>Payroll Sheet of <?php echo $_GET['var2']; echo "  "; echo $_GET['var3']; ?></h4>
+   
     <div class="col-sm-12">
+       <h3>Payroll Sheet of <?php echo $_GET['var2']; echo "  "; echo $_GET['var3']; ?></h3>
       
 
 <?php $abc=array();
@@ -259,7 +260,7 @@
  <!-- <a type="button" class="btn btn-primary buttondelete" href="javascript:window.history.go(-1);" style="padding: 1px 12px;">Back</a>
  <input type="button" class="btn btn-primary buttondelete" style="display: none"  name="delete" id="delete" value="Delete"/> -->
 
-  <a type="button" class="btn btn-primary buttonsave" id="addexp" href="<?= base_url();?>expense/?val1=<?php echo $_GET['var1'];?>"><span class="glyphicon glyphicon-plus"></span>Add Expense</a>
+  <a type="button" class="btn btn-primary buttonsave" id="addexp" href="<?= base_url();?>expense/?val1=<?php echo $_GET['var1'];?>&val2=<?php echo $_GET['var2'];?>&val3=<?php echo $_GET['var3'];?>"><span class="glyphicon glyphicon-plus"></span>Add Expense</a>
 
   <button class="btn btn-primary buttonsave"id="delete" onclick="deleteRow('customers')"><i class="fa fa-trash-o"></i> Delete</button>
  <button type="button" id="back" class="btn btn-primary buttonsave" onclick="history.back()"> <span class="glyphicon glyphicon-arrow-left"></span> Back </button>

@@ -54,7 +54,7 @@
 	<div class="wrapper">
 
 		<div class="page-header">
-		<h3>Expenses </h3>  
+		<h4>Expenses View of <?php echo $_GET['val2']; echo "  "; echo $_GET['val3']; ?></h4>
 	</div>
 
 

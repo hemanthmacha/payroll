@@ -60,3 +60,10 @@ table td ::hover{
 h4{font-family: -webkit-body;
     font-weight: 900;
 }
+
+h3 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+        font-size: 22px;
+}

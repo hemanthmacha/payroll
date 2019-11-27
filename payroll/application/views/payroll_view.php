@@ -4,22 +4,34 @@
 <title>Payroll Summary</title>
 <link rel="stylesheet" href="<?=base_url('assests/css/payroll.css')?>">
 
+<style type="text/css">
+  #monthdisplay{
+    padding-right: 10px;
+  }
+  h4 {
+    font-family: inherit;
+    font-weight: 50;
+}
+</style>
+
 
 </head>
 
 <body>
   <div class="container-flud">
     <div class="content"> 
+
     <div class="row"> 
-    <h3> Payroll Summary For <input type="text" id="monthdisplay" value="" style="border: none; width:auto;
+       <h3> Payroll Summary For <input type="text" id="monthdisplay" value="" style="border: none; width:auto;
 height:auto; "> </h3>
    
     <div class="col-sm-12">
+   
       
    <?php if(!empty($sresult)){ ?>
 
 <table class="table text-center" align="center" id="customers">
-<tr>
+<tr style="background-color: gainsboro;">
       <th>Sno</th>  
       <th>First Name</th>
       <th>Last Name</th>
@@ -28,8 +40,8 @@ height:auto; "> </h3>
       <th>Tiz</th>
 
       <!-- <th>Hours</th> -->
-      <th><input type="text" id="monthfirstpay" value=""  size="13" style="border: none" readonly></th>
-      <th><input type="text" id="monthsecondpay" value=""  size="13" style="border: none" readonly></th>
+      <th><input type="text" id="monthfirstpay" value=""  size="13" style="border: none;background-color: gainsboro;" readonly></th>
+      <th><input type="text" id="monthsecondpay" value=""  size="13" style="border: none;background-color: gainsboro;" readonly></th>
       <th>Total</th>
      <!--  <th>Status</th> -->
       <th>Total Hours</th>
@@ -86,9 +98,9 @@ height:auto; "> </h3>
     
     <!-- <td><input type="text" id="hours"  value="<?php echo $val->hours; ?>" disabled/></td> -->
   <!-- <td><input type="text" id="pct"  value="<?php echo $val->percentage; ?>" disabled/></td> -->
-    <td><input type="text"  id="firsttpay" class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onestpay; ?>"/></td>
-    <td><input type="text"  id="secondpay"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onefivethpay; ?>"/></td>
-    <td><input type="text" style="border: 0" id="total" value="<?php echo $val->total; ?>" readonly/></td>
+    <td><input type="text"  id="firsttpay" size="8"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onestpay; ?>"/></td>
+    <td><input type="text" size="8"   id="secondpay"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onefivethpay; ?>"/></td>
+    <td><input type="text" size="8"  style="border: 0" id="total" value="<?php echo $val->total; ?>" readonly/></td>
     <!-- <td>
       <select style="width: 90px;"   id="status"  class="form-control dropdownselect">
             <option value="Active" <?php if($val->status == 'Active') { echo 'selected'; } ?>>Active</option>
@@ -126,24 +138,24 @@ height:auto; "> </h3>
     <div class="counts" style="display: none">
        <br>
       <h4>  <?php foreach ($monthpay as $key => $value) { ?>
-       Total Firstpay : &nbsp; <?php echo $value->firstsum; ?>;&nbsp;&nbsp; 
-       Total Secondpay : &nbsp;<?php echo $value->secondsum; ?>;&nbsp;&nbsp; 
-       Total Pay :&nbsp; <?php echo $value->totalmonthsum; ?>;&nbsp;&nbsp; 
+       Total Firstpay   :<?php echo $value->firstsum; ?>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; 
+       Total Secondpay  :<?php echo $value->secondsum; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+       Total Pay        :<?php echo $value->totalmonthsum; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
        <?php break; } foreach($totalhours as $key => $value) {?>
-        Total hours: &nbsp;<?php echo $value->totalhours; ?>;&nbsp;&nbsp; 
+        Total hours     :<?php echo $value->totalhours; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
 
         <?php break; } foreach ($totalbalance as $key => $value) { ?>
-        Total Balance : &nbsp;<?php echo $value->totalbalance; ?>
+        Total Balance   :<?php echo $value->totalbalance ?>
          <?php } ?> </h4> 
  
     </div>  
 
    <div class="remaining" style="display: none">
     <br>
-        <h4>Total Employees worked on <?php echo $unpid[3]; echo " "; echo $unpid[4]; echo " :"; echo $unpid[2]; ?></h4>
+        <h4>Total Employees worked on <?php echo $unpid[3]; echo " "; echo $unpid[4]; echo " : "; echo $unpid[2]; ?></h4>
         
-        <h4>1st Pay Remaining Employees: <?php $temp =$unpid[3]-$unpid[0]; echo $temp; ?></h4>
-        <h4>15th pay Remaining Employees: <?php $temp1 =$unpid[3]-$unpid[1]; echo $temp1; ?> </h4>
+        <h4>1st Pay Remaining Employees&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?php $temp =$unpid[2]-$unpid[0]; echo $temp; ?></h4>
+        <h4>15th pay Remaining Employees&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?php $temp1 =$unpid[2]-$unpid[1]; echo $temp1; ?> </h4>
     </div>
 
 </div>

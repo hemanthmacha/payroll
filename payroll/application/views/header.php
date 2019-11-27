@@ -10,7 +10,7 @@
   
     <div class="navbar-header">
        <?php if($this->session->userdata('role') == 'admin') { ?>  
-    <a href="<?=base_url()?>payroll"><img class="nav navbar-nav navbar-left" src="<?= base_url();?>assests/images/logo.jpg" height="60" width="90" style=""></a>  <a class="navbar-brand"  style="color: black !important; font-family:webkit-pictograph  ; font-size: 37px;" href="<?=base_url()?>payroll">&nbsp;&nbsp;&nbsp;&nbsp;PAYROLL SYSTEM</a> 
+    <a href="<?=base_url()?>payroll"><img class="nav navbar-nav navbar-left" src="<?= base_url();?>assests/images/logo.jpg" height="60" width="90" style=""></a>  <a class="navbar-brand"  style="color: black !important; font-family:Arial, Helvetica, sans-serif /*webkit-pictograph*/  ; font-size: 37px;" href="<?=base_url()?>payroll">&nbsp;&nbsp;&nbsp;&nbsp;PAYROLL SYSTEM</a> 
 
    <!--  <div class="logout1"><a href="<?=base_url()?>logout"> Logout </a> </div> -->
     <div class="logout1"><a href="<?=base_url()?>logout"> <button type="button" class="btn btn-default btn-sm"> <span class="glyphicon">&#xe017;</span> Logout</button></a></div>
@@ -155,7 +155,9 @@ table td ::hover{
     padding: 21px 20px;
     font-size: 18px;
     line-height: 20px;
+  
 }
+
 
 </style>
 
