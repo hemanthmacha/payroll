@@ -7,77 +7,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-<style type="text/css">
-  .buttonsave{
-    height: 28px;
-    padding:0px 10px;
-  }
-  .buttonback{
-    height: 28px;
-    padding:0px 10px;
-  }
-  .buttondelete{
-    height: 28px;
-    padding:0px 10px;
-  }
-  #edit {
-  opacity: 0.8;
-  filter: alpha(opacity=50); 
-}
+<link rel="stylesheet" href="<?=base_url('assests/css/percentview.css')?>">
 
-#edit:hover {
-  opacity: 1.0;
-  filter: alpha(opacity=100); 
-}
-  #delete {
-  opacity: 0.8;
-  filter: alpha(opacity=50); 
-}
-
-#delete:hover {
-  opacity: 1.0;
-  filter: alpha(opacity=100); 
-}
- #back {
-  opacity: 0.8;
-  filter: alpha(opacity=50); 
-}
-
-#back:hover {
-  opacity: 1.0;
-  filter: alpha(opacity=100); 
-}
- #update {
-  opacity: 0.8;
-  filter: alpha(opacity=50); 
-}
-
-#update:hover {
-  opacity: 1.0;
-  filter: alpha(opacity=100); 
-}
- #addcondition {
-  opacity: 0.8;
-  filter: alpha(opacity=50); 
-}
-
-#addcondition:hover {
-  opacity: 1.0;
-  filter: alpha(opacity=100); 
-}
- #save {
-  opacity: 0.8;
-  filter: alpha(opacity=50); 
-}
-
-#save:hover {
-  opacity: 1.0;
-  filter: alpha(opacity=100); 
-}
-
- 
-
-</style>
 
 </head>
 
@@ -89,17 +20,15 @@
   <div class="container-flud">
     <div class="content">   
     <div class="row"> 
-
     <div class="col-sm-6">
-   <!--   <h4>Percentage/Rate Conditions Of <?php echo $_GET['var2']; echo "  "; echo $_GET['var3']; ?></h4> -->
   <form class="form-signin">
     <div class="page-header">
       <h4>Percentage & Rate Conditions Of <?php echo $_GET['var2']; echo "  "; echo $_GET['var3']; ?></h4>
-    <!-- <h3>Conditions </h3> -->
+    
       </div>      
   
     <table  class="table text-center" align="center" id="percentage">
-       <thead> 
+       <thead style="background-color: gainsboro;"> 
 
       <tr>
         

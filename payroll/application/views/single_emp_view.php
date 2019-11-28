@@ -153,7 +153,7 @@
       <td><input type="text" style="border:0"  id="pct" size="5" name="pct" value="<?php echo $val->rate; ?>"readonly /></td> 
      <?php } ?>
    
-    <td><input type="text" style="border:0" id="totalamount" size="8" name="total" value="<?php echo $val->mounthtotal; ?>"readonly/></td>
+    <td><input type="text" style="border:0" id="totalamount" size="8" name="total" value="<?php echo "$";echo $val->mounthtotal; ?>"readonly/></td>
 
     <!-- change alert start-->
 
@@ -213,9 +213,9 @@
       <!-- change alert ends-->
 
 
-    <td><input type="text" style="border:0"  id="monthpay" size="8" name="total" value="<?php echo $monthtotalpay[$mp];  ?>"readonly/></td>
+    <td><input type="text" style="border:0"  id="monthpay" size="8" name="total" value="<?php echo "$";echo $monthtotalpay[$mp];  ?>"readonly/></td>
 
-    <td><input type="text" style="border:0"  id="expenses" size="8" name="expenses" value="<?php echo $expp[$mp]; ?>"readonly />&nbsp;&nbsp;<a href="singleempexpenses/?val1=<?php echo $val->id;?>&val2=<?php echo $val->month;?>&val3=<?php echo $val->year;?>"> know expenses </a></td>
+    <td><input type="text" style="border:0"  id="expenses" size="8" name="expenses" value="<?php echo "$";echo $expp[$mp]; ?>"readonly />&nbsp;&nbsp;<a href="singleempexpenses/?val1=<?php echo $val->id;?>&val2=<?php echo $val->month;?>&val3=<?php echo $val->year;?>"> know expenses </a></td>
     
 
 
@@ -237,10 +237,10 @@
     <br>
 
       &emsp;&nbsp;&emsp;&nbsp;&emsp;&nbsp;&emsp;&nbsp;<td style="font-size:14;">  &emsp;Total Hours : <input type="text" size="6" style="border: none;" value="<?php echo $value->billedhours; ?>" readonly/>  </td>
-      <td style="font-size:14;">&emsp;&nbsp;Total Amount : <input type="text" size="6"  style="border: none;" value="<?php echo $value->totalamount; ?>" readonly/></td>
-       <td style="font-size:14;">Total Pay : <input type="text"  style="border: none;" size="6" value="<?php echo $value->totalmonthpay; ?>" readonly/></td>
-        <td style="font-size:14;"> &emsp; Total Expenses: <input type="text"  size="6" style="border: none;" value="<?php echo $value->exp; ?>" readonly/></td>
-        <td style="font-size:14;"> &emsp; Balance : <input type="text"   size="6" style="border: none;" value="<?php echo $value->balance; ?>" readonly/></td>
+      <td style="font-size:14;">&emsp;&nbsp;Total Amount : <input type="text" size="6"  style="border: none;" value="<?php echo "$";echo $value->totalamount; ?>" readonly/></td>
+       <td style="font-size:14;">Total Pay : <input type="text"  style="border: none;" size="6" value="<?php echo "$";echo $value->totalmonthpay; ?>" readonly/></td>
+        <td style="font-size:14;"> &emsp; Total Expenses: <input type="text"  size="6" style="border: none;" value="<?php echo "$";echo $value->exp; ?>" readonly/></td>
+        <td style="font-size:14;"> &emsp; Balance : <input type="text"   size="6" style="border: none;" value="<?php echo "$";echo $value->balance; ?>" readonly/></td>
  
     </div>
  <?php } ?>

@@ -25,7 +25,7 @@ class Payroll_sheet_model extends CI_Model
 
     public function checking_month($month,$year){
 
-        $this->db->select('firstname','lastname');
+    $this->db->select('firstname','lastname');
 		$this->db->from('tbl_payrool_sheet');
 		$this->db->where('year',$year);
 		$this->db->where('month',$month);
@@ -39,17 +39,14 @@ class Payroll_sheet_model extends CI_Model
 
 
 public function getting_last_id($month,$year){
-
-
-        $query="SELECT MAX(id) id FROM tbl_payrool_sheet where month='$month' and year='$year'";
-        $response = $this->db->query($query)->result();
+    $query="SELECT MAX(id) id FROM tbl_payrool_sheet where month='$month' and year='$year'";
+    $response = $this->db->query($query)->result();
 		return $response;
-
 }
 
     public function getting_users(){
 
-    	$this->db->select(`firstname`, `lastname`,`status`, `id`);  
+    $this->db->select(`firstname`, `lastname`,`status`, `id`);  
 		$this->db->from('tbl_users');
 		$query = $this->db->get();
 		$response = $query->result();
@@ -71,48 +68,33 @@ public function getting_last_id($month,$year){
     $response = $query->result();
     return $response;
    
-		
-
     }
 
-    public function addusers_payroll($firstname, $lastname,$id,$year,$month){
+  public function addusers_payroll($firstname, $lastname,$id,$year,$month){
 
-        $query="INSERT INTO `tbl_payrool_sheet`(`firstname`, `lastname`,`id`, `year`, `month`) VALUES('$firstname', '$lastname','$id','$year','$month')";
- 
-		$this->db->query($query); 
-     
+    $query="INSERT INTO `tbl_payrool_sheet`(`firstname`, `lastname`,`id`, `year`, `month`) VALUES('$firstname', '$lastname','$id','$year','$month')";
+		$this->db->query($query);   
 		$query="INSERT INTO `tbl_employee`(`id`, `year`, `month`) VALUES('$id','$year','$month')";
 		$this->db->query($query);
 
     }
 
 
-      public function insert_into_payroll($id,$firstname,$lastname,$pay1,$pay2,$total,$status,$month,$year){
- 		
- 		
-       $query= "UPDATE tbl_payrool_sheet SET firstname='$firstname', lastname='$lastname',onestpay='$pay1', onefivethpay='$pay2' ,total='$total', status='$status' WHERE id='$id' and month='$month' and year='$year'";
-
-       $this->db->query($query);
-
-       
-       return true;
+  public function insert_into_payroll($id,$firstname,$lastname,$pay1,$pay2,$total,$status,$month,$year){
+ 		 $query= "UPDATE tbl_payrool_sheet SET firstname='$firstname', lastname='$lastname',onestpay='$pay1', onefivethpay='$pay2' ,total='$total', status='$status' WHERE id='$id' and month='$month' and year='$year'";
+     $this->db->query($query);  
+     return true;
     }
 
-      public function insert_rate_percent($id,$month,$year,$rate,$billedhours,$percent){
- 		
- 		   
-       $query= "UPDATE tbl_payrool_sheet SET `rate_percent`='$rate' `percentage`='$percent' , `hours`='$billedhours'WHERE id='$id' and month='$month' and year='$year'";
-
+  public function insert_rate_percent($id,$month,$year,$rate,$billedhours,$percent){
+      $query= "UPDATE tbl_payrool_sheet SET `rate_percent`='$rate' `percentage`='$percent' , `hours`='$billedhours'WHERE id='$id' and month='$month' and year='$year'";
        $this->db->query($query);
-
-
-      
     }
 
-    public function getting_previous_month_emp($month1,$year1){
-      $query="SELECT COUNT(billedhours) as worked FROM `tbl_employee` where billedhours>0 and month='$month1' and year='$year1'";
-      $response = $this->db->query($query)->result();
-      return $response;
+  public function getting_previous_month_emp($month1,$year1){
+    $query="SELECT COUNT(billedhours) as worked FROM `tbl_employee` where billedhours>0 and month='$month1' and year='$year1'";
+    $response = $this->db->query($query)->result();
+    return $response;
     }
 
 
@@ -165,11 +147,13 @@ public function getting_last_id($month,$year){
 
     }
 
-
-
-
-
-
+        public function lastmonthpay($id,$year,$month)
+    {
+      $query="SELECT IFNULL(onestpay,0) AS onestpay, IFNULL(onefivethpay,0) AS onefivethpay, total FROM tbl_payrool_sheet WHERE id='$id' AND year='$year' AND month='$month'";
+      $response = $this->db->query($query)->result();
+      return $response;
+     // return $qyery;
+    }
 
 
 }

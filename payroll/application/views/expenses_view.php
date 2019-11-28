@@ -78,7 +78,7 @@
 			 		<input type="hidden" id="idddd" value="<?php echo $val->id1; ?>">
             	<td><input type="text" style="border: 0"  id="date<?php echo $i; ?>" value="<?php echo $val->month; ?>-<?php echo $val->year; ?>"  readonly/></td>
 				<td><input type="text"  style="border: 0"  id="des<?php echo $i; ?>"  value="<?php echo $val->description; ?>"readonly/></td>
-    			<td><input type="text"  style="border: 0"  id="amount<?php echo $i; ?>" value="<?php echo $val->expenses; ?>" readonly/></td>
+    			<td><input type="text"  style="border: 0"  id="amount<?php echo $i; ?>" value="<?php echo"$"; echo $val->expenses; ?>" readonly/></td>
     			
     			
 		
@@ -102,7 +102,7 @@
 				<!-- <td> <input type="month" id="date" name="date"> </td> -->
 				<input type="hidden" id="idddd" value="<?php echo $val->id; ?>">
 				<td>  <input type="text" id="des" name="des"></textarea>  </td>
-				<td> <input type="text"  id="amount" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="amount"> </td>
+				<td> <input type="text"  id="amount" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="amount"  value="<?php echo "$"; ?>"> </td>
 				<td><input class="btn btn-primary buttondelete" type="submit" id="save" value="Save" disabled> </td>			
 			</tr>
 		</tbody>
@@ -151,8 +151,9 @@
            
            var id = <?php echo $_GET['val1']; ?> ;
            var des= $(this).parent('td').parent('tr').find('#des').val();
-           var amount = $(this).parent('td').parent('tr').find('#amount').val();
+           var amount1 = $(this).parent('td').parent('tr').find('#amount').val();
            var date= $(this).parent('td').parent('tr').find('#date1').val();
+           var amount=amount1.replace('$','');
 
           
          $.ajax({

@@ -71,7 +71,7 @@
 			 		
         	      <td> <input type="text" style="border: 0" id="date" value="<?php echo $val->month; ?>-<?php echo $val->year; ?>"  readonly/></td>
 				  <td><input type="text" style="border: 0"  id="des"  value="<?php echo $val->description; ?>"readonly/></td>
-    			<td><input type="text" style="border: 0"  id="amount" value="<?php echo $val->expenses; ?>" readonly/></td>
+    			<td><input type="text" style="border: 0"  id="amount" value="<?php echo "$";echo $val->expenses; ?>" readonly/></td>
     		
          
     			

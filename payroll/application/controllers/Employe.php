@@ -401,6 +401,36 @@ class Employe extends CI_Controller {
       $this->load->view('singleemp_monthexp',$monthlyexp);
      }
 
+      public function gettingmonth_not_in_data()
+     {
+      
+      $id=$_POST['id'];
+      $year=$_POST['year'];
+      $months = array("Jan", "Feb", "Mar","Apr", "May", "Jun","Jul", "Aug", "Sep","Oct", "Nov", "Dec"); 
+      $temp= $this->Employe_model->employe_month($id,$year);
+      $month=array();
+      $final_months=array();
+          foreach ($temp as $key => $value) {
+               array_push($month,"$value->month");
+             }
+
+             for($i=0;$i<count($months);$i++){
+                 $temp1 = 0;
+                for($j=0;$j<count($temp);$j++){
+ 
+                  if($months[$i]==$month[$j]){
+                    $temp1=$temp1+1;
+                  }   
+               }
+
+               if($temp1==0){
+                array_push($final_months,"$months[$i]");
+               }
+             }
+            
+      
+      echo json_encode($final_months);
+     }
 
 
 

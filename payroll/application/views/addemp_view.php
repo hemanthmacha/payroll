@@ -22,12 +22,15 @@
         </div>
     <div>
 		 <label for="lname">Last Name:</label>
-		 <input type="text" class="form-control" id="fname" placeholder="Enter Last name" name="lname" required>
+		 <input type="text" class="form-control" id="lname" placeholder="Enter Last name" name="lname" required>
 		</div>
 
-    <div>
+    <div> <table style="border-collapse: separate;">
      <label for="lname">User Name:</label>
-     <input type="text" class="form-control" id="uname" placeholder="Enter User name" name="uname" required>
+    <tr> <td><input type="text" style="width: 498px;" class="form-control" id="uname" placeholder="Enter User name" name="uname" required> </td>
+         <td style="padding: 7px;">  <input type="button" class="button" value="Generate Password" onClick="randomPassword();" tabindex="2"></td>
+    </tr>
+     </table>
     </div>
 
     <div>
@@ -51,6 +54,22 @@
      </div>
     </form>
   </div>
+
+  <script type="text/javascript">
+   
+function randomPassword() {
+    var chars = "abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890";
+    var pass = "";
+    for (var x = 0; x < 10; x++) {
+        var i = Math.floor(Math.random() * chars.length);
+        pass += chars.charAt(i);
+    }
+    
+    $('#pass').val(pass);
+}
+
+
+  </script>
 
 </html>
 

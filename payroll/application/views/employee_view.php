@@ -149,10 +149,10 @@
     <td><input type="text" size= "8" id="billedhours<?php echo $i;?>"  name="hours" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="miles" value="<?php echo $val->billedhours;?>"/></td>
     <td><input type="text" style="border: 0" size= "8" id="rate<?php echo $i;?>" class="rate" name="rate"  value="" readonly> </td>
     <td><input type="text" style="border: 0" size= "8" id="percent<?php echo $i;?>" class="percent" name="percent"  value="" readonly> </td>
-    <td><input type="text"style="border: 0" size= "8" id="totalamount<?php echo $i;?>" name="total" value="<?php echo $val->mounthtotal; ?>" readonly/></td>
-    <td><input type="text"style="border: 0" size= "8" id="totalamount<?php echo $i;?>" name="total" value="<?php echo $val->onestpay; ?>" readonly/></td>
-    <td><input type="text"style="border: 0" size= "8" id="totalamount<?php echo $i;?>" name="total" value="<?php echo $val->onefivethpay; ?>" readonly/></td>
-    <td><input type="text"style="border: 0"  size= "8" id="totalmonthpay<?php echo $i;?>" name="total" value="<?php echo $monthtotalpay[$mp]; ?>" readonly/></td>
+    <td><input type="text"style="border: 0" size= "8" id="totalamount<?php echo $i;?>" name="total" value="<?php echo"$";echo $val->mounthtotal; ?>" readonly/></td>
+    <td><input type="text"style="border: 0" size= "8" id="onestpay<?php echo $i;?>" name="total" value="<?php echo"$";echo $val->onestpay; ?>" readonly/></td>
+    <td><input type="text"style="border: 0" size= "8" id="onefivethpay<?php echo $i;?>" name="total" value="<?php echo"$";echo $val->onefivethpay; ?>" readonly/></td>
+    <td><input type="text"style="border: 0"  size= "8" id="monthtotalpay<?php echo $i;?>" name="total" value="<?php echo"$";echo monthtotalpay[$mp]; ?>" readonly/></td>
 
     <!-- change rate alert display start -->
 
@@ -255,7 +255,7 @@
    
    <br>  <br>
    
-  <!-- <button  class="btn btn-primary buttonsave" id="adddata"><span class="glyphicon glyphicon-plus"></span>Add Data</button>  -->
+  <button  class="btn btn-primary buttonsave" id="adddata"><span class="glyphicon glyphicon-plus"></span>Add Data</button> 
   <button class="btn btn-primary buttonsave" id="save"><i class="fa fa-save"></i>Save</button>
  <!-- <a type="button" class="btn btn-primary buttondelete" href="javascript:window.history.go(-1);" style="padding: 1px 12px;">Back</a>
  <input type="button" class="btn btn-primary buttondelete" style="display: none"  name="delete" id="delete" value="Delete"/> -->
@@ -287,38 +287,38 @@
 */
 
  $("#Link").click(function(){
-    $(".counts").toggle();
+   
     var id = <?php echo $_GET['var1']; ?>;
 
       $.ajax({
-                    
-                    type: "post",
-                    url: "<?= base_url();?>test",
-                    cache: false,
-                    data: {id:id},
-                    dataType: "json",   
-                    
-                    success: function(json){ 
+           type: "post",
+           url: "<?= base_url();?>test",
+           cache: false,
+           data: {id:id},
+           dataType: "json",   
+           success: function(json){ 
+              /*$('#b').val(json[0].balance);
+              $('#ta').val(json[0].totalamount);
+              $('#te').val(json[0].exp);
+              $('#tp').val(json[0].totalmonthpay);
+              $('#th').val(json[0].billedhours);*/
 
-                      $('#b').val(json[0].balance);
-                      $('#ta').val(json[0].totalamount);
-                      $('#te').val(json[0].exp);
-                      $('#tp').val(json[0].totalmonthpay);
-                      $('#th').val(json[0].billedhours);
-                   } 
-                });
+              $('#b').val('$'+json[0].balance);
+              $('#ta').val('$'+json[0].totalamount);
+              $('#te').val('$'+json[0].exp);
+              $('#tp').val('$'+json[0].totalmonthpay);
+              $('#th').val(json[0].billedhours);
+
+             } 
+        });
+
+       $(".counts").toggle();
   });
-
-
-
-
                                 
 
 $(document).ready(function(){
 
-      $('.counts').hide();
-
-  
+     $('.counts').hide();
              var hourstartarray=[];
              var hourstoparray=[];
              var ratearray=[];
@@ -578,7 +578,7 @@ abc++;
 
     }
 
-    $('#totalamount'+(storeid)).val(Math.round(cal));
+    $('#totalamount'+(storeid)).val('$'+Math.round(cal));
 
    storeid = storeid +1;
      }
@@ -593,6 +593,8 @@ abc++;
                 var percentage1 = $(this).find("td").eq(6).find(":text").val();
                 var totalamount = $(this).find("td").eq(7).find(":text").val();
                 //console.log(rate);
+                  var totalamount=totalamount.replace('$',' ');
+                   //console.log(totalamount);
                 
                   $.ajax({
                     type: "post",
@@ -617,7 +619,7 @@ abc++;
    // adding new data
 
 
-/*    $(document).on("click", "#adddata", function() { 
+   $(document).on("click", "#adddata", function() { 
       $('.counts ').hide();
       $('#Link').hide();
       $('#theLink').hide();
@@ -627,21 +629,16 @@ abc++;
        
         var sno='<?php  $i++; echo $i; ?>';
         <?php  $abc= date("Y"); 
-               //$abc1= date("F");
-               $yearArray = range(2017, 2100);
-               $monthArray = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+               //$abc=2019;
+               $yearArray = range($abc-2,$abc+2);
+              
         ?>
        //'.$selected.'
         markup = "<tr> <input type='hidden' id='idd1' value='<?=$val->id?>'> <td> " + sno + "</td> <td> <select id='year' name='year'> <option value=''>Select Year</option> <?php foreach ($yearArray as $year) {
          $selected = ($year == $abc) ? 'selected' : '';
         echo '<option value='.$year.'>'.$year.'</option>';
         }
-    ?></select> <select id='month' name='month'> <option value=''>Select Month</option> <?php
-    foreach ($monthArray as $month) {
-        echo '<option value='.substr($month,0,3).'>'.$month.'</option>';
-    }
-    ?>
-    </select> </td>  <td><input type='text' size='8' id='billedhours1'onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='billhours' name='hours'> </td>   <td><input type='text' size='8' id='rate1' name='rate1' disabled> </td>  <td><input type='text'size='8' id='pct1' name='pct1' disabled> </td>  <td><input type='text' id='totalamount1' name='total' disabled> </td><td> </td> <td> </td> <td ><button class='btn btn-primary buttonsaveone' id='save1' disabled>Add</button></td> </tr>";
+    ?></select> <select id='month' name='month' disabled> <option value=''>Select Month</option> </select> </td> <td></td> <td><input type='text' size='8' id='billedhours1'onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='billhours' name='hours'> </td>   <td><input type='text' size='8' id='rate1' name='rate1' disabled> </td>  <td><input type='text'size='8' id='pct1' name='pct1' disabled> </td>  <td><input type='text' size='8' id='totalamount1' name='total' disabled> </td><td><input type='text' size='8' disabled> </td><td><input type='text' size='8' disabled> </td><td><input type='text' size='8' disabled> </td> <td><button class='btn btn-primary buttonsaveone' id='save1' disabled>Add</button></td> </tr>";
         tableBody = $("table"); 
         tableBody.append(markup);
 
@@ -660,8 +657,38 @@ abc++;
              });
 
 
+         $(document).on('change', "#year", function (){
+
+          var year = $(this).parent('td').parent('tr').find('#year').val();
+          var id = <?php echo $_GET['var1']; ?>;
+          $(this).parent('td').parent('tr').find('#month').prop('disabled', false);
+          console.log(year);
+          console.log(id);
+          $('#month').empty();
+
+             $.ajax({
+                    type: "post",
+                    url: "<?= base_url();?>gettingmonth",
+                    cache: false,  
+                    dataType: 'JSON',
+                    data: {id:id, year:year},
+                    success: function(json){  
+                      var formoption = ""; 
+                       for (i in json) {
+                         formoption += "<option value='"+json[i]+"'>"+json[i]+"</option>";
+                       }
+                       $('#month').append(formoption);
+                    }
+
+                });
+
+
+
+         });
+
+
   });
-*/
+
 
 
 // save data
@@ -669,9 +696,7 @@ abc++;
 $(document).on("click", "#save", function() { 
            
 
-                   $("table tbody tr").each(function () {  
-
-  
+       $("table tbody tr").each(function () {  
                 var tiz = $(this).find("td").eq(2).find(":text").val();
                 var id = <?php echo $_GET['var1'];  ?>;
                 var mon = $(this).find("td").eq(3).find(":text").val();
@@ -680,6 +705,7 @@ $(document).on("click", "#save", function() {
                  var percet11 = $(this).find("td").eq(6).find(":text").val();
                 var totalamount = $(this).find("td").eq(7).find(":text").val();
                 //console.log(tiz);
+                var totalamount=totalamount.replace('$',' ');
                 
                   $.ajax({
                     type: "post",

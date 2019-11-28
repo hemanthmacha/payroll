@@ -5,7 +5,7 @@ class Percentage extends CI_Controller {
 
 	    public function __construct()
 	{
-		     parent::__construct();//call CodeIgniter's default Constructor
+		  parent::__construct();
           $this->load->model('Percentage_model');
           error_reporting(0);
         
@@ -27,8 +27,7 @@ class Percentage extends CI_Controller {
         $hour2 =$_POST['hour2'];
         $per =$_POST['percentage'];
         $rate =$_POST['rate'];
-        $tiz =$_POST['tiz'];
-       
+        $tiz =$_POST['tiz'];     
         $data['rate']=$this->Percentage_model->insertpercent($id,$hour1,$hour2,$per,$rate,$tiz);
         echo json_encode($data);
 

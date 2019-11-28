@@ -3,14 +3,6 @@
 class Employe_model extends CI_Model 
 {
 
-	/* public function getemploye($id){
- 		
- 		$response = array();
-    $query=" SELECT `billedhours`, `mounthtotal`, `month`, `year`, `id`, `rate` FROM `tbl_employee` WHERE id='$id'  ORDER BY year ASC, field(month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec') ";
-    $response= $this->db->query($query)->result();
-    return $response;
-    }*/
-
       public function getemploye($id,$perpage,$limit){
 
       $response = array();
@@ -33,14 +25,7 @@ class Employe_model extends CI_Model
     die();*/
     return $responsex;
 
-
-
-
-
     }
-
-
-
 
     public function getemploye_firstmonth($id){
     
@@ -116,10 +101,6 @@ class Employe_model extends CI_Model
     }
 
 
-    
-
-    
-
     public function deleteemployee($id,$month,$year)
     {  
       $query1="DELETE FROM `tbl_payrool_sheet` WHERE id='$id' and month='$month' and year='$year'";
@@ -168,40 +149,22 @@ class Employe_model extends CI_Model
 
 
       public function insert_newdata_employee($id,$billedhours,$totalamount,$month,$year,$fname,$lname,$rate,$pct){
- 		
- 		
-       
 
        $query= "INSERT INTO `tbl_payrool_sheet`(`month`, `year`, `id`,`firstname`, `lastname`) VALUES ('$month','$year','$id','$fname','$lname')";
-
 
        $this->db->query($query);
 
        $query1= "INSERT INTO `tbl_employee`(`billedhours`, `mounthtotal`, `month`, `year`, `id`,`rate`,`percentage`) VALUES ('$billedhours','$totalamount','$month','$year','$id','$rate','$pct')";
-
-
 
        $this->db->query($query1);
        
        return  $query;
     }
 
-  /*  public function getemp(){
- 		
- 		$response = array();
- 		
-		$this->db->select(`firstname`, `lastname`, `id`);  
-		$this->db->from('tbl_users');
-     	$query = $this->db->get();
-		$response = $query->result();
-		 return $response;
-    }*/
-
-
-      public function getemp($perpage,$limit){
+  
+  public function getemp($perpage,$limit){
     
-      $response = array();
-    
+    $response = array();
     $this->db->select(`firstname`, `lastname`, `id`);  
     $this->db->from('tbl_users');
     $query = $this->db->get();
@@ -248,7 +211,13 @@ class Employe_model extends CI_Model
     }
     
 
-
+    public function employe_month($id,$year){
+    
+    $response1 = array();
+    $query1= "SELECT `month` FROM `tbl_employee` WHERE id='$id' and year='$year'";
+    $response1= $this->db->query($query1)->result();
+    return $response1; 
+    }
 
 
 }

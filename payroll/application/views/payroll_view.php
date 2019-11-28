@@ -3,6 +3,7 @@
 <head>
 <title>Payroll Summary</title>
 <link rel="stylesheet" href="<?=base_url('assests/css/payroll.css')?>">
+<img src="https://img.icons8.com/officexs/16/000000/data-recovery.png">
 
 <style type="text/css">
   #monthdisplay{
@@ -47,6 +48,7 @@ height:auto; "> </h3>
       <th>Total Hours</th>
       <th>Balance</th>
       <th>Link</th>
+      <th>Save</th>
 </tr>
 
 
@@ -67,40 +69,41 @@ height:auto; "> </h3>
     <input type="hidden" style="border: 0" id="sno" value="<?=$i?>">
     <input type="hidden" id="idd" value="<?=$val->id?>">
     <input type="hidden" id="expences" value="<?=$val->expences?>">
-    <input type="hidden" id="month" value="<?=$val->month?>">
-    <input type="hidden" id="year" value="<?=$val->year?>">
+    <input type="hidden" id="month<?php echo $i; ?>" value="<?=$val->month?>">
+    <input type="hidden" id="year<?php echo $i; ?>" value="<?=$val->year?>">
     
-    <td><input type="text" style="border: 0" id="fname"  value="<?php echo $val->firstname; ?>"  readonly/></td>
-    <td><input type="text" style="border: 0" id="lname" value="<?php echo $val->lastname; ?>"readonly/></td>
+    <td><input type="text" style="border: 0" size= "10" id="fname<?php echo $i; ?>"  value="<?php echo $val->firstname; ?>"  readonly/></td>
+    <td><input type="text" style="border: 0" size= "10" id="lname<?php echo $i; ?>" value="<?php echo $val->lastname; ?>"readonly/></td>
 
     <?php if($val->hours==0) { ?>
-    <td><input type="text" style="border: 0" id="rate" size="8" value="<?php echo $val->curent_rate; ?>" readonly/> </td>
+    <td><input type="text" style="border: 0" id="rate<?php echo $i; ?>" size="8" value="<?php echo $val->curent_rate; ?>" readonly/> </td>
     <?php if($val->percentage >0) { ?>
-    <td><input type="text" style="border: 0" id="percent"  size="8" value="<?php echo $val->current_percent; ?>" readonly/></td>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="8" value="<?php echo $val->current_percent; ?>" readonly/></td>
     <?php } ?>
 
     <?php if($val->percentage ==0) { ?>
-    <td><input type="text" style="border: 0" id="percent"  size="8" value="100" readonly/></td>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="8" value="100" readonly/></td>
     <?php } } ?>
 
      <?php if($val->hours>0) { ?>
-      <td><input type="text" style="border: 0" id="rate" size="8" value="<?php echo $val->rate_percent; ?>" readonly/> </td>
+      <td><input type="text" style="border: 0" id="rate<?php echo $i; ?>" size="8" value="<?php echo $val->rate_percent; ?>" readonly/> </td>
     <?php if($val->percentage >0) { ?>
-    <td><input type="text" style="border: 0" id="percent"  size="8" value="<?php echo $val->percentage; ?>" readonly/></td>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="8" value="<?php echo $val->percentage; ?>" readonly/></td>
     <?php } ?>
 
     <?php if($val->percentage ==0) { ?>
-    <td><input type="text" style="border: 0" id="percent"  size="8" value="100" readonly/></td>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="8" value="100" readonly/></td>
     <?php } } ?>
 
-     <td><input type="text" style="border: 0" id="tiz_share" size="8" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+     <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="8" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
 
-    
-    <!-- <td><input type="text" id="hours"  value="<?php echo $val->hours; ?>" disabled/></td> -->
-  <!-- <td><input type="text" id="pct"  value="<?php echo $val->percentage; ?>" disabled/></td> -->
-    <td><input type="text"  id="firsttpay" size="8"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onestpay; ?>"/></td>
-    <td><input type="text" size="8"   id="secondpay"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo $val->onefivethpay; ?>"/></td>
-    <td><input type="text" size="8"  style="border: 0" id="total" value="<?php echo $val->total; ?>" readonly/></td>
+    <td><input type="text"  id="firsttpay<?php echo $i; ?>" size="8"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo "$"; echo $val->onestpay; ?>"/> <input type="image" id="lastmonthfirstpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
+
+    <td><input type="text" size="10"   id="secondpay<?php echo $i; ?>"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php  echo "$"; echo $val->onefivethpay; ?>"/> <input type="image" id="lastmonthsecondpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
+
+  
+
+    <td><input type="text" size="8"  style="border: 0" id="total<?php echo $i; ?>" value="<?php echo "$";echo $val->total; ?>" readonly/></td>
     <!-- <td>
       <select style="width: 90px;"   id="status"  class="form-control dropdownselect">
             <option value="Active" <?php if($val->status == 'Active') { echo 'selected'; } ?>>Active</option>
@@ -110,9 +113,9 @@ height:auto; "> </h3>
        </select>
     </td> -->
 
-    <td><input type="text" style="border: 0" id="totalbilled" name="name" value="<?php echo $val->totalbilled_hours; ?>" readonly/></td>
-    <td><input type="text" style="border: 0" id="balance" name="name" value="<?php echo $val->balance; ?>" readonly/></td>
-    <td><a href="<?=base_url()?>list/?var1=<?=$val->id?>&var2=<?=$val->firstname?>&var3=<?=$val->lastname?>">See More</a></td>
+    <td><input type="text" style="border: 0" size="10" id="totalbilled<?php echo $i; ?>" name="name" value="<?php echo $val->totalbilled_hours; ?>" readonly/></td>
+    <td><input type="text" style="border: 0" size="10" id="balance<?php echo $i; ?>" name="name" value="<?php  echo "$"; echo $val->balance; ?>" readonly/></td>
+    <td><a href="<?=base_url()?>list/?var1=<?=$val->id?>&var2=<?=$val->firstname?>&var3=<?=$val->lastname?>" target="_blank" >See More</a></td>
 
       <td >
         
@@ -136,26 +139,30 @@ height:auto; "> </h3>
 &nbsp; &nbsp;   <button class="btn btn-primary buttonsave" id="unpaid" >No. of Unpaid Employes</button> 
      
     <div class="counts" style="display: none">
-       <br>
+      
+       <table class="col-sm-2">
+        <br>
       <h4>  <?php foreach ($monthpay as $key => $value) { ?>
-       Total Firstpay   :<?php echo $value->firstsum; ?>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; 
-       Total Secondpay  :<?php echo $value->secondsum; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-       Total Pay        :<?php echo $value->totalmonthsum; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+         <tr> <td> Total Firstpay    </td> <td><?php  echo "$";echo $value->firstsum; ?> </td> </tr> 
+         <tr> <td>Total Secondpay  </td> <td><?php  echo "$";echo $value->secondsum; ?> </td> </tr>  
+         <tr> <td> Total Pay        </td> <td><?php  echo "$";echo $value->totalmonthsum; ?> </td> </tr>  
        <?php break; } foreach($totalhours as $key => $value) {?>
-        Total hours     :<?php echo $value->totalhours; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+        <tr> <td>Total hours     </td> <td><?php echo $value->totalhours; ?> </td> </tr>  
 
         <?php break; } foreach ($totalbalance as $key => $value) { ?>
-        Total Balance   :<?php echo $value->totalbalance ?>
-         <?php } ?> </h4> 
+         <tr> <td> Total Balance   </td> <td><?php  echo "$";echo $value->totalbalance ?> </td> </tr> 
+        <?php } ?> </table> </h4> 
  
     </div>  
 
    <div class="remaining" style="display: none">
+    <table class="col-sm-3">
     <br>
-        <h4>Total Employees worked on <?php echo $unpid[3]; echo " "; echo $unpid[4]; echo " : "; echo $unpid[2]; ?></h4>
+        <h4><tr> <td>Total Employees worked on <?php echo $unpid[3]; echo " "; echo $unpid[4]; ?> </td> <td><?php echo $unpid[2]; ?></td> </tr> </h4>
         
-        <h4>1st Pay Remaining Employees&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?php $temp =$unpid[2]-$unpid[0]; echo $temp; ?></h4>
-        <h4>15th pay Remaining Employees&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?php $temp1 =$unpid[2]-$unpid[1]; echo $temp1; ?> </h4>
+        <h4><tr> <td>1st Pay Remaining Employees </td> <td> <?php $temp =$unpid[2]-$unpid[0]; echo $temp; ?></td> </tr> </h4>
+        <h4><tr> <td>15th pay Remaining Employees </td> <td> <?php $temp1 =$unpid[2]-$unpid[1]; echo $temp1; ?> </td> </tr> </h4>
+    </table> 
     </div>
 
 </div>
@@ -178,11 +185,13 @@ height:auto; "> </h3>
 
   $(document).on("click","#unpaid", function(){   
      $('.remaining').toggle();
+      $(".counts").hide();
 });
 
 
 $(document).on("click","#total", function(){
      $(".counts").toggle();
+     $('.remaining').hide();
 });
 
 
@@ -279,10 +288,15 @@ $(document).ready(function() {
       balancearray.push(<?php echo $val->balance;?>);
     <?php } ?>
 
+            var sno = $(this).parent('td').parent('tr').find('#sno').val();
+            console.log(sno)
             var index = $(this).parent('td').parent('tr').find('#sno').val();
                index= parseInt(index)-1;
-            var num1 = $(this).parent('td').parent('tr').find('#firsttpay').val();
-            var num2 = $(this).parent('td').parent('tr').find('#secondpay').val();
+            var num1 = $(this).parent('td').parent('tr').find('#firsttpay'+sno).val();
+            var num2 = $(this).parent('td').parent('tr').find('#secondpay'+sno).val();
+            var num1=num1.replace('$','');
+            var num2=num2.replace('$','');
+             
             if(num2==''){
 
               num2=0;
@@ -299,17 +313,17 @@ $(document).ready(function() {
 
             if (!isNaN(result)) {
 
-              $(this).parent('td').parent('tr').find('#total').val(result);
+              $(this).parent('td').parent('tr').find('#total'+sno).val('$'+result);
               var bal = balancearray[index];
               var result1 = parseFloat(bal)-parseFloat(result);
-              $(this).parent('td').parent('tr').find('#balance').val(result1);
+              $(this).parent('td').parent('tr').find('#balance'+sno).val('$'+result1);
 
         
             }
         });
 
 $(document).ready(function () {
-        $("#firsttpay,#secondpay").on('keyup', function () {
+        $(".paychange").on('keyup', function () {
             if ($(this).val() != '') {
                 $(this).parent('td').parent('tr').find('#save').prop('disabled', false);
             }
@@ -321,26 +335,28 @@ $(document).ready(function () {
    
 
 
-$(document).on("click", "#save", function() { 
+   $(document).on("click", "#save", function() { 
            
+           var sno = $(this).parent('td').parent('tr').find('#sno').val();
            var id = $(this).parent('td').parent('tr').find('#idd').val();
-           var fname= $(this).parent('td').parent('tr').find('#fname').val();
-           var lname = $(this).parent('td').parent('tr').find('#lname').val();
-           var rate= $(this).parent('td').parent('tr').find('#rate').val();
-           var pct = $(this).parent('td').parent('tr').find('#percent').val();
-           var pay1= $(this).parent('td').parent('tr').find('#firsttpay').val();
-           var pay2 = $(this).parent('td').parent('tr').find('#secondpay').val();
-           var total= $(this).parent('td').parent('tr').find('#total').val();
-           var status= $(this).parent('td').parent('tr').find('#status').val();
-           var hours = $(this).parent('td').parent('tr').find('#hours').val();
-           var balance= $(this).parent('td').parent('tr').find('#balance').val();
-           var month = $(this).parent('td').parent('tr').find('#month').val();
-           var year= $(this).parent('td').parent('tr').find('#year').val();
-           console.log(year);
+           var fname= $(this).parent('td').parent('tr').find('#fname'+sno).val();
+           var lname = $(this).parent('td').parent('tr').find('#lname'+sno).val();
+           var rate= $(this).parent('td').parent('tr').find('#rate'+sno).val();
+           var pct = $(this).parent('td').parent('tr').find('#percent'+sno).val();
+           var pay11= $(this).parent('td').parent('tr').find('#firsttpay'+sno).val();
+           var pay22 = $(this).parent('td').parent('tr').find('#secondpay'+sno).val();
+           var total1= $(this).parent('td').parent('tr').find('#total'+sno).val();
+           var status= $(this).parent('td').parent('tr').find('#status'+sno).val();
+           var hours = $(this).parent('td').parent('tr').find('#hours'+sno).val();
+           var balance1= $(this).parent('td').parent('tr').find('#balance'+sno).val();
+           var month = $(this).parent('td').parent('tr').find('#month'+sno).val();
+           var year= $(this).parent('td').parent('tr').find('#year'+sno).val();
 
-
-           console.log(id);
-          
+          var pay1=pay11.replace('$','');
+          var pay2=pay22.replace('$','');
+          var total=total1.replace('$','');
+          var balance=balance1.replace('$','');
+           
           $.ajax({
            type: "post",
            url: "<?= base_url();?>update",
@@ -350,8 +366,78 @@ $(document).on("click", "#save", function() {
             alert("payroll updated");
             location.reload();
           } 
-          });
+       });
+    });
+
+$(document).on("click","#lastmonthsecondpay",function(){
+
+             var sno = $(this).parent('td').parent('tr').find('#sno').val();
+             var id = $(this).parent('td').parent('tr').find('#idd').val();
+             var month = $(this).parent('td').parent('tr').find('#month'+sno).val();
+             var year= $(this).parent('td').parent('tr').find('#year'+sno).val();
+             var fp1= $(this).parent('td').parent('tr').find('#firsttpay'+sno).val();
+             var FP= fp1.replace('$','');
+              FP= parseInt(FP);
+             $(this).parent('td').parent('tr').find('#save').prop('disabled', false);
+
+
+             /*console.log(month);
+             console.log(year);
+             console.log(id);*/
+            $.ajax({
+            type: "post",
+            url:"<?=base_url();?>recentpay",
+            cache: false,
+            dataType:"json",
+            data:{id:id,month:month, year:year},
+
+            success: function(json)
+            {
+           /*   //console.log(json);
+              console.log(json[0].onestpay);
+              console.log(json[0].onefivethpay);*/
+             
+             $('#secondpay'+sno).val('$'+parseInt(json[0].onefivethpay));
+             var temp=parseInt(json[0].onefivethpay)+FP;
+             $('#total'+sno).val('$'+temp);
+             
+            }
          });
+        });
+
+
+
+$(document).on("click","#lastmonthfirstpay",function(){
+
+             var sno = $(this).parent('td').parent('tr').find('#sno').val();
+             var id = $(this).parent('td').parent('tr').find('#idd').val();
+             var month = $(this).parent('td').parent('tr').find('#month'+sno).val();
+             var year= $(this).parent('td').parent('tr').find('#year'+sno).val();
+             $(this).parent('td').parent('tr').find('#save').prop('disabled', false);
+
+
+             /*console.log(month);
+             console.log(year);
+             console.log(id);*/
+            $.ajax({
+            type: "post",
+            url:"<?=base_url();?>recentpay",
+            cache: false,
+            dataType:"json",
+            data:{id:id,month:month, year:year},
+
+            success: function(json)
+            {
+           /*   //console.log(json);
+              console.log(json[0].onestpay);
+              console.log(json[0].onefivethpay);*/
+             $('#firsttpay'+sno).val('$'+json[0].onestpay);
+             $('#total'+sno).val('$'+json[0].onestpay);
+             
+            }
+         });
+        });
+
         
 
 </script>

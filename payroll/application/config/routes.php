@@ -56,6 +56,10 @@ $route['unpaid']='Payroll_sheet/unpaid_emp';
 
 $route['test']='Employe/total';
 
+$route['gettingmonth']='Employe/gettingmonth_not_in_data';
+
+$route['recentpay']='Payroll_sheet/recentpay';
+
 
 
 
