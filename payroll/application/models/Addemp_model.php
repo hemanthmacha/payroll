@@ -6,6 +6,10 @@ class Addemp_model extends CI_Model
 	public function addemp($fname,$lname,$pass,$status,$uname,$email)
 	{
 		$query="INSERT INTO `tbl_users`(`firstname`,`lastname`,`status`,`password`,`username`,`email`,`first_login_status`) VALUES('$fname','$lname','$status','$pass','$uname','$email','1')";
+	
+/*
+		print_r($query);
+		die();*/
 		$this->db->query($query);
 
 		$this->db->select('id,username,password');  
@@ -14,6 +18,10 @@ class Addemp_model extends CI_Model
 	
 		$query = $this->db->get();
 		$response = $query->result();
+
+		/*print_r($response);
+		die();
+*/
 		 return $response;
 	}
 

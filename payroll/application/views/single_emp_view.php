@@ -33,7 +33,7 @@
 
     <div class="content"> 
     <div class="row"> 
-    <div class="col-sm-10">
+    <div class="col-sm-12">
       <?php 
       $changevalue1=array();
       $changevalue2=array();
@@ -119,6 +119,7 @@
       <th>Rate</th>
        <th>Hourly Rate</th>
       <th>Total Amount</th>
+      <th></th>
       <th>1st Pay</th>
         <th>15th Pay</th>
       <th>Amount Paid to Individual</th>

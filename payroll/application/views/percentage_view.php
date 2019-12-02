@@ -8,8 +8,6 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <link rel="stylesheet" href="<?=base_url('assests/css/percentview.css')?>">
-
-
 </head>
 
 
@@ -96,14 +94,14 @@
      
     </form>
 
-     <button style="display: none" class="btn btn-primary buttonsave"  name="edit" id="edit"><i class="fa fa-edit"></i> Edit </button>
+     <button style="display: none" class="btn btn-primary buttonsave" style="padding-top: 3px;" name="edit" id="edit"><i class="fa fa-edit"></i> Edit </button>
     <!-- <input style="display: none" class="btn btn-primary buttonsave"  type="button" name="edit" id="edit" value="Edit"/> -->
-    <button class="btn btn-primary buttonsave" style="display: none"  name="update" id="update"><i class="fa fa-edit"></i> Update </button>
+    <button class="btn btn-primary buttonsave" style="padding-top: 3px;display: none"  name="update" id="update"><i class="fa fa-edit"></i> Update </button>
 
-    <button class="btn btn-primary buttonsave" style="display: none" id="save" name="save" id="save"><i class="fa fa-save"></i> Save</button>
-   <button class="btn btn-primary buttonsave add-row" id="addcondition" style="display: none" ><span class="glyphicon glyphicon-plus"></span>  Add condition </button>
-     <button class="btn btn-primary buttondelete"id="delete" style="display: none"><i class="fa fa-trash-o"></i> Delete</button>
-    <button type="button" id="back" class="btn btn-primary buttonsave" onclick="history.back()"> <span class="glyphicon glyphicon-arrow-left"></span> Back </button>
+    <button class="btn btn-primary buttonsave" style="padding-top: 3px;display: none" id="save" name="save" id="save"><i class="fa fa-save"></i> Save</button>
+   <button class="btn btn-primary buttonsave add-row" id="addcondition" style="padding-top: 3px;display: none" ><span class="glyphicon glyphicon-plus"></span>  Add condition </button>
+     <button class="btn btn-primary buttondelete"id="delete" style="padding-top: 3px;display: none"><i class="fa fa-trash-o"></i> Delete</button>
+    <button type="button" id="back" class="btn btn-primary buttonsave" style="padding-top: 3px;" onclick="history.back()"> <span class="glyphicon glyphicon-arrow-left"></span> Back </button>
 
 
    <!--  <input style="display: none" class="btn btn-primary buttonsave"  type="button" name="edit" id="edit" value="Edit"/>

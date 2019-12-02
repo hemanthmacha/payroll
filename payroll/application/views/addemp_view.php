@@ -35,15 +35,15 @@
 
     <div>
      <label for="lname">Password:</label>
-     <input type="password" class="form-control" id="pass" placeholder="Enter Password" name="pass" required> 
+     <input type="password" class="form-control" id="pass" placeholder="Enter Password" name="pass" required readonly> 
     </div>
 
     <div>
      <label for="lname">Email:</label>
-     <input type="email" class="form-control" id="email" placeholder="Enter MailID" name="email" required> 
+     <input type="text" class="form-control" id="email" placeholder="Enter MailID" name="email" required> 
     </div>
 
-		<div>
+		<!-- <div>
 		 <label for="status">Status:</label>
 		 <select  class="form-control" id="status" name="status" >
                      <option value="Active">Active</option>
@@ -51,19 +51,24 @@
                      <option value="Inhouse">Inhouse</option>
                      <option value="miscellaneous">Miscellaneous</option>
           </select>           
-		</div> 
+		</div>  -->
 
 		<div>
-         <br><input class="btn btn-primary" type="submit" id="submit" value="Submit"> 
+         <br><input class="btn btn-primary" type="submit" id="submit" value="Submit" disabled>
+          <button class="btn btn-primary" style="display: none" type="submit" id="submit1">
+            <i class="fa fa-circle-o-notch fa-spin"></i>Please Wait
+    </button> 
          <input class="btn btn-primary" type="reset" value="Reset">
      </div>
+
+    
     </form>
   </div>
 
   <script type="text/javascript">
    
 function randomPassword() {
-    var chars = "abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890";
+    var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOP1234567890";
     var pass = "";
     for (var x = 0; x < 10; x++) {
         var i = Math.floor(Math.random() * chars.length);
@@ -77,9 +82,76 @@ function randomPassword() {
 $(document).ready(function () {
     $("#submit").click(function () {
         $(".form-signin").prop('disabled', false);
+
         return true;
     });
 });
+
+
+// then do something with "isValid"
+
+
+ var isValid = true;
+     $('input,textarea,select').filter('[required]:visible').each(function() {
+      if ( $(this).val() === '' )
+         isValid = false;
+    });
+
+    if( isValid ) {
+       $('#submit').prop('disabled', false);
+
+    } else {
+       $('#submit').prop('disabled', true);
+
+    };
+
+    $('#submit').click(function() {
+        var isValid = true;
+         $('input,textarea,select').filter('[required]:visible').each(function() {
+          if ( $(this).val() === '' )
+             isValid = false;
+        });
+        if( isValid ) {
+            $('#submit').hide();
+            $('#submit1').show();
+            $('#submit1').prop('disabled', true);
+           $("#addemployee")[0].submit(); 
+       };
+
+    });
+
+    //When a input is changed check all the inputs and if all are filled, enable the button
+     $('input,textarea,select').keyup(function() {
+        var isValid = true;
+         $('input,textarea,select').filter('[required]:visible').each(function() {
+          if ( $(this).val() === '' )
+             isValid = false;
+        });
+        if( isValid ) {
+           $('#submit').prop('disabled', false);
+        } else {
+           $('#submit').prop('disabled', true);
+        };
+    });
+
+    //In case the user edits the button with firebug and removes disabled, check
+    $('#submit11').click(function() {
+         var isValid = true;
+         $('input,textarea,select').filter('[required]:visible').each(function() {
+          if ( $(this).val() === '' )
+             isValid = false;
+        });
+        if( isValid ) {
+            $('#submit').hide();
+            $('#submit1').show();
+            $('#submit1').prop('disabled', true);
+           $("#addemployee")[0].submit(); 
+       };
+    });
+
+
+
+
 
 
   </script>

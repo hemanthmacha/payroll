@@ -227,6 +227,7 @@
                  var date1=$('#date'+abc).val();
                  var des=$('#des'+abc).val();
                  var amount=$('#amount'+abc).val();
+                 var amount=amount.replace('$','');
                 $.ajax({
                      type:'POST',
                      url: "<?= base_url();?>deleteexpenses", 

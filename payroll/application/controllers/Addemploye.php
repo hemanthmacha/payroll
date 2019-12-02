@@ -57,16 +57,16 @@ class Addemploye extends CI_Controller {
         $this->email->initialize($config);
         $this->email->set_mailtype("html");
         $this->email->set_newline("\r\n");
-        $htmlContent = '<h1>Hi,</h1>'.$fname .$lname;
+        $htmlContent = '<h4>Hi,</h4>'.$fname .$lname;
         $htmlContent .= '<p>Your user name and password for login to your payroll details are given below.</p>';
         $htmlContent .= '<p>URL :http://payrol.codetru.org/</p>';
         $htmlContent .= '<p>USERNAME: </p>'.$uname;
         $htmlContent .= '<p>PASSWORD: </p>'.$password;
         $htmlContent .= '<p>NOTE: Please change your password after login </p>';
-        $htmlContent .= '<p>If u had any doughts call back to our office. Contact Number:+919999999999</p>';
+        $htmlContent .= '<p>If u had any queries call back to us. Contact Number:+919999999999</p>';
         $this->email->to($email);
         $this->email->from('machahemanth16@gmail.com','macha_hemanth');
-        $this->email->subject('Your Account Username and Password ');
+        $this->email->subject('Tekinvaderz Account Username and Password ');
         $this->email->message($htmlContent);
        /* $this->email->send();*/
          if($this->email->send()){
@@ -84,7 +84,7 @@ class Addemploye extends CI_Controller {
 
         if(!empty($data1)){
 
-            echo '<script>alert("Employee Added and login details send to the Employe");</script>';
+            echo '<script>alert("Employe Added and login details sent to the Employe");</script>';
             $this->load->view('addemp_view');
             
    }
@@ -92,7 +92,7 @@ class Addemploye extends CI_Controller {
         }
 
         else{
-            echo '<script>alert("Something went wrong try again later");</script>';
+            echo '<script>alert("Something went wrong please try again ");</script>';
             $this->load->view('addemp_view');
 
         }

@@ -20,6 +20,8 @@
 <tr> <td> <a href="<?= base_url();?>month/Nov/?var1=<?=$yea?>"><font size="5"> November <?= $yea ?></font> </a><br><br> </td></tr>
 <tr> <td> <a href="<?= base_url();?>month/Dec/?var1=<?=$yea?>"><font size="5"> December <?= $yea ?></font> </a><br><br> </td></tr>
 </table>
+<br>
+<button type="button" id="back" class="btn btn-primary buttonsave" onclick="history.back()"> <span class="glyphicon glyphicon-arrow-left"></span> Back </button>
 </div>
 </div>
 </div>

@@ -57,16 +57,16 @@ class Forgot extends CI_Controller {
         $this->email->initialize($config);
         $this->email->set_mailtype("html");
         $this->email->set_newline("\r\n");
-        $htmlContent = '<h1>Hi,</h1>'.$fname .$lname;
+        $htmlContent = '<h4>Hi,</h4>'.$fname .$lname;
         $htmlContent .= '<p>Your user name and password for login to your payroll details are given below.</p>';
         $htmlContent .= '<p>URL :http://payrol.codetru.org/</p>';
         $htmlContent .= '<p>USERNAME: </p>'.$username;
         $htmlContent .= '<p>PASSWORD: </p>'.$password;
         $htmlContent .= '<p>NOTE: Please change your password after login </p>';
-        $htmlContent .= '<p>If u had any doughts call back to our office. Contact Number:+919999999999</p>';
+        $htmlContent .= '<p>If u had any queries call back to us. Contact Number:+919999999999</p>';
         $this->email->to($email);
         $this->email->from('machahemanth16@gmail.com','macha_hemanth');
-        $this->email->subject('Your Account Username and Password ');
+        $this->email->subject('Tekinvaderz Account Username and Password ');
         $this->email->message($htmlContent);
         $this->email->send();
         echo '<script>alert("Password sent to your mail");</script>';
@@ -77,7 +77,7 @@ class Forgot extends CI_Controller {
 		else{
 
 			       echo '<script>alert("Please enter correct username or maild");</script>';
-             //echo '<script>window.open("'base_url()'");</script>'; 
+             echo '<script>window.open("'.base_url().'","_self");</script>';
 		}
 	
 	}
@@ -93,7 +93,7 @@ class Forgot extends CI_Controller {
       $this->Forgot_model->update_status($id,$password);
     
       //$this->session->unset_userdata('role');
-      echo '<script>alert("Password change successfully");</script>';
+      echo '<script>alert("Password changed successfully");</script>';
       echo '<script>alert("Please login again");</script>';
       echo '<script>window.open("'.base_url().'","_self");</script>';
 

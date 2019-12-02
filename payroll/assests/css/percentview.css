@@ -65,4 +65,11 @@
   filter: alpha(opacity=100); 
 }
 
- 
+ .btn-primary {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    padding-bottom: 22px;
+    padding-top: 3px;
+    width: auto;
+}
