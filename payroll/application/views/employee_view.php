@@ -152,7 +152,7 @@
     <td><input type="text"style="border: 0" size= "8" id="totalamount<?php echo $i;?>" name="total" value="<?php echo"$";echo $val->mounthtotal; ?>" readonly/></td>
     <td><input type="text"style="border: 0" size= "8" id="onestpay<?php echo $i;?>" name="total" value="<?php echo"$";echo $val->onestpay; ?>" readonly/></td>
     <td><input type="text"style="border: 0" size= "8" id="onefivethpay<?php echo $i;?>" name="total" value="<?php echo"$";echo $val->onefivethpay; ?>" readonly/></td>
-    <td><input type="text"style="border: 0"  size= "8" id="monthtotalpay<?php echo $i;?>" name="total" value="<?php echo"$";echo monthtotalpay[$mp]; ?>" readonly/></td>
+    <td><input type="text"style="border: 0"  size= "8" id="monthtotalpay<?php echo $i;?>" name="total" value="<?php echo"$";echo $monthtotalpay[$mp]; ?>" readonly/></td>
 
     <!-- change rate alert display start -->
 

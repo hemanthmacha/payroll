@@ -119,7 +119,8 @@
       <th>Rate</th>
        <th>Hourly Rate</th>
       <th>Total Amount</th>
-      <th></th>
+      <th>1st Pay</th>
+        <th>15th Pay</th>
       <th>Amount Paid to Individual</th>
       <th>Expenses</th>
       
@@ -212,7 +213,11 @@
       ?>
       <!-- change alert ends-->
 
+    <td><input type="text" style="border:0"  id="monthpay" size="8" name="total" value="<?php echo "$";echo $val->onestpay;  ?>"readonly/></td>
+    
+    <td><input type="text" style="border:0"  id="monthpay" size="8" name="total" value="<?php echo "$";echo $val->onefivethpay;  ?>"readonly/></td>
 
+      
     <td><input type="text" style="border:0"  id="monthpay" size="8" name="total" value="<?php echo "$";echo $monthtotalpay[$mp];  ?>"readonly/></td>
 
     <td><input type="text" style="border:0"  id="expenses" size="8" name="expenses" value="<?php echo "$";echo $expp[$mp]; ?>"readonly />&nbsp;&nbsp;<a href="singleempexpenses/?val1=<?php echo $val->id;?>&val2=<?php echo $val->month;?>&val3=<?php echo $val->year;?>"> know expenses </a></td>
@@ -221,7 +226,7 @@
 
 	</tr>
 
-	  <?php $j = $j +1; } ?>
+	  <?php $j = $j +1; $mp=$mp+1;} ?>
 
        <tr><td colspan="6" class="text-right"><span class="pagination"><?=$links?></span></td></tr>
 

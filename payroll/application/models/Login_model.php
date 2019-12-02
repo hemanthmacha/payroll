@@ -25,6 +25,16 @@ class Login_model extends CI_Model {
  
   }
 
+  public function emp_status($id){
+
+    $status=array();
+    $query= "SELECT `first_login_status` FROM `tbl_users` WHERE id='$id' ";
+    $status= $this->db->query($query)->result();
+    return $status; 
+ 
+  }
+
   
 
 }  
+?>

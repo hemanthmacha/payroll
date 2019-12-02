@@ -38,6 +38,11 @@
      <input type="password" class="form-control" id="pass" placeholder="Enter Password" name="pass" required> 
     </div>
 
+    <div>
+     <label for="lname">Email:</label>
+     <input type="email" class="form-control" id="email" placeholder="Enter MailID" name="email" required> 
+    </div>
+
 		<div>
 		 <label for="status">Status:</label>
 		 <select  class="form-control" id="status" name="status" >
@@ -49,7 +54,7 @@
 		</div> 
 
 		<div>
-         <br><input class="btn btn-primary" type="submit" value="Submit"> 
+         <br><input class="btn btn-primary" type="submit" id="submit" value="Submit"> 
          <input class="btn btn-primary" type="reset" value="Reset">
      </div>
     </form>
@@ -67,6 +72,14 @@ function randomPassword() {
     
     $('#pass').val(pass);
 }
+
+
+$(document).ready(function () {
+    $("#submit").click(function () {
+        $(".form-signin").prop('disabled', false);
+        return true;
+    });
+});
 
 
   </script>

@@ -57,7 +57,7 @@ class Employe_model extends CI_Model
 
       $response = array();
       
-      $this->db->select('tbl_employee.billedhours,tbl_employee.mounthtotal,tbl_employee.month,tbl_employee.year,tbl_employee.id,tbl_employee.rate,tbl_employee.percentage,IFNULL(tbl_payrool_sheet.total,0) as total');
+      $this->db->select('tbl_employee.billedhours,tbl_employee.mounthtotal,tbl_employee.month,tbl_employee.year,tbl_employee.id,tbl_employee.rate,tbl_employee.percentage, `tbl_payrool_sheet`.`onefivethpay`,`tbl_payrool_sheet`.`onestpay,IFNULL(tbl_payrool_sheet.total,0) as total');
       $this->db->from('tbl_employee as tbl_employee');
       $this->db->join('tbl_payrool_sheet AS tbl_payrool_sheet','tbl_employee.id=tbl_payrool_sheet.id and tbl_employee.month=tbl_payrool_sheet.month and tbl_employee.year=tbl_payrool_sheet.year');
       $this->db->order_by("tbl_employee.year", "asc");

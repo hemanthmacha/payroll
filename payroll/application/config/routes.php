@@ -60,6 +60,12 @@ $route['gettingmonth']='Employe/gettingmonth_not_in_data';
 
 $route['recentpay']='Payroll_sheet/recentpay';
 
+$route['changepassword']='Forgot/change_password';
+
+$route['forgot']='Forgot';
+
+$route['reset']='Forgot/reset_password';
+
 
 
 

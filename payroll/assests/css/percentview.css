@@ -1,0 +1,68 @@
+.buttonsave{
+    height: 28px;
+    padding:0px 10px;
+  }
+  .buttonback{
+    height: 28px;
+    padding:0px 10px;
+  }
+  .buttondelete{
+    height: 28px;
+    padding:0px 10px;
+  }
+  #edit {
+  opacity: 0.8;
+  filter: alpha(opacity=50); 
+}
+
+#edit:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100); 
+}
+  #delete {
+  opacity: 0.8;
+  filter: alpha(opacity=50); 
+}
+
+#delete:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100); 
+}
+ #back {
+  opacity: 0.8;
+  filter: alpha(opacity=50); 
+}
+
+#back:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100); 
+}
+ #update {
+  opacity: 0.8;
+  filter: alpha(opacity=50); 
+}
+
+#update:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100); 
+}
+ #addcondition {
+  opacity: 0.8;
+  filter: alpha(opacity=50); 
+}
+
+#addcondition:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100); 
+}
+ #save {
+  opacity: 0.8;
+  filter: alpha(opacity=50); 
+}
+
+#save:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100); 
+}
+
+ 
