@@ -5,8 +5,7 @@ class Addemp_model extends CI_Model
 
 	public function addemp($fname,$lname,$pass,$status,$uname,$email)
 	{
-		$query="INSERT INTO `tbl_users`(`firstname`,`lastname`,`status`,`password`,`username`,`email`,`first_login_status
-`) VALUES('$fname','$lname','$status','$pass','$uname','$email','1')";
+		$query="INSERT INTO `tbl_users`(`firstname`,`lastname`,`status`,`password`,`username`,`email`,`first_login_status`) VALUES('$fname','$lname','$status','$pass','$uname','$email','1')";
 		$this->db->query($query);
 
 		$this->db->select('id,username,password');  
