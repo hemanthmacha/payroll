@@ -12,7 +12,7 @@
 <?php require_once 'header.php'; ?>
   <div class="wrapper">
 
-    <form action="addemployee" method="post" class="form-signin"> 
+    <form action="addemployee" method="post" class="form-signin" name="myForm"> 
 
     <div> 
     <h2>Enter Employee Details</h2>      
@@ -149,10 +149,16 @@ $(document).ready(function () {
        };
     });
 
+    $('#email').change(function(){
+      var x = document.forms["myForm"]["email"].value;
+  var atpos = x.indexOf("@");
+  var dotpos = x.lastIndexOf(".");
+  if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+    alert("Not a valid e-mail address");
+   $('#submit').prop('disabled', true);
+  }
 
-
-
-
+    });
 
   </script>
 

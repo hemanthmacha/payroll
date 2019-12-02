@@ -75,7 +75,7 @@
                             </div>
                             <div class="col-md-8 offset-md-6">
                                 <a href="forgot" class="btn btn-link">
-                                    Forgot Your Password?
+                                    Forgot Password?
                                 </a>
                             </div>
                     </div>

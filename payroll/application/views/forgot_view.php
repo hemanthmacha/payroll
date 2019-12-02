@@ -38,7 +38,7 @@
                 <div class="card">
                     <div class="card-header" style="background-color: #250d0d14;;">Forgot Password</div>
                     <div class="card-body">
-                        <form action="reset" method="POST">
+                        <form action="reset" method="POST" name="myForm">
                             <div class="form-group row">
                                 <label for="email_address" class="col-md-4 col-form-label text-md-right" style="font-family: unset;">UserName</label>
                                 <div class="col-md-6">
@@ -100,11 +100,16 @@
           if ( $(this).val() === '' )
              isValid = false;
         });
-        if( isValid ) {
+          if( isValid ) {
+             var x = document.forms["myForm"]["email"].value;
+             var atpos = x.indexOf("@");
+             var dotpos = x.lastIndexOf(".");
+             if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
             $('#submit').hide();
             $('#submit1').show();
             $('#submit1').prop('disabled', true);
            $("#login")[0].submit(); 
+       }
        };
 
     });
@@ -131,15 +136,31 @@
              isValid = false;
         });
         if( isValid ) {
+             var x = document.forms["myForm"]["email"].value;
+             var atpos = x.indexOf("@");
+             var dotpos = x.lastIndexOf(".");
+             if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
             $('#submit').hide();
             $('#submit1').show();
             $('#submit1').prop('disabled', true);
            $("#login")[0].submit(); 
+       }
        };
     });
 
 
 
+    $('#email').change(function(){
+ var x = document.forms["myForm"]["email"].value;
+  var atpos = x.indexOf("@");
+  var dotpos = x.lastIndexOf(".");
+  if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+    alert("Not a valid e-mail address");
+   $('#submit').prop('disabled', true);
+  }
+  
+    });
+</script>
 
 </script>
 
