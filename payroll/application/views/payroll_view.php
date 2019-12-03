@@ -147,7 +147,7 @@ height:auto; "> </h3>
          <tr> <td>Total Secondpay  </td> <td><?php  echo "$";echo $value->secondsum; ?> </td> </tr>  
          <tr> <td> Total Pay        </td> <td><?php  echo "$";echo $value->totalmonthsum; ?> </td> </tr>  
        <?php break; } foreach($totalhours as $key => $value) {?>
-        <tr> <td>Total hours     </td> <td><?php echo $value->totalhours; ?> </td> </tr>  
+        <tr> <td>Total hours     </td> <td><?php echo $value->totalhours; echo" " ;echo "Hrs";?> </td> </tr>  
 
         <?php break; } foreach ($totalbalance as $key => $value) { ?>
          <tr> <td> Total Balance   </td> <td><?php  echo "$";echo $value->totalbalance ?> </td> </tr> 
@@ -413,6 +413,15 @@ $(document).on("click","#lastmonthfirstpay",function(){
              var id = $(this).parent('td').parent('tr').find('#idd').val();
              var month = $(this).parent('td').parent('tr').find('#month'+sno).val();
              var year= $(this).parent('td').parent('tr').find('#year'+sno).val();
+
+             var fp1= $(this).parent('td').parent('tr').find('#secondpay'+sno).val();
+             var FP= fp1.replace('$','');
+              FP= parseInt(FP);
+              if(FP==''){
+                FP=0;
+              }
+
+
              $(this).parent('td').parent('tr').find('#save').prop('disabled', false);
 
 
@@ -431,8 +440,15 @@ $(document).on("click","#lastmonthfirstpay",function(){
            /*   //console.log(json);
               console.log(json[0].onestpay);
               console.log(json[0].onefivethpay);*/
+
+              $('#firsttpay'+sno).val('$'+parseInt(json[0].onestpay));
+             var temp=parseInt(json[0].onestpay)+FP;
+             $('#total'+sno).val('$'+temp);
+
+
+            /* 
              $('#firsttpay'+sno).val('$'+json[0].onestpay);
-             $('#total'+sno).val('$'+json[0].onestpay);
+             $('#total'+sno).val('$'+json[0].onestpay);*/
              
             }
          });

@@ -59,14 +59,14 @@ class Employe_model extends CI_Model
       
       $this->db->select('tbl_employee.billedhours,tbl_employee.mounthtotal,tbl_employee.month,tbl_employee.year,tbl_employee.id,tbl_employee.rate,tbl_employee.percentage, `tbl_payrool_sheet`.`onefivethpay`,`tbl_payrool_sheet`.`onestpay,IFNULL(tbl_payrool_sheet.total,0) as total');
       $this->db->from('tbl_employee as tbl_employee');
-      $this->db->join('tbl_payrool_sheet AS tbl_payrool_sheet','tbl_employee.id=tbl_payrool_sheet.id and tbl_employee.month=tbl_payrool_sheet.month and tbl_employee.year=tbl_payrool_sheet.year');
+      $this->db->join('tbl_payrool_sheet AS tbl_payrool_sheet','tbl_employee.id=tbl_payrool_sheet.id and tbl_employee.month=tbl_payrool_sheet.month and tbl_employee.year=tbl_payrool_sheet.year'); 
       $this->db->order_by("tbl_employee.year", "asc");
       $this->db->order_by("field(tbl_employee.month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')");
       $this->db->where('tbl_employee.id', $id); 
     $query = $this->db->get();
     $totalrecords = $query->num_rows();
     $lastQeuryUsers = $this->db->last_query();
-    $paginationQuery = $this->db->select('*')->from('('.$lastQeuryUsers.') AS X')->limit($perpage,$limit)->get(); 
+    $paginationQuery = $this->db->select('*')->order_by("year", "asc")->order_by("field(month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')")->from('('.$lastQeuryUsers.') AS X')->limit($perpage,$limit)->get(); 
     $responsex['numRows'] = $totalrecords;
     $responsex['result'] = $paginationQuery->result();
     return $responsex;

@@ -104,11 +104,15 @@
              var x = document.forms["myForm"]["email"].value;
              var atpos = x.indexOf("@");
              var dotpos = x.lastIndexOf(".");
-             if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+              if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+            $('#submit').prop('disabled', true);       
+              }
+
+       else{
             $('#submit').hide();
             $('#submit1').show();
             $('#submit1').prop('disabled', true);
-           $("#login")[0].submit(); 
+            $("#login")[0].submit(); 
        }
        };
 
@@ -140,10 +144,14 @@
              var atpos = x.indexOf("@");
              var dotpos = x.lastIndexOf(".");
              if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+            $('#submit').prop('disabled', true);       
+              }
+
+       else{
             $('#submit').hide();
             $('#submit1').show();
             $('#submit1').prop('disabled', true);
-           $("#login")[0].submit(); 
+            $("#login")[0].submit(); 
        }
        };
     });
@@ -161,11 +169,6 @@
   
     });
 </script>
-
-</script>
-
-
-
 </body>
 </html>
 

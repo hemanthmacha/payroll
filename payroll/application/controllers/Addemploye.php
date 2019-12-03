@@ -84,7 +84,7 @@ class Addemploye extends CI_Controller {
 
         if(!empty($data1)){
 
-            echo '<script>alert("Employe Added and login details sent to the Employe");</script>';
+            echo '<script>alert("Employe Added and login details are sent to the Employe");</script>';
             $this->load->view('addemp_view');
             
    }

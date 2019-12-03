@@ -18,7 +18,7 @@
   <div class="container-flud">
     <div class="content">   
     <div class="row"> 
-    <div class="col-sm-6">
+    <div class="col-sm-10">
   <form class="form-signin">
     <div class="page-header">
       <h4>Percentage & Rate Conditions Of <?php echo $_GET['var2']; echo "  "; echo $_GET['var3']; ?></h4>
@@ -279,15 +279,26 @@ $("input.percent").on("keyup", function(){
           
 
 
-           $("input.lasthour").on("input change keyup keydown", function(){ 
+           $("input.lasthour").on("keyup", function(){ 
 
-                  var tr1 = $('#percentage tr:last');
-                  var nexthour1 = tr1.find('input[name="hour2"]').val();
-                  if(nexthour1 == "" || nexthour1 == "max"){ 
+                  var num = parseInt($(this).parent('td').parent('tr').find('#sno').val());
+                  //var num1 =$(this).parent('td').parent('tr').find('#firsthour'+num).val();
+                  var num2= $(this).parent('td').parent('tr').find('#secondhour'+num).val();
+
+                  //var temp1= parseInt(num1);
+                  var temp2 = parseInt(num2);
+
+
+                  if(num2 == "" || num2 == "max"){ 
                   
-                  $('#addcondition').show();
-                  $('#save').hide();  
+                  $('#addcondition').hide();
+                  $('#save').show();  
 
+                  }
+                  else{
+
+                    $('#addcondition').show();
+                    $('#save').hide();
                   }
                 });
        
@@ -373,7 +384,7 @@ $(document).on("click","#save", function(){
 
 
 
-  $("input.lasthour").on("change", function(){ 
+  $("input.lasthour").on("change ", function(){ 
 
                         $('#save').hide(); 
                         $('#addcondition').show(); 
@@ -391,7 +402,7 @@ $(document).on("click","#save", function(){
                   else{
 
                     $('#update').hide();
-                     $('#addcondition').show();
+                     $('#addcondition').hide();
                       $('#save').hide(); 
 
                   }
@@ -424,12 +435,41 @@ $(document).on("click","#save", function(){
               $('#firsthour'+num).val(temphour);
 
    });
+
+  $('input.ratee').on('keyup',function(){
+
+              var num = parseInt($(this).parent('td').parent('tr').find('#sno').val());
+              var rate1 =$(this).parent('td').parent('tr').find('#rate'+num).val();
+              var percent1 =$(this).parent('td').parent('tr').find('#percent'+num).val();
+              var temp5 = rate1 * (percent1/100);
+              var temp15 = rate1 - temp5;
+     
+              if(temp5 > 0)
+                  $('#tiz'+(num)).val(temp15);
+
+  })
+
+
+  $('input.percent11').on('keyup',function(){
+
+              var num = parseInt($(this).parent('td').parent('tr').find('#sno').val());
+              var rate1 =$(this).parent('td').parent('tr').find('#rate'+num).val();
+              var percent1 =$(this).parent('td').parent('tr').find('#percent'+num).val();
+              var temp5 = rate1 * (percent1/100);
+              var temp15 = rate1 - temp5;
+     
+              if(temp5 > 0)
+                  $('#tiz'+(num)).val(temp15);
+
+  })
+
+  
             
      $(document).on("click","#update", function(){
 
 
 
-       var temp1=0;
+         var temp1=0;
                 $("table tbody tr").each(function () {
           
                 var rate = $(this).find("td").eq(2).find(":text").val();

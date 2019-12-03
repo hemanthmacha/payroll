@@ -35,7 +35,7 @@
 
     <div>
      <label for="lname">Password:</label>
-     <input type="password" class="form-control" id="pass" placeholder="Enter Password" name="pass" required readonly> 
+     <input type="password" class="form-control" id="pass" placeholder="Generate Password" name="pass" required readonly> 
     </div>
 
     <div>
@@ -58,7 +58,7 @@
           <button class="btn btn-primary" style="display: none" type="submit" id="submit1">
             <i class="fa fa-circle-o-notch fa-spin"></i>Please Wait
     </button> 
-         <input class="btn btn-primary" type="reset" value="Reset">
+         <input class="btn btn-primary" type="reset" id= "reset" value="Reset">
      </div>
 
     
@@ -113,6 +113,7 @@ $(document).ready(function () {
         });
         if( isValid ) {
             $('#submit').hide();
+             $('#reset').hide();
             $('#submit1').show();
             $('#submit1').prop('disabled', true);
            $("#addemployee")[0].submit(); 
@@ -144,6 +145,7 @@ $(document).ready(function () {
         if( isValid ) {
             $('#submit').hide();
             $('#submit1').show();
+            $('#reset').hide();
             $('#submit1').prop('disabled', true);
            $("#addemployee")[0].submit(); 
        };

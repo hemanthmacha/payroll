@@ -49,7 +49,7 @@
 
   .logout{
             padding-left: 1371px;
-    padding-top: 20px;
+    padding-top: 0px;
     }
 
     .logout1{
