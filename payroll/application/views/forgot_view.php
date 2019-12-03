@@ -156,8 +156,6 @@
        };
     });
 
-
-
     $('#email').change(function(){
  var x = document.forms["myForm"]["email"].value;
   var atpos = x.indexOf("@");
@@ -169,6 +167,21 @@
   
     });
 </script>
+
+<style type="text/css">
+    .buttonsave{
+  opacity: 0.7;
+  filter: alpha(opacity=50); 
+}
+
+.buttonsave:hover {
+  opacity: 1.0;
+  filter: alpha(opacity=100); 
+}
+</style>
+
+
+
 </body>
 </html>
 
