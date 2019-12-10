@@ -46,13 +46,24 @@ class Forgot extends CI_Controller {
 			$this->Forgot_model->updatepassword($username,$password);
 
 			 $config = array(
-            'protocol'  => 'smtp',
+           /* 'protocol'  => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'smtp_port' => 465,
             'smtp_user' => 'machahemanth16@gmail.com',
             'smtp_pass' => 'M@cha  2010',
             'mailtype'  => 'html',
-            'charset'   => 'utf-8'
+            'charset'   => 'utf-8'*/
+            'protocol' => 'smtp',
+                        'smtp_host' => 'mail.codetru.org',
+                        'smtp_timeout'=> 30,
+                        'smtp_port' => 587,
+                        'smtp_user' => 'noreply@codetru.org',
+                        'smtp_pass' => '123456@Aa',
+                        'charset' => 'utf-8',
+                        'mailtype' => 'html',
+                        'newline' => '\r\n',
+                        'wordwrap' => TRUE,
+                        'validation' => TRUE
         );
         $this->email->initialize($config);
         $this->email->set_mailtype("html");
@@ -65,7 +76,7 @@ class Forgot extends CI_Controller {
         $htmlContent .= '<p>NOTE: Please change your password after login </p>';
         $htmlContent .= '<p>If u had any queries call back to us. Contact Number:+919999999999</p>';
         $this->email->to($email);
-        $this->email->from('machahemanth16@gmail.com','macha_hemanth');
+          $this->email->from('noreply@codetru.org', 'Codetru');
         $this->email->subject('Tekinvaderz Account Username and Password ');
         $this->email->message($htmlContent);
         $this->email->send();
