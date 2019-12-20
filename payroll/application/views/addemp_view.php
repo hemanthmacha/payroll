@@ -43,22 +43,30 @@
      <input type="text" class="form-control" id="email" placeholder="Enter MailID" name="email" required> 
     </div>
 
-		<!-- <div>
+		 <div>
 		 <label for="status">Status:</label>
 		 <select  class="form-control" id="status" name="status" >
-                     <option value="Active">Active</option>
+                     <!-- <option value="Active">Active</option>
                      <option value="Inactive">Inactive</option>
                      <option value="Inhouse">Inhouse</option>
-                     <option value="miscellaneous">Miscellaneous</option>
+                     <option value="miscellaneous">Miscellaneous</option> -->
+                      <option>Active</option>
+                      <option>Internal</option>
+                      <option>Project Completed</option>
+                      <option>Left Company</option>
+                      <option>Inactive</option>
           </select>           
-		</div>  -->
+		</div> 
 
 		<div>
+
          <br><input class="btn btn-primary" type="submit" id="submit" value="Submit" disabled>
           <button class="btn btn-primary" style="display: none" type="submit" id="submit1">
             <i class="fa fa-circle-o-notch fa-spin"></i>Please Wait
     </button> 
+
          <input class="btn btn-primary" type="reset" id= "reset" value="Reset">
+          <button type="button" id="back" class="btn btn-primary buttonsave" onclick="history.back()"> <span class="glyphicon glyphicon-arrow-left"></span> Back </button>
      </div>
 
     

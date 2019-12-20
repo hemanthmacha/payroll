@@ -66,6 +66,10 @@ $route['forgot']='Forgot';
 
 $route['reset']='Forgot/reset_password';
 
+$route['saveemployeelist']= 'Employe/saveempstatus';
+
+$route['special_case']= 'Special_case';
+
 
 
 

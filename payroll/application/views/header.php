@@ -33,9 +33,9 @@
   <?php if($this->session->userdata('role') == 'admin') { ?>  
   <a href="<?= base_url();?>payroll" class="nav-link nav-toggle <?php if($this->uri->segment(1) == 'payroll'|| $this->uri->segment(1) == 'month' || $this->uri->segment(1) == 'updateemployee'|| $this->uri->segment(1) == 'update' || $this->uri->segment(1) == 'employee') { echo 'active'; } ?>" >Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a>
   
-  <a href="<?= base_url();?>employeelist" class="nav-link nav-toggle  <?php if($this->uri->segment(1) == 'employeelist'  || $this->uri->segment(1) == 'list' || $this->uri->segment(1) == 'percentage' || $this->uri->segment(1) == 'expense') { echo 'active'; } ?>" >Employee<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a>
+  <a href="<?= base_url();?>employeelist" class="nav-link nav-toggle  <?php if($this->uri->segment(1) == 'employeelist'  || $this->uri->segment(1) == 'list' || $this->uri->segment(1) == 'percentage' || $this->uri->segment(1) == 'expense' || $this->uri->segment(1) == 'addemp') { echo 'active'; } ?>" >Employee<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a>
   
-  <a href="<?= base_url();?>addemp"  class="nav-link nav-toggle  <?php if($this->uri->segment(1) == 'addemp' )  { echo 'active'; } ?>">Addemployee<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-plus"></span></a>
+<!--   <a href="<?= base_url();?>addemp"  class="nav-link nav-toggle  <?php if($this->uri->segment(1) == 'addemp' )  { echo 'active'; } ?>">Addemployee<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-plus"></span></a> -->
  <?php } ?>
 
  <?php if($this->session->userdata('role') == 'employee') { ?>  
@@ -69,7 +69,7 @@
   width: 200px;
   background-color: #26344B;
   position: absolute;
-  height: 100%;
+  height: 200%;
   overflow: auto;
 }
 

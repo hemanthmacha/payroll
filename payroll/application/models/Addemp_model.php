@@ -42,7 +42,7 @@ class Addemp_model extends CI_Model
 
 	public function selectusers()
 	{
-		$query="SELECT `username`  FROM `tbl_users` ";
+		$query="SELECT username,email  FROM `tbl_users` ";
 		$user=$this->db->query($query)->result();
         return $user;
 	}

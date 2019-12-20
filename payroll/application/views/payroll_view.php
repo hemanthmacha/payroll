@@ -9,9 +9,11 @@
   #monthdisplay{
     padding-right: 10px;
   }
-  h4 {
-    font-family: inherit;
+
+h4 {
+    font-family: sans-serif;
     font-weight: 50;
+    width: 10;
 }
 </style>
 
@@ -24,15 +26,16 @@
 
     <div class="row"> 
        <h3> Payroll Summary For <input type="text" id="monthdisplay" value="" style="border: none; width:auto;
-height:auto; "> </h3>
+height:auto; " readonly> </h3>
    
     <div class="col-sm-12">
    
       
-   <?php if(!empty($sresult)){ ?>
+   <?php if(!empty($active) || !empty($internal) || !empty($complete) || !empty($left) || !empty($inactive)){ $act==0; $in==0; $leftc==0; $com=0; $inact=0;$i=0;?>
 
 <table class="table text-center" align="center" id="customers">
 <tr style="background-color: gainsboro;">
+  <th></th>
       <th>Sno</th>  
       <th>First Name</th>
       <th>Last Name</th>
@@ -51,21 +54,16 @@ height:auto; "> </h3>
       <th>Save</th>
 </tr>
 
+<!-- looping starts -->
+   <?php   $j=0;foreach($active as $key=>$val){ $j++; $i++;?>
 
-   <?php if(!$_GET['per_page']){
-       
-        $temp=0;
-      }
+    <?php if($act==0){ $act=1; ?>
+      <td><h4>Active&nbsp;Employees</h4></td> 
+  <?php } ?>
 
-      else{
-        
-        $temp=$_GET['per_page'];
-      }
-
-
-      $i=0;foreach($sresult as $key=>$val){ $i++; ?>
   <tr>
-    <td><?php $temp=$temp+1; echo $temp; ?></td>
+    <td style="border: none"></td>
+    <td><?php echo $j; ?></td>
     <input type="hidden" style="border: 0" id="sno" value="<?=$i?>">
     <input type="hidden" id="idd" value="<?=$val->id?>">
     <input type="hidden" id="expences" value="<?=$val->expences?>">
@@ -76,42 +74,32 @@ height:auto; "> </h3>
     <td><input type="text" style="border: 0" size= "10" id="lname<?php echo $i; ?>" value="<?php echo $val->lastname; ?>"readonly/></td>
 
     <?php if($val->hours==0) { ?>
-    <td><input type="text" style="border: 0" id="rate<?php echo $i; ?>" size="8" value="<?php echo $val->curent_rate; ?>" readonly/> </td>
+    <td><input type="text" style="border: 0" id="rate<?php echo $i; ?>" size="5" value="<?php echo $val->curent_rate; ?>" readonly/> </td>
     <?php if($val->percentage >0) { ?>
-    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="8" value="<?php echo $val->current_percent; ?>" readonly/></td>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="<?php echo $val->current_percent; ?>" readonly/></td>
     <?php } ?>
 
     <?php if($val->percentage ==0) { ?>
-    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="8" value="100" readonly/></td>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="100" readonly/></td>
     <?php } } ?>
 
      <?php if($val->hours>0) { ?>
-      <td><input type="text" style="border: 0" id="rate<?php echo $i; ?>" size="8" value="<?php echo $val->rate_percent; ?>" readonly/> </td>
+      <td><input type="text" style="border: 0" id="rate<?php echo $i; ?>" size="5" value="<?php echo $val->rate_percent; ?>" readonly/> </td>
     <?php if($val->percentage >0) { ?>
-    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="8" value="<?php echo $val->percentage; ?>" readonly/></td>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="<?php echo $val->percentage; ?>" readonly/></td>
     <?php } ?>
 
     <?php if($val->percentage ==0) { ?>
-    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="8" value="100" readonly/></td>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="100" readonly/></td>
     <?php } } ?>
 
-     <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="8" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+     <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
 
     <td><input type="text"  id="firsttpay<?php echo $i; ?>" size="8"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo "$"; echo $val->onestpay; ?>"/> <input type="image" id="lastmonthfirstpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
 
     <td><input type="text" size="10"   id="secondpay<?php echo $i; ?>"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php  echo "$"; echo $val->onefivethpay; ?>"/> <input type="image" id="lastmonthsecondpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
 
-  
-
     <td><input type="text" size="8"  style="border: 0" id="total<?php echo $i; ?>" value="<?php echo "$";echo $val->total; ?>" readonly/></td>
-    <!-- <td>
-      <select style="width: 90px;"   id="status"  class="form-control dropdownselect">
-            <option value="Active" <?php if($val->status == 'Active') { echo 'selected'; } ?>>Active</option>
-            <option value="Inactive" <?php if($val->status == 'Inactive') { echo 'selected'; } ?>>Inactive</option>
-            <option value="Inhouse" <?php if($val->status == 'Inhouse') { echo 'selected'; } ?>>Inhouse</option>
-             <option value="Miscellaneous"<?php if($val->status == 'Miscellaneous') { echo 'selected'; } ?>>Miscellaneous</option>
-       </select>
-    </td> -->
 
     <td><input type="text" style="border: 0" size="10" id="totalbilled<?php echo $i; ?>" name="name" value="<?php echo $val->totalbilled_hours; ?>" readonly/></td>
     <td><input type="text" style="border: 0" size="10" id="balance<?php echo $i; ?>" name="name" value="<?php  echo "$"; echo $val->balance; ?>" readonly/></td>
@@ -128,9 +116,257 @@ height:auto; "> </h3>
 
     <?php } ?>
 
-          <td colspan="12" class="text-right" ><span class="pagination"><?=$links?></span></td></tr>
+
+    <?php   $j=0;foreach($internal as $key=>$val){ $j++; $i++;?>
+
+      <?php if($in==0){ $in=1; ?> 
+      <td style="border: none"><h4>Internal&nbsp;Employees</h4> </td>
+   
+  <?php } ?>
+  <tr>
+    <td style="border: none"></td>
+    <td><?php echo $j; ?></td>
+    <input type="hidden" style="border: 0" id="sno" value="<?=$i?>">
+    <input type="hidden" id="idd" value="<?=$val->id?>">
+    <input type="hidden" id="expences" value="<?=$val->expences?>">
+    <input type="hidden" id="month<?php echo $i; ?>" value="<?=$val->month?>">
+    <input type="hidden" id="year<?php echo $i; ?>" value="<?=$val->year?>">
+    
+    <td><input type="text" style="border: 0" size= "10" id="fname<?php echo $i; ?>"  value="<?php echo $val->firstname; ?>"  readonly/></td>
+    <td><input type="text" style="border: 0" size= "10" id="lname<?php echo $i; ?>" value="<?php echo $val->lastname; ?>"readonly/></td>
+
+    <?php if($val->hours==0) { ?>
+    <td><input type="text" style="border: 0" id="rate<?php echo $i; ?>" size="5" value="<?php echo $val->curent_rate; ?>" readonly/> </td>
+    <?php if($val->percentage >0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="<?php echo $val->current_percent; ?>" readonly/></td>
+    <?php } ?>
+
+    <?php if($val->percentage ==0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="100" readonly/></td>
+    <?php } } ?>
+
+     <?php if($val->hours>0) { ?>
+      <td><input type="text" style="border: 0" id="rate<?php echo $i; ?>" size="5" value="<?php echo $val->rate_percent; ?>" readonly/> </td>
+    <?php if($val->percentage >0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="<?php echo $val->percentage; ?>" readonly/></td>
+    <?php } ?>
+
+    <?php if($val->percentage ==0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="100" readonly/></td>
+    <?php } } ?>
+
+     <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+
+    <td><input type="text"  id="firsttpay<?php echo $i; ?>" size="8"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo "$"; echo $val->onestpay; ?>"/> <input type="image" id="lastmonthfirstpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
+
+    <td><input type="text" size="10"   id="secondpay<?php echo $i; ?>"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php  echo "$"; echo $val->onefivethpay; ?>"/> <input type="image" id="lastmonthsecondpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
+
+    <td><input type="text" size="8"  style="border: 0" id="total<?php echo $i; ?>" value="<?php echo "$";echo $val->total; ?>" readonly/></td>
+   
+    <td><input type="text" style="border: 0" size="10" id="totalbilled<?php echo $i; ?>" name="name" value="<?php echo $val->totalbilled_hours; ?>" readonly/></td>
+    <td><input type="text" style="border: 0" size="10" id="balance<?php echo $i; ?>" name="name" value="<?php  echo "$"; echo $val->balance; ?>" readonly/></td>
+    <td><a href="<?=base_url()?>list/?var1=<?=$val->id?>&var2=<?=$val->firstname?>&var3=<?=$val->lastname?>" target="_blank" >See More</a></td>
+
+      <td >
+        
+          <button class="btn btn-primary buttonsave" id="save" disabled>Save</button> 
+
+        </td>
+
+
+  </tr>
+
+    <?php } ?>
+
+
+    <?php   $j=0;foreach($complete as $key=>$val){ $j++;$i++; ?>
+
+      <?php if($com==0){ $com=1; ?> 
+      <td style="border: none"><h4>Project&nbsp;Complete</h4> 
+   
+  <?php } ?>
+
+  <tr>
+    <td style="border: none"></td>
+    <td><?php echo $j; ?></td>
+    <input type="hidden" style="border: 0" id="sno" value="<?=$i?>">
+    <input type="hidden" id="idd" value="<?=$val->id?>">
+    <input type="hidden" id="expences" value="<?=$val->expences?>">
+    <input type="hidden" id="month<?php echo $i; ?>" value="<?=$val->month?>">
+    <input type="hidden" id="year<?php echo $i; ?>" value="<?=$val->year?>">
+    
+    <td><input type="text" style="border: 0" size= "10" id="fname<?php echo $i; ?>"  value="<?php echo $val->firstname; ?>"  readonly/></td>
+    <td><input type="text" style="border: 0" size= "10" id="lname<?php echo $i; ?>" value="<?php echo $val->lastname; ?>"readonly/></td>
+
+    <?php if($val->hours==0) { ?>
+    <td><input type="text" style="border: 0" id="rate<?php echo $i; ?>" size="5" value="<?php echo $val->curent_rate; ?>" readonly/> </td>
+    <?php if($val->percentage >0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="<?php echo $val->current_percent; ?>" readonly/></td>
+    <?php } ?>
+
+    <?php if($val->percentage ==0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="100" readonly/></td>
+    <?php } } ?>
+
+     <?php if($val->hours>0) { ?>
+      <td><input type="text" style="border: 0" id="rate<?php echo $i; ?>" size="5" value="<?php echo $val->rate_percent; ?>" readonly/> </td>
+    <?php if($val->percentage >0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="<?php echo $val->percentage; ?>" readonly/></td>
+    <?php } ?>
+
+    <?php if($val->percentage ==0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="100" readonly/></td>
+    <?php } } ?>
+
+     <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+
+    <td><input type="text"  id="firsttpay<?php echo $i; ?>" size="8"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo "$"; echo $val->onestpay; ?>"/> <input type="image" id="lastmonthfirstpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
+
+    <td><input type="text" size="10"   id="secondpay<?php echo $i; ?>"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php  echo "$"; echo $val->onefivethpay; ?>"/> <input type="image" id="lastmonthsecondpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
+
+    <td><input type="text" size="8"  style="border: 0" id="total<?php echo $i; ?>" value="<?php echo "$";echo $val->total; ?>" readonly/></td>
+
+    <td><input type="text" style="border: 0" size="10" id="totalbilled<?php echo $i; ?>" name="name" value="<?php echo $val->totalbilled_hours; ?>" readonly/></td>
+    <td><input type="text" style="border: 0" size="10" id="balance<?php echo $i; ?>" name="name" value="<?php  echo "$"; echo $val->balance; ?>" readonly/></td>
+    <td><a href="<?=base_url()?>list/?var1=<?=$val->id?>&var2=<?=$val->firstname?>&var3=<?=$val->lastname?>" target="_blank" >See More</a></td>
+
+      <td >
+        
+          <button class="btn btn-primary buttonsave" id="save" disabled>Save</button> 
+
+        </td>
+
+
+  </tr>
+
+    <?php } ?>
+
+
+    <?php   $j=0;foreach($inactive as $key=>$val){ $j++;$i++;?>
+
+       <?php if($inact==0){ $inact=1; ?>
+      <td style="border: none"><h4>Inactive&nbsp;Employees</h4> 
+  <?php } ?>
+
+  <tr>
+    <td style="border: none"></td>
+    <td><?php echo $j; ?></td>
+    <input type="hidden" style="border: 0" id="sno" value="<?=$i?>">
+    <input type="hidden" id="idd" value="<?=$val->id?>">
+    <input type="hidden" id="expences" value="<?=$val->expences?>">
+    <input type="hidden" id="month<?php echo $i; ?>" value="<?=$val->month?>">
+    <input type="hidden" id="year<?php echo $i; ?>" value="<?=$val->year?>">
+    
+    <td><input type="text" style="border: 0" size= "10" id="fname<?php echo $i; ?>"  value="<?php echo $val->firstname; ?>"  readonly/></td>
+    <td><input type="text" style="border: 0" size= "10" id="lname<?php echo $i; ?>" value="<?php echo $val->lastname; ?>"readonly/></td>
+
+    <?php if($val->hours==0) { ?>
+    <td><input type="text" style="border: 0" id="rate<?php echo $i; ?>" size="5" value="<?php echo $val->curent_rate; ?>" readonly/> </td>
+    <?php if($val->percentage >0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="<?php echo $val->current_percent; ?>" readonly/></td>
+    <?php } ?>
+
+    <?php if($val->percentage ==0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="100" readonly/></td>
+    <?php } } ?>
+
+     <?php if($val->hours>0) { ?>
+      <td><input type="text" style="border: 0" id="rate<?php echo $i; ?>" size="5" value="<?php echo $val->rate_percent; ?>" readonly/> </td>
+    <?php if($val->percentage >0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="<?php echo $val->percentage; ?>" readonly/></td>
+    <?php } ?>
+
+    <?php if($val->percentage ==0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="100" readonly/></td>
+    <?php } } ?>
+
+     <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+
+    <td><input type="text"  id="firsttpay<?php echo $i; ?>" size="8"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo "$"; echo $val->onestpay; ?>"/> <input type="image" id="lastmonthfirstpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
+
+    <td><input type="text" size="10"   id="secondpay<?php echo $i; ?>"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php  echo "$"; echo $val->onefivethpay; ?>"/> <input type="image" id="lastmonthsecondpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
+
+    <td><input type="text" size="8"  style="border: 0" id="total<?php echo $i; ?>" value="<?php echo "$";echo $val->total; ?>" readonly/></td>
+
+    <td><input type="text" style="border: 0" size="10" id="totalbilled<?php echo $i; ?>" name="name" value="<?php echo $val->totalbilled_hours; ?>" readonly/></td>
+    <td><input type="text" style="border: 0" size="10" id="balance<?php echo $i; ?>" name="name" value="<?php  echo "$"; echo $val->balance; ?>" readonly/></td>
+    <td><a href="<?=base_url()?>list/?var1=<?=$val->id?>&var2=<?=$val->firstname?>&var3=<?=$val->lastname?>" target="_blank" >See More</a></td>
+
+      <td >    
+          <button class="btn btn-primary buttonsave" id="save" disabled>Save</button> 
+        </td>
+  </tr>
+
+    <?php } ?>
+
+
+    <?php   $j=0;foreach($left as $key=>$val){ $j++;$i++; ?>
+
+      <?php if($leftc==0){ $leftc=1; ?> 
+      <td style="border: none"><h4>Left&nbsp;Company</h4></td> 
+  <?php } ?>
+  <tr>
+    <td style="border: none"></td>
+    <td><?php echo $j; ?></td>
+    <input type="hidden" style="border: 0" id="sno" value="<?=$i?>">
+    <input type="hidden" id="idd" value="<?=$val->id?>">
+    <input type="hidden" id="expences" value="<?=$val->expences?>">
+    <input type="hidden" id="month<?php echo $i; ?>" value="<?=$val->month?>">
+    <input type="hidden" id="year<?php echo $i; ?>" value="<?=$val->year?>">
+    
+    <td><input type="text" style="border: 0" size= "10" id="fname<?php echo $i; ?>"  value="<?php echo $val->firstname; ?>"  readonly/></td>
+    <td><input type="text" style="border: 0" size= "10" id="lname<?php echo $i; ?>" value="<?php echo $val->lastname; ?>"readonly/></td>
+
+    <?php if($val->hours==0) { ?>
+    <td><input type="text" style="border: 0" id="rate<?php echo $i; ?>" size="5" value="<?php echo $val->curent_rate; ?>" readonly/> </td>
+    <?php if($val->percentage >0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="<?php echo $val->current_percent; ?>" readonly/></td>
+    <?php } ?>
+
+    <?php if($val->percentage ==0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="100" readonly/></td>
+    <?php } } ?>
+
+     <?php if($val->hours>0) { ?>
+      <td><input type="text" style="border: 0" id="rate<?php echo $i; ?>" size="5" value="<?php echo $val->rate_percent; ?>" readonly/> </td>
+    <?php if($val->percentage >0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="<?php echo $val->percentage; ?>" readonly/></td>
+    <?php } ?>
+
+    <?php if($val->percentage ==0) { ?>
+    <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="100" readonly/></td>
+    <?php } } ?>
+
+     <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+
+    <td><input type="text"  id="firsttpay<?php echo $i; ?>" size="8"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo "$"; echo $val->onestpay; ?>"/> <input type="image" id="lastmonthfirstpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
+
+    <td><input type="text" size="10"   id="secondpay<?php echo $i; ?>"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php  echo "$"; echo $val->onefivethpay; ?>"/> <input type="image" id="lastmonthsecondpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
+
+    <td><input type="text" size="8"  style="border: 0" id="total<?php echo $i; ?>" value="<?php echo "$";echo $val->total; ?>" readonly/></td>
+  
+    <td><input type="text" style="border: 0" size="10" id="totalbilled<?php echo $i; ?>" name="name" value="<?php echo $val->totalbilled_hours; ?>" readonly/></td>
+    <td><input type="text" style="border: 0" size="10" id="balance<?php echo $i; ?>" name="name" value="<?php  echo "$"; echo $val->balance; ?>" readonly/></td>
+    <td><a href="<?=base_url()?>list/?var1=<?=$val->id?>&var2=<?=$val->firstname?>&var3=<?=$val->lastname?>" target="_blank" >See More</a></td>
+
+      <td >
+        
+          <button class="btn btn-primary buttonsave" id="save" disabled>Save</button> 
+
+        </td>
+
+
+  </tr>
+
+    <?php } ?>
+
+<!-- looping ends -->
+          <!-- <td colspan="12" class="text-right" ><span class="pagination"><?=$links?></span></td></tr> -->
 </table>
   <?php } ?>
+
+
+
 
   <button class="btn btn-primary buttonsave" id="total">Total</button>&nbsp; &nbsp; &nbsp; &nbsp; 
 
@@ -283,39 +519,30 @@ $(document).ready(function() {
    
     $("input.paychange").on("keyup", function() {
 
-      var balancearray=[];
-    <?php foreach($sresult as $key=>$val){  ?>
-      balancearray.push(<?php echo $val->balance;?>);
-    <?php } ?>
-
-            var sno = $(this).parent('td').parent('tr').find('#sno').val();
-            console.log(sno)
-            var index = $(this).parent('td').parent('tr').find('#sno').val();
-               index= parseInt(index)-1;
+              var balancearray=[];
+              <?php foreach($balance_single as $key=>$val){  ?>
+                balancearray.push(<?php echo $val->balance;?>);
+              <?php } ?>
+            var sno = $(this).parent('td').parent('tr').find('#sno').val(); 
             var num1 = $(this).parent('td').parent('tr').find('#firsttpay'+sno).val();
             var num2 = $(this).parent('td').parent('tr').find('#secondpay'+sno).val();
+            var index = $(this).parent('td').parent('tr').find('#sno').val();
+               index= parseInt(index)-1;
+     
             var num1=num1.replace('$','');
             var num2=num2.replace('$','');
-             
-            if(num2==''){
-
-              num2=0;
-            }
-
-            if(num1==''){
-
-              num1=0;
-            }
-            
-            //var bal = $(this).parent('td').parent('tr').find('#balance').val();
+  
             var result = parseFloat(num1) + parseFloat(num2);
-            //var result1 = parseFloat(bal)-parseFloat(result);  
+
+        
 
             if (!isNaN(result)) {
 
               $(this).parent('td').parent('tr').find('#total'+sno).val('$'+result);
               var bal = balancearray[index];
               var result1 = parseFloat(bal)-parseFloat(result);
+
+              console.log(result1);
               $(this).parent('td').parent('tr').find('#balance'+sno).val('$'+result1);
 
         
@@ -398,8 +625,8 @@ $(document).on("click","#lastmonthsecondpay",function(){
               console.log(json[0].onefivethpay);*/
              
              $('#secondpay'+sno).val('$'+parseInt(json[0].onefivethpay));
-             var temp=parseInt(json[0].onefivethpay)+FP;
-             $('#total'+sno).val('$'+temp);
+             var temp11=parseInt(json[0].onefivethpay)+FP;
+             $('#total'+sno).val('$'+temp11);
              
             }
          });
@@ -442,8 +669,8 @@ $(document).on("click","#lastmonthfirstpay",function(){
               console.log(json[0].onefivethpay);*/
 
               $('#firsttpay'+sno).val('$'+parseInt(json[0].onestpay));
-             var temp=parseInt(json[0].onestpay)+FP;
-             $('#total'+sno).val('$'+temp);
+             var temp12=parseInt(json[0].onestpay)+FP;
+             $('#total'+sno).val('$'+temp12);
 
 
             /* 

@@ -37,7 +37,7 @@ function checkPassword(form) {
  <div class="container">
   <div>
    <label><b>Password</b></label>
-   <input type="password" placeholder="Enter new Password" name="password1" id="password1" required>
+   <input type="password" placeholder="Enter new Password" name="password1" id="password1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()?]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
  </div>
 
    <div>

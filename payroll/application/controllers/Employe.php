@@ -9,6 +9,7 @@ class Employe extends CI_Controller {
 		    $this->load->database();//load database libray manually
         $this->load->model('Employe_model');//load Model
         $this->load->model('Balance_model');
+        $this->load->model('Special_model');
           $this->load->model('Payroll_sheet_model');
         error_reporting(0);
 
@@ -64,43 +65,26 @@ class Employe extends CI_Controller {
 
      public function emplist(){
 
+        $data['active'] = $this->Employe_model->getemp_active();
+        $data['inactive'] = $this->Employe_model->getemp_inactive();
+        $data['inter'] = $this->Employe_model->getemp_internal();
+        $data['complete'] = $this->Employe_model->getemp_comp();
+        $data['left'] = $this->Employe_model->getemp_left();
+        
 
-                $config = array();
-                $config["base_url"] =base_url() . "employeelist";
-                $config["per_page"] = 10;
-                $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
-                $config["total_rows"] = $this->Employe_model->getemp($config["per_page"],$page)
-                      ['numRows'];
-              
-                $config["uri_segment"] = 2;
-                $config['full_tag_open'] = "<ul class='pagination'>";
-                $config['full_tag_close'] = '</ul>';
-                $config['num_tag_open'] = '<li>';
-                $config['num_tag_close'] = '</li>';
-                $config['cur_tag_open'] = '<li class="active"><a href="#">';
-                $config['cur_tag_close'] = '</a></li>';
-                $config['prev_tag_open'] = '<li>';
-                $config['prev_tag_close'] = '</li>';
-                $config['first_tag_open'] = '<li>';
-                $config['first_tag_close'] = '</li>';
-                $config['last_tag_open'] = '<li>';
-                $config['last_tag_close'] = '</li>';
-
-                $config['next_link'] = 'Next Page';
-                $config['next_tag_open'] = '<li>';
-                $config['next_tag_close'] = '</li>';
-
-                $config['prev_link'] = 'Previous Page';
-                $config['prev_tag_open'] = '<li>';
-                $config['prev_tag_close'] = '</li>';
-
-        $this->pagination->initialize($config);
-        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
-        $data["links"] = $this->pagination->create_links();
-        $data['data'] = $this->Employe_model->getemp($config["per_page"], $page)['result'];
+      //  print_r($data);
         $this->load->view('employee_list_view',$data);  
 
      }
+
+      public function saveempstatus()
+    {
+      $id=$_POST['id'];
+      $status=$_POST['status'];
+      $savelist['data11']=$this->Employe_model->saveempstatus($id,$status);
+      echo json_encode($savelist);  
+
+      }
 
 
 
@@ -164,7 +148,7 @@ class Employe extends CI_Controller {
          
 
 
-                 $config = array();
+                 /*$config = array();
                 $config['page_query_string'] = TRUE;
                 
                 $config["base_url"] = base_url() ."list/?var1=$id&var2=$name1&var3=$name2";
@@ -220,10 +204,11 @@ class Employe extends CI_Controller {
                     
                 }
 
-
-        $data["links"] = $this->pagination->create_links();
+    
+        $data["links"] = $this->pagination->create_links();*/
+        $data['special'] = $this->Special_model->getemp_special($id);
         $data['summdata'] = $this->Employe_model->getemployersum($id);
-      $data['sresult'] = $config["total_rows"] = $this->Employe_model->getemploye($id,$config["per_page"], $page)['result'];
+       $data['sresult']  = $this->Employe_model->getemploye($id);
     //$usersData['result'] = $this->Retrive_model->getUserDetails();  
      $this->load->view('employee_view',$data);
 
@@ -312,7 +297,7 @@ class Employe extends CI_Controller {
 
 
 
-                $config = array();
+               /* $config = array();
                // $config['page_query_string'] = TRUE;
                 
                 $config["base_url"] = base_url() ."employe";
@@ -344,8 +329,8 @@ class Employe extends CI_Controller {
 
                 $this->pagination->initialize($config);
           $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
-        $data["links"] = $this->pagination->create_links();
-     $data['sresult'] = $config["total_rows"] = $this->Employe_model->getsingle_employedata($id,$config["per_page"], $page)['result'];
+        $data["links"] = $this->pagination->create_links();*/
+     $data['sresult'] = $this->Employe_model->getsingle_employedata($id);
     //$usersData['result'] = $this->Retrive_model->getUserDetails();  
     $this->load->view('single_emp_view',$data);    
 

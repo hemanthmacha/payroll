@@ -44,12 +44,20 @@ class Payroll_sheet extends CI_Controller {
 
 
         // unpaid employes data             
-        $data['unpid'] = $this->unpaid_emp($month,$year); 
-
-        // update current rate and percentage        
+        $data['unpid'] = $this->unpaid_emp($month,$year);
+       
+        // update current rate and percentage    
+           
         $this->update_rate();
+        $data['active'] = $this->Payroll_sheet_model->getpayrolls($month,$year,'Active');
+        $data['internal'] = $this->Payroll_sheet_model->getpayrolls($month,$year,'Internal');
+        $data['complete'] = $this->Payroll_sheet_model->getpayrolls($month,$year,'Project Completed');
+        $data['left'] = $this->Payroll_sheet_model->getpayrolls($month,$year,'Left Company');
+        $data['inactive'] = $this->Payroll_sheet_model->getpayrolls($month,$year,'Inactive');
+        $data['balance_single'] = $this->Payroll_sheet_model->getpayrolls_balance($month,$year);  
+        $this->load->view('payroll_view',$data);
 
-                $config = array();
+                /*$config = array();
                 $config['page_query_string'] = TRUE;
                 $config["base_url"] = base_url() . "month/$month/?var1=$year";
                 $config["per_page"] = 10;
@@ -100,9 +108,8 @@ class Payroll_sheet extends CI_Controller {
                 }
 
 
-        $data["links"] = $this->pagination->create_links();
-        $data['sresult'] = $config["total_rows"] = $this->Payroll_sheet_model->getpayrolls($month,$year,$config["per_page"], $page)['result'];  
-       $this->load->view('payroll_view',$data);
+        $data["links"] = $this->pagination->create_links();*/
+       
 
      }
 

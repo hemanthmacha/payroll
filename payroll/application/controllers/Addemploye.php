@@ -27,6 +27,8 @@ class Addemploye extends CI_Controller {
     	$fname=$_POST['fname'];
     	$lname=$_POST['lname'];
         $password=$_POST['pass'];
+
+        $password = MD5($password);
         $uname=$_POST['uname'];
     	$status=$_POST['status'];
         $email=$_POST['email'];
@@ -36,9 +38,17 @@ class Addemploye extends CI_Controller {
          foreach ($usernameexists as $key => $value) {
 
             $username=$value->username;
+            $cemail=$value->email;
+
             if($username==$uname){
 
                 echo '<script>alert("Username Already Exists");</script>';
+                echo '<script>window.open("'.base_url().'addemp","_self");</script>';
+            }
+
+            if($cemail == $email ){
+
+                echo '<script>alert("Email Id Already Exists");</script>';
                 echo '<script>window.open("'.base_url().'addemp","_self");</script>';
             }
 
@@ -68,11 +78,11 @@ class Addemploye extends CI_Controller {
         $this->email->initialize($config);
         $this->email->set_mailtype("html");
         $this->email->set_newline("\r\n");
-        $htmlContent = '<h4>Hi,</h4>'.$fname .$lname;
+        $htmlContent = '<h4>Hi,&nbsp;'.$fname .'&nbsp;'.$lname.'</h4>';
         $htmlContent .= '<p>Your user name and password for login to your payroll details are given below.</p>';
         $htmlContent .= '<p>URL :http://payrol.codetru.org/</p>';
-        $htmlContent .= '<p>USERNAME: </p>'.$uname;
-        $htmlContent .= '<p>PASSWORD: </p>'.$password;
+        $htmlContent .= '<p>USERNAME:&nbsp;'.$uname.' </p>';
+        $htmlContent .= '<p>PASSWORD:&nbsp;'.$password.' </p>';
         $htmlContent .= '<p>NOTE: Please change your password after login </p>';
         $htmlContent .= '<p>If u had any queries call back to us. Contact Number:+919999999999</p>';
         $this->email->to($email);
@@ -96,7 +106,7 @@ class Addemploye extends CI_Controller {
         if(!empty($data1)){
 
             echo '<script>alert("Employe Added and login details sent to the Employe");</script>';
-            $this->load->view('addemp_view');
+            echo '<script>window.open("'.base_url().'employeelist","_self");</script>';
             
    }
 
@@ -104,7 +114,7 @@ class Addemploye extends CI_Controller {
 
         else{
             echo '<script>alert("Something went wrong please try again ");</script>';
-            $this->load->view('addemp_view');
+           echo '<script>window.open("'.base_url().'employeelist","_self");</script>';
 
         }
     

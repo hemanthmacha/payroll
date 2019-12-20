@@ -3,27 +3,26 @@
 class Employe_model extends CI_Model 
 {
 
-      public function getemploye($id,$perpage,$limit){
+      public function getemploye($id){
 
-      $response = array();
+      //$response = array();
       $this->db->select('tbl_employee.billedhours,tbl_employee.mounthtotal,tbl_employee.month,tbl_employee.year,tbl_employee.id,tbl_employee.rate,tbl_employee.percentage, IFNULL(tbl_payrool_sheet.onestpay,0) as onestpay,IFNULL(tbl_payrool_sheet.onefivethpay,0)as onefivethpay, IFNULL(tbl_payrool_sheet.total,0) as total');
       $this->db->from('tbl_employee as tbl_employee');
       $this->db->join('tbl_payrool_sheet AS tbl_payrool_sheet','tbl_employee.id=tbl_payrool_sheet.id and tbl_employee.month=tbl_payrool_sheet.month and tbl_employee.year=tbl_payrool_sheet.year');
       $this->db->order_by("tbl_employee.year", "asc");
       $this->db->order_by("field(tbl_employee.month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')");
       $this->db->where('tbl_employee.id', $id); 
-      
-    $query = $this->db->get();
-    $totalrecords = $query->num_rows();
+      $query = $this->db->get();
+      return $query->result();
+
+
+    /*$totalrecords = $query->num_rows();
     $lastQeuryUsers = $this->db->last_query();
-    /*print_r($lastQeuryUsers);
-    die();*/
     $paginationQuery = $this->db->select('*')->order_by("year", "asc")->order_by("field(month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')")->from('('.$lastQeuryUsers.') AS X')->limit($perpage,$limit)->get();
     $responsex['numRows'] = $totalrecords;
     $responsex['result'] = $paginationQuery->result();
-   /*print_r($responsex['result']);
-    die();*/
-    return $responsex;
+    return $responsex;*/
+    
 
     }
 
@@ -52,7 +51,7 @@ class Employe_model extends CI_Model
     return $response;
   }
 
-    public function getsingle_employedata($id,$perpage,$limit){
+    public function getsingle_employedata($id){
 
 
       $response = array();
@@ -63,13 +62,16 @@ class Employe_model extends CI_Model
       $this->db->order_by("tbl_employee.year", "asc");
       $this->db->order_by("field(tbl_employee.month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')");
       $this->db->where('tbl_employee.id', $id); 
-    $query = $this->db->get();
+      $query = $this->db->get();
+      return $query->result();
+
+   /* $query = $this->db->get();
     $totalrecords = $query->num_rows();
     $lastQeuryUsers = $this->db->last_query();
     $paginationQuery = $this->db->select('*')->order_by("year", "asc")->order_by("field(month, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')")->from('('.$lastQeuryUsers.') AS X')->limit($perpage,$limit)->get(); 
     $responsex['numRows'] = $totalrecords;
     $responsex['result'] = $paginationQuery->result();
-    return $responsex;
+    return $responsex;*/
     
     }
 
@@ -108,6 +110,9 @@ class Employe_model extends CI_Model
 
       $query="DELETE FROM `tbl_employee` WHERE id='$id' and month='$month' and year='$year'";
       $response= $this->db->query($query);
+
+      $query2="DELETE FROM `tbl_special` WHERE id='$id' and month='$month' and year='$year'";
+      $response= $this->db->query($query2);
  
     }
     public function getemployerate($id){
@@ -157,24 +162,56 @@ class Employe_model extends CI_Model
        $query1= "INSERT INTO `tbl_employee`(`billedhours`, `mounthtotal`, `month`, `year`, `id`,`rate`,`percentage`) VALUES ('$billedhours','$totalamount','$month','$year','$id','$rate','$pct')";
 
        $this->db->query($query1);
+
+       $query2="INSERT INTO `tbl_special`(`id`, `month`, `year`) VALUES ('$id','$month','$year')";
+       $this->db->query($query2);
        
        return  $query;
     }
 
   
-  public function getemp($perpage,$limit){
-    
-    $response = array();
+  public function getemp_active(){
+  
     $this->db->select(`firstname`, `lastname`, `id`);  
     $this->db->from('tbl_users');
+    $this->db->where('status', 'Active');
     $query = $this->db->get();
-    $totalrecords = $query->num_rows();
-    $lastQeuryUsers = $this->db->last_query();
-    $paginationQuery = $this->db->select('firstname,lastname,id')->from('('.$lastQeuryUsers.') AS X')->limit($perpage,$limit)->get();
-    $response['numRows'] = $totalrecords;
-    $response['result'] = $paginationQuery->result();
-    return $response;
+    return $query->result();   
 }
+public function getemp_internal(){
+  
+    $this->db->select(`firstname`, `lastname`, `id`);  
+    $this->db->from('tbl_users');
+    $this->db->where('status','Internal');
+    $query = $this->db->get();
+    return $query->result();   
+}
+public function getemp_comp(){
+  
+    $this->db->select(`firstname`, `lastname`, `id`);  
+    $this->db->from('tbl_users');
+    $this->db->where('status','Project Completed');
+    $query = $this->db->get();
+    return $query->result();   
+}
+public function getemp_left(){
+  
+    $this->db->select(`firstname`, `lastname`, `id`);  
+    $this->db->from('tbl_users');
+    $this->db->where('status', 'Left Company');
+    $query = $this->db->get();
+    return $query->result();   
+}
+public function getemp_inactive(){
+  
+    $this->db->select(`firstname`, `lastname`, `id`);  
+    $this->db->from('tbl_users');
+    $this->db->where('status', 'Inactive');
+    $query = $this->db->get();
+    return $query->result();   
+}
+
+
 
 
     public function deleteemployeelist($id)
@@ -199,6 +236,9 @@ class Employe_model extends CI_Model
 
        $query6 =" DELETE FROM `tbl_percentage` WHERE id1='$id'";
        $this->db->query($query6);
+
+       $query7 =" DELETE FROM `tbl_special` WHERE id1='$id'";
+       $this->db->query($query6);
        return true;
     }
    
@@ -217,6 +257,14 @@ class Employe_model extends CI_Model
     $query1= "SELECT `month` FROM `tbl_employee` WHERE id='$id' and year='$year'";
     $response1= $this->db->query($query1)->result();
     return $response1; 
+    }
+
+
+     public function saveempstatus($id,$status)
+    {
+      $query="UPDATE tbl_users SET status ='$status' WHERE id='$id'"; 
+      $this->db->query($query);
+      return true;
     }
 
 
