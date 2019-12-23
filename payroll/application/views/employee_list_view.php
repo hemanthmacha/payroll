@@ -97,7 +97,7 @@
     <?php $i=1; foreach($complete as $key=>$val){?>
    
    <?php if($com==0){ $com=1; ?><tr> 
-      <td><h4>Project Complete</h4> 
+      <td><h4>Project Completed</h4> 
    </tr>
   <?php } ?>
 

@@ -26,7 +26,7 @@ class Balance_model extends CI_Model {
   }
 
    public function special_total($id){
-    $query2="SELECT SUM(special_amount) as st FROM tbl_balance where emp_id='$id' ";
+    $query2="SELECT SUM(total) as st FROM tbl_special where id='$id' ";
     $te=$this->db->query($query2)->result();
     return $te;
   }
@@ -59,9 +59,9 @@ class Balance_model extends CI_Model {
 }
 
       
- public function update_balance($id,$balance,$totalamount,$totalexpenses,$totalmonthpay,$totalbillhours){
+ public function update_balance($id,$balance,$totalamount,$totalexpenses,$totalmonthpay,$totalbillhours,$specialtotal){
 
-        $query=" UPDATE `tbl_balance` SET `balance`='$balance',`totalamount`='$totalamount',`totalexpenses`='$totalexpenses', `totalmonthpay`='$totalmonthpay',`totalbilled_hours`='$totalbillhours' WHERE emp_id='$id' ";      
+        $query=" UPDATE `tbl_balance` SET `balance`='$balance',`totalamount`='$totalamount',`totalexpenses`='$totalexpenses', `totalmonthpay`='$totalmonthpay',`totalbilled_hours`='$totalbillhours',`special_amount`='$specialtotal' WHERE emp_id='$id' ";      
         $this->db->query($query);
 
  }
@@ -73,6 +73,12 @@ class Balance_model extends CI_Model {
         $query=" UPDATE `tbl_balance` SET `special_amount`='$special' WHERE emp_id='$id' ";
          $this->db->query($query);
  }
+
+  public function update_balance_payroll($id,$balance){
+        $query=" UPDATE `tbl_balance` SET `balance`='$balance' WHERE emp_id='$id' ";
+         $this->db->query($query);
+ }
+
 
  public function update_rate_percentage($id,$rate,$percent){
         $query=" UPDATE `tbl_balance` SET `curent_rate`='$rate',`current_percent`='$percent' WHERE emp_id='$id' ";

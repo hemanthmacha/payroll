@@ -254,7 +254,7 @@
   <tr >
     <td style="border: none"></td>
      <td style="border: none"></td>
-      <td style="border: none"></td>
+      <td style="border: none"> <h5> <?php echo $specialdata_year[$test]; echo " "; echo $specialdata_month[$test]; echo " ";echo "special"; ?> </h5></td>
        <td style="border: none"> </td>
         <td style="border: none"></td>
 
@@ -264,7 +264,15 @@
     <td style="border: none"> <?php echo"$"; ?> <input type="text"style="border: 0"  size= "8" id="specialdata_first<?php echo $i;?>" class="special" value="<?php echo $specialdata_first[$test]; ?>" /></td>
     <td style="border: none"> <?php echo"$"; ?> <input type="text"style="border: 0"  size= "8" id="specialdata_second<?php echo $i;?>"  class="special" value="<?php echo $specialdata_second[$test]; ?>" /></td>
     <td style="border: none">  <?php echo"$"; ?> <input type="text"style="border: 0"  size= "8" id="specialdata_total<?php echo $i;?>" value="<?php echo $specialdata_total[$test]; ?>" readonly/></td>
-    <td style="border: none"> <input type="text"style="border: 0"  size= "8" id="specialdata_comments<?php echo $i;?>"  value="<?php echo $specialdata_comments[$test]; ?>" /></td>
+    
+
+ <!--    <td style="border: none"> <input type="text"style="border: 0"  size= "8" id="specialdata_comments<?php echo $i;?>"  value="<?php echo $specialdata_comments[$test]; ?>" /></td> -->
+
+
+    <td style="border: none"> <textarea style="border: 0" id="specialdata_comments<?php echo $i;?>" > <?php echo $specialdata_comments[$test]; ?> </textarea></td>
+
+
+
     <td style="border: none"> <button class="btn btn-primary buttonsave" id="updatespecial"><i class="fa fa-save"></i>Update</button></td>
   </tr>
 <?php } ?>
@@ -626,7 +634,7 @@ abc++;
 
     }
 
-    $('#totalamount'+(storeid)).val(Math.round(cal));
+    $('#totalamount'+(storeid)).val(cal.toFixed(2));
 
                 var id = <?php echo $_GET['var1'];  ?>;
                 //var sno = $('#sno').val();
@@ -677,7 +685,7 @@ abc++;
               
         ?>
        //'.$selected.'
-        markup = "<tr> <input type='hidden' id='idd1' value='<?=$val->id?>'> <td></td> <td> " + sno + "</td> <td> <select id='year' name='year'> <option value=''>Year</option> <?php foreach ($yearArray as $year) {
+        markup = "<tr> <input type='hidden' id='idd1' value='<?=$val->id?>'> <td></td> <td> " + sno + "</td> <td> <select id='year'  name='year'> <option value=''>Year</option> <?php foreach ($yearArray as $year) {
          $selected = ($year == $abc) ? 'selected' : '';
         echo '<option value='.$year.'>'.$year.'</option>';
         }

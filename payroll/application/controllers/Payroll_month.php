@@ -71,7 +71,7 @@ class Payroll_month extends CI_Controller {
 
         $balance = $balance1 - $specialtotal;
 
-      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay,$totalbillhours);
+      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay,$totalbillhours,$specialtotal);
 
 
     }

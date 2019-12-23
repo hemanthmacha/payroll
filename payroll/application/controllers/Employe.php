@@ -485,7 +485,7 @@ class Employe extends CI_Controller {
       print_r($specialtotal);
       die();*/
 
-      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay,$totalbillhours);
+      $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay,$totalbillhours,$specialtotal);
 
     }
 

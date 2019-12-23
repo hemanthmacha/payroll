@@ -579,11 +579,11 @@ $(document).ready(function () {
            var month = $(this).parent('td').parent('tr').find('#month'+sno).val();
            var year= $(this).parent('td').parent('tr').find('#year'+sno).val();
 
-           console.log(sno);
+          /* console.log(sno);
            console.log(id);
            console.log(rate);
-           console.log(pct);
-
+           console.log(id);
+*/
           var pay1=pay11.replace('$','');
           var pay2=pay22.replace('$','');
           var total=total1.replace('$','');

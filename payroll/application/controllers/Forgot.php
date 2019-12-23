@@ -42,7 +42,7 @@ class Forgot extends CI_Controller {
 			   $email = $value->email;
 			   //$fname = $value->firstname;
 			}
-
+      $password = MD5($password);
 			$this->Forgot_model->updatepassword($username,$password);
 
 			 $config = array(
@@ -98,7 +98,7 @@ class Forgot extends CI_Controller {
 	  public function change_password(){
 
       $password = $_POST['password2'];
-
+      $password = MD5($password);
       $id= $this->session->userdata('id');
 
       $this->Forgot_model->update_status($id,$password);
