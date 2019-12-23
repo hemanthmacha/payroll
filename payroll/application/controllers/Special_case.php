@@ -8,6 +8,7 @@ class Special_case extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('Special_model');
+        $this->load->model('Balance_model');
         //$this->load->model('Balance_model');
         error_reporting(0);
         
@@ -23,8 +24,14 @@ class Special_case extends CI_Controller {
           $total=$_POST['totalamount'];
           $comments=$_POST['comments'];
 
+          $data1 = $this->Special_model->get_balance_($id);
+         foreach ($data1 as $key => $value) {
+            $balance = $value->balance;
+          }
+          $temp = $balance - $total;
+          $this->Balance_model->update_balance_payroll_special($id,$temp,$total);
           $data = $this->Special_model->addspecial($id,$month,$year,$first,$second,$total,$comments);
-          echo json_encode($data);
+          echo json_encode($data1);
       }
 
 

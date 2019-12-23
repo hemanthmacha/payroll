@@ -5,7 +5,7 @@ class Payroll_sheet_model extends CI_Model {
 
 	public function getpayrolls($month,$year,$status){
 
-    $this->db->select('sno,tbl_users.id,tbl_users.firstname,tbl_users.lastname,onestpay,onefivethpay,rate_percent,percentage,hours,tbl_users.status,IFNULL(total,0) as total,balance, month,year,totalbilled_hours');
+    $this->db->select('sno,tbl_users.id,tbl_users.firstname,tbl_users.lastname,onestpay,onefivethpay,rate_percent,percentage,hours,tbl_users.status,IFNULL(total,0) as total,balance, month,year,totalbilled_hours,tiz_share,tbl_balance.curent_rate,tbl_balance.current_percent');
       $this->db->from('tbl_payrool_sheet');
       $this->db->join('tbl_balance AS tbl_balance','tbl_payrool_sheet.id=tbl_balance.emp_id');
       $this->db->join('tbl_users AS tbl_users','tbl_users.id=tbl_balance.emp_id');

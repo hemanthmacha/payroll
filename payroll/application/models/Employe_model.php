@@ -244,8 +244,8 @@ public function getemp_inactive(){
    
    public function getemployersum($id){
     
-    $response = array();
-    $query=" SELECT  IFNULL(`tbl_balance`.`balance`,0) as balance, IFNULL(`tbl_balance`.`totalamount`,0) as totalamount, IFNULL(`tbl_balance`.`totalexpenses`,0) as exp, IFNULL(`tbl_balance`.`totalmonthpay`,0) as totalmonthpay, IFNULL(sum(`tbl_employee`.`billedhours`),0) as billedhours FROM `tbl_balance` join tbl_employee on `tbl_balance`.`emp_id`= `tbl_employee`.`id` WHERE tbl_balance.emp_id='$id'";
+   // $response = array();
+    $query=" SELECT  IFNULL(`tbl_balance`.`balance`,0) as balance, IFNULL(`tbl_balance`.`totalamount`,0) as totalamount, IFNULL(`tbl_balance`.`totalexpenses`,0) as exp, IFNULL(`tbl_balance`.`totalmonthpay`,0) as totalmonthpay, IFNULL(sum(`tbl_employee`.`billedhours`),0) as billedhours ,IFNULL(`tbl_balance`.`special_amount`,0) as special_amount FROM `tbl_balance` join tbl_employee on `tbl_balance`.`emp_id`= `tbl_employee`.`id` WHERE tbl_balance.emp_id='$id'";
     $response= $this->db->query($query)->result();
     return $response;
     }

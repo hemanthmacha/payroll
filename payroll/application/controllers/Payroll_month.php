@@ -43,10 +43,15 @@ class Payroll_month extends CI_Controller {
        $balance1= $this->Balance_model->balance($id);
        $totalmonthlypay= $this->Balance_model->totalmonthlypay($id);
        $totalbilledhours= $this->Balance_model->totalbilledhours($id);
+       $special_total= $this->Balance_model->special_total($id);
 
         foreach ($totalbilledhours as $key => $value) {
           $totalbillhours =$value->billhours;
-        }     
+        }    
+
+            foreach ($special_total as $key => $value) {
+        $specialtotal =$value->st;
+       } 
 
        foreach ($total1 as $key => $value) {
         $total =$value->tm;
@@ -61,8 +66,10 @@ class Payroll_month extends CI_Controller {
        }
 
        foreach ($balance1 as $key => $value) {
-        $balance =$value->total;
+        $balance1 =$value->total;
        }  
+
+        $balance = $balance1 - $specialtotal;
 
       $this->Balance_model->update_balance($id,$balance,$total,$expenses,$totalmonpay,$totalbillhours);
 

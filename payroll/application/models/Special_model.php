@@ -6,7 +6,8 @@ class Special_model extends CI_Model
 	{
 		$query="UPDATE `tbl_special` SET `first`='$first',`fifteen`='$fifteen',`total`='$total',`comments`='$comments' WHERE `id`='$id'and `month`='$month' and `year`='$year' ";
 		$this->db->query($query);
-        return $query;
+
+        return true;
 	}
 
 	public function getemp_special($id)
@@ -20,6 +21,13 @@ class Special_model extends CI_Model
 /*
 		print_r($response);
 		die();*/
+		return $response;
+	}
+
+	public function get_balance_($id){
+    
+        $query ="SELECT balance from tbl_balance where emp_id= '$id'";
+		$response = $this->db->query($query)->result();
 		return $response;
 	}
 

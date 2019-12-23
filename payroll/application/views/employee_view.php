@@ -156,7 +156,7 @@
         $mp=0;   $abcd=0; $ttee=$hourssum; foreach($sresult as $key=>$val){ $snonum++; $i++; ?>
 
     <tr>
-     <td><input type="checkbox" class= "chkBox" id="checkboxid" value="<?php echo $i; ?>" ></td> 
+     <td><input type="checkbox" class= "chkBox" id="checkboxid" value="<?php echo $snonum; ?>" ></td> 
      <td><?php echo $snonum; ?></td>
       <input type="hidden" id="sno" value="<?php echo $snonum; ?>">
       <input type="hidden" id="idd" value="<?=$val->id?>">
@@ -165,7 +165,7 @@
     <td style="display: none"><input type="text" id="tiz<?php echo $i;?>" value=""  readonly/></td>
     <td><input type="text" style="border: 0" size= "13" id="billedmonth<?php echo $i;?>" name="month" value="<?php echo $val->month; echo "-"; echo $val->year; ?>"  readonly/> </td> 
 
-    <td> <?php if($specialdata_total[$mp]==0) { ?> <input type="button" class="addRow" id="addrow" value="Add Row" /> <?php } ?></td>
+    <td> <?php if($specialdata_total[$mp]==0) { ?> <input type="button"  class="addRow" id="addrow" value="Add special" /> <?php } ?></td>
 
     <td><input type="text" size= "8" id="billedhours<?php echo $i;?>"  name="hours" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="miles" value="<?php echo $val->billedhours;?>"/></td>
 
@@ -244,8 +244,8 @@
 
 
 
-     <td><button class="btn btn-primary buttonsave" id="save"><i class="fa fa-save"></i>Save</button></td>
-    <td><button class="btn btn-primary buttonsave"id="delete" ><i class="fa fa-trash-o"></i> Delete</button></td>
+     <!-- <td><button class="btn btn-primary buttonsave" id="save"><i class="fa fa-save"></i>Save</button></td> -->
+    <!-- <td><button class="btn btn-primary buttonsave"id="delete" ><i class="fa fa-trash-o"></i> Delete</button></td> -->
    
    <!--  <td> <button class="btn btn-primary buttonsave" id="delete" >Delete</button></td> -->
   </tr>
@@ -261,10 +261,10 @@
     <td style="border: none"><input type="hidden" id="num" value="<?php echo $i;?>"></td>
     <td style="border: none"><input type="hidden" id="specialdata_month<?php echo $i;?>" value="<?php echo $specialdata_month[$test]; ?>"></td>
     <td style="border: none"><input type="hidden" id="specialdata_year<?php echo $i;?>" value="<?php echo $specialdata_year[$test]; ?>"></td>
-    <td style="border: none"> <?php echo"$"; ?> <input type="text"style="border: 0"  size= "8" id="specialdata_first<?php echo $i;?>" class="special" name="total" value="<?php echo $specialdata_first[$test]; ?>" /></td>
-    <td style="border: none"> <?php echo"$"; ?> <input type="text"style="border: 0"  size= "8" id="specialdata_second<?php echo $i;?>" name="total" value="<?php echo $specialdata_second[$test]; ?>" /></td>
-    <td style="border: none">  <?php echo"$"; ?> <input type="text"style="border: 0"  size= "8" id="specialdata_total<?php echo $i;?>" name="total" value="<?php echo $specialdata_total[$test]; ?>" readonly/></td>
-    <td style="border: none">  <?php echo"$"; ?> <input type="text"style="border: 0"  size= "8" id="specialdata_comments<?php echo $i;?>" name="total" value="<?php echo $specialdata_comments[$test]; ?>" /></td>
+    <td style="border: none"> <?php echo"$"; ?> <input type="text"style="border: 0"  size= "8" id="specialdata_first<?php echo $i;?>" class="special" value="<?php echo $specialdata_first[$test]; ?>" /></td>
+    <td style="border: none"> <?php echo"$"; ?> <input type="text"style="border: 0"  size= "8" id="specialdata_second<?php echo $i;?>"  class="special" value="<?php echo $specialdata_second[$test]; ?>" /></td>
+    <td style="border: none">  <?php echo"$"; ?> <input type="text"style="border: 0"  size= "8" id="specialdata_total<?php echo $i;?>" value="<?php echo $specialdata_total[$test]; ?>" readonly/></td>
+    <td style="border: none"> <input type="text"style="border: 0"  size= "8" id="specialdata_comments<?php echo $i;?>"  value="<?php echo $specialdata_comments[$test]; ?>" /></td>
     <td style="border: none"> <button class="btn btn-primary buttonsave" id="updatespecial"><i class="fa fa-save"></i>Update</button></td>
   </tr>
 <?php } ?>
@@ -287,8 +287,12 @@
       <td style="font-size:14; display: none;">  &emsp;Total Hours : <input id= "th" type="text" size="6" style="border: none;" value="" readonly/>  </td>
       <td style="font-size:14;">&emsp;&nbsp;Total Amount : <input type="text" id="ta" size="6" style="border: none;" value="" readonly /></td>
        <td style="font-size:14;">Total Pay : <input type="text"  id="tp" style="border: none;" size="6" value="" readonly/></td>
+
+       <td style="font-size:14;"> &emsp; Total special pay : <input type="text"  id="tsp" size="6" style="border: none;" value="" readonly /></td>
+      
         <td style="font-size:14;"> &emsp; Total Expenses: <input type="text" id="te" size="6" style="border: none;" value="" readonly/></td>
         <td style="font-size:14;"> &emsp; Balance : <input type="text"  id="b" size="6" style="border: none;" value="" readonly /></td> 
+
     </div>
 
 
@@ -306,8 +310,11 @@
 
   <a type="button" class="btn btn-primary buttonsave" id="addexp" href="<?= base_url();?>expense/?val1=<?php echo $_GET['var1'];?>&val2=<?php echo $_GET['var2'];?>&val3=<?php echo $_GET['var3'];?>"><span class="glyphicon glyphicon-plus"></span>Add Expense</a>
 
-  
+  <button class="btn btn-primary buttonsave" id="save"><i class="fa fa-save"></i>Save</button>
+ <button class="btn btn-primary buttonsave"id="delete" ><i class="fa fa-trash-o"></i> Delete</button>
  <button type="button" id="back" class="btn btn-primary buttonsave" onclick="history.back()"> <span class="glyphicon glyphicon-arrow-left"></span> Back </button>
+
+
 
    
 
@@ -333,7 +340,7 @@
  $("#Link").click(function(){
    
     var id = <?php echo $_GET['var1']; ?>;
-
+    console.log(id);
       $.ajax({
            type: "post",
            url: "<?= base_url();?>test",
@@ -341,17 +348,13 @@
            data: {id:id},
            dataType: "json",   
            success: function(json){ 
-              /*$('#b').val(json[0].balance);
-              $('#ta').val(json[0].totalamount);
-              $('#te').val(json[0].exp);
-              $('#tp').val(json[0].totalmonthpay);
-              $('#th').val(json[0].billedhours);*/
-
+            //alert(json[0].balance);
               $('#b').val('$'+json[0].balance);
               $('#ta').val('$'+json[0].totalamount);
               $('#te').val('$'+json[0].exp);
               $('#tp').val('$'+json[0].totalmonthpay);
               $('#th').val(json[0].billedhours);
+              $('#tsp').val(json[0].special_amount);
 
              } 
         });
@@ -397,6 +400,7 @@ $(document).ready(function(){
      var temp1 = <?php echo $hourssum; ?>;
      var variable= <?php echo $billsum; ?>;
      var abc=0;
+
      for(var i = 0, m=variable ; m <hours.length;i++ , m++ ){
       var cal=0;
       var temp3=0;
@@ -624,23 +628,15 @@ abc++;
 
     $('#totalamount'+(storeid)).val(Math.round(cal));
 
-   storeid = storeid +1;
-     }
-
- $("table tbody tr").each(function () {  
-
                 var id = <?php echo $_GET['var1'];  ?>;
-                var sno = $(this).parent('td').parent('tr').find('#sno').val();
-                var tiz = $(this).parent('td').parent('tr').find('#tiz'+sno).val();
-                var mon = $(this).parent('td').parent('tr').find('#billedmonth'+sno).val();
-                var billedhours = $(this).parent('td').parent('tr').find('#billedhours'+sno).val();
-                var rate = $(this).parent('td').parent('tr').find('#rate'+sno).val();
-                var percentage1 = $(this).parent('td').parent('tr').find('#percent'+sno).val();
-                var totalamount = $(this).parent('td').parent('tr').find('#totalamount'+sno).val();
-                //console.log(rate);
-                  //var totalamount=totalamount.replace('$','');
-                   //console.log(totalamount);
-                
+                //var sno = $('#sno').val();
+                var tiz = $('#tiz'+storeid).val();
+                var mon = $('#billedmonth'+storeid).val();
+                var billedhours = $('#billedhours'+storeid).val();
+                var rate = $('#rate'+storeid).val();
+                var percentage1 = $('#percent'+storeid).val();
+                var totalamount = $('#totalamount'+storeid).val();
+
                   $.ajax({
                     type: "post",
                     url: "<?= base_url();?>updateemployee",
@@ -651,7 +647,9 @@ abc++;
                    } 
                 });
 
-              });          
+             storeid = storeid +1; 
+
+           }          
 });
 
 
@@ -707,8 +705,8 @@ abc++;
           var year = $(this).parent('td').parent('tr').find('#year').val();
           var id = <?php echo $_GET['var1']; ?>;
           $(this).parent('td').parent('tr').find('#month').prop('disabled', false);
-          console.log(year);
-          console.log(id);
+          /*console.log(year);
+          console.log(id);*/
           $('#month').empty();
 
              $.ajax({
@@ -739,37 +737,32 @@ abc++;
 // save data
 
 $(document).on("click", "#save", function() { 
+
+            var limit = <?php echo $snonum; ?>;
              
-               var id = <?php echo $_GET['var1'];  ?>;
-                var sno = $(this).parent('td').parent('tr').find('#sno').val();
-                var tiz = $(this).parent('td').parent('tr').find('#tiz'+sno).val();
-                var mon = $(this).parent('td').parent('tr').find('#billedmonth'+sno).val();
-                var billedhours = $(this).parent('td').parent('tr').find('#billedhours'+sno).val();
-                var rate = $(this).parent('td').parent('tr').find('#rate'+sno).val();
-                var percentage1 = $(this).parent('td').parent('tr').find('#percent'+sno).val();
-                var totalamount = $(this).parent('td').parent('tr').find('#totalamount'+sno).val();
+             for (var i = 1; i <=limit; i++) {
+              
+                var id = <?php echo $_GET['var1'];  ?>; 
+                var tiz = $('#tiz'+i).val();
+                var mon = $('#billedmonth'+i).val();
+                var billedhours = $('#billedhours'+i).val();
+                var rate = $('#rate'+i).val();
+                var percentage1 = $('#percent'+i).val();
+                var totalamount = $('#totalamount'+i).val();
                 
-                console.log(id);
-                console.log(tiz);
-                console.log(mon);
-                console.log(billedhours);
-                console.log(rate);
-                console.log(percentage1);
-                console.log(totalamount);
-
-
-                  $.ajax({
+                    $.ajax({
                     type: "post",
                     url: "<?= base_url();?>updateemployee",
                     cache: false,    
                     data: {id:id, rate:rate, billedhours:billedhours, totalamount:totalamount, mon:mon,percet11:percentage1,tiz:tiz},
                     success: function(json){  
-                      alert("updated succesfully");
-                        location.reload();  
+                      
                    } 
                 });
 
-             
+             }
+               alert("updated succesfully");
+               location.reload();         
                     
         });               
 
@@ -788,6 +781,11 @@ $(document).on("click", "#save", function() {
            var totalamount= $(this).parent('td').parent('tr').find('#totalamount1').val();
            //var expenses = $(this).parent('td').parent('tr').find('#expenses1').val();
            var balance= $(this).parent('td').parent('tr').find('#balance1').val();
+
+           console.log(month);
+           console.log(year);
+           console.log(totalamount);
+
   
           
           $.ajax({
@@ -808,70 +806,11 @@ $(document).on("click", "#save", function() {
 
 
 
-/*
- $(document).on("click", "#delete", function(){
 
-     var id = $(this).parent('td').parent('tr').find('#idd').val();
-     var month=$(this).parent('td').parent('tr').find('#mon').val();
-     var year=$(this).parent('td').parent('tr').find('#yea').val();
-   
-
-     $.ajax({
-    type:'POST',
-    url:"<?= base_url();?>deleteemployee",
-    data:{month:month, year:year,id:id },
-    success: function(json){
-          alert('Payroll Deleted');
-           location.reload();
-       }
-
-       });
-  });
-*/
-
-
-$("#delete").click(function(){
-
-  if ($('.chkBox:checked').length == 1) {
-
-                var num = $(this).parent('td').parent('tr').find('#sno').val();
-                var id = $('#idd').val();
-                var month=$(this).parent('td').parent('tr').find('#mon'+num).val(); 
-                var year=$('#yea'+num).val();
-
-                 console.log(num);
-                 console.log(year);
-                 $.ajax({
-                    type:'POST',
-                    url:"<?= base_url();?>deleteemployee",
-                    data:{month:month, year:year,id:id },
-                    success: function(json){
-                  alert('Deleted');
-                  location.reload();
-                     }
-
-                  });
-
-         } 
-
- }); 
+ 
 
 
 
-  $("#delete").click(function(){
-
- if ($('.chkBox:checked').length == 0) {
-         
-         alert("please select one row to delete");
-         }      
-
-    if ($('.chkBox:checked').length >1) {
-         
-         alert("please select only one row to delete");
-         }      
-         
-
-    }); 
   
   // adding special case
 
@@ -886,17 +825,43 @@ $("#delete").click(function(){
             var sno = $(this).parent('td').parent('tr').find('#sno').val();
             var month = $(this).parent('td').parent('tr').find('#mon'+sno).val();
             var year = $(this).parent('td').parent('tr').find('#yea'+sno).val();
-
+            var specialmsg = month +' ' +year+' ' + 'Special';
+            console.log(specialmsg);
             var newRow = $("<tr>");
-            var cols = "<td></td> <td><input type='hidden' id='month' value="+month+"></td> <td><input type='hidden' id='year' value="+year+"></td> <td></td> <td></td> <td></td> <td></td> <td></td><td><input type='text' size='8' id='first'onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='first' name='first'> </td>   <td><input type='text' size='8' id='second' name='second' onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='second' name='second'> </td> <td><input type='text' size='8' id='totals'onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='totals' name='totals'> </td> <td><input type='text' size='8' id='comment' class='comment' name='comment'> </td> <td><button class='btn btn-primary buttonsaveone' id='update' >save</button></td>";
+            var cols = " <td><input type='hidden' id='month' value="+month+"></td> <td><input type='hidden' id='year' value="+year+"></td> <td><h5>"+specialmsg+"</h5></td> <td></td> <td></td> <td></td> <td></td> <td></td><td><input type='text' size='8' id='first' onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='spe' name='first' value='0'> </td>   <td><input type='text' size='8' id='second' name='second' onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='spe' name='second' value='0'> </td> <td><input type='text' size='8' id='totals'onkeypress='return event.charCode >= 48 && event.charCode <= 57' class='totals' name='totals' readonly> </td> <td><input type='text' size='8' id='comment' class='comment' name='comment'> </td> <td><button class='btn btn-primary buttonsaveone' id='update' >save</button></td>";
            
             newRow.append(cols);
             newRow.insertAfter($(this).parents().closest('tr'));
             //$("table.order-list").append(newRow);
             //counter++;
-        });
+        
+
+
+        $("#first,#second").on("keyup", function() {
+
+      
+            //var sno = $(this).parent('td').parent('tr').find('#num').val(); 
+            var num1 = $(this).parent('td').parent('tr').find('#first').val();
+            var num2 = $(this).parent('td').parent('tr').find('#second').val();
+
+
+            var num1=num1.replace('$','');
+            var num2=num2.replace('$','');
             
-    });
+            var result = parseFloat(num1) + parseFloat(num2);
+
+   /*       console.log(num1);
+          console.log(num2);
+*/
+            if (!isNaN(result)) {
+
+              $('#totals').val(result);
+    
+            }
+        });
+
+
+
 
    $(document).on("click", "#update", function() { 
 
@@ -909,15 +874,7 @@ $("#delete").click(function(){
            var second= $(this).parent('td').parent('tr').find('#second').val();
            var totalamount= $(this).parent('td').parent('tr').find('#totals').val();
            //var expenses = $(this).parent('td').parent('tr').find('#expenses1').val();
-           var comments= $(this).parent('td').parent('tr').find('#comment').val();
-            
-           console.log(id);
-           console.log(month);
-           console.log(year);
-           console.log(first);
-           console.log(second); 
-           console.log(totalamount);
-           console.log(comments); 
+           var comments= $(this).parent('td').parent('tr').find('#comment').val();            
 
           $.ajax({
            type: "post",
@@ -930,7 +887,19 @@ $("#delete").click(function(){
           } 
           });
          
-         });  
+         });
+
+
+
+      });
+           
+    });
+
+
+      
+
+    
+  
 
 
       
@@ -946,14 +915,6 @@ $(document).on("click", "#updatespecial", function() {
            var second= $(this).parent('td').parent('tr').find('#specialdata_second'+num).val();
            var totalamount= $(this).parent('td').parent('tr').find('#specialdata_total'+num).val();
            var comments= $(this).parent('td').parent('tr').find('#specialdata_comments'+num).val();
-            
-           console.log(id);
-           console.log(month);
-           console.log(year);
-           console.log(first);
-           console.log(second); 
-           console.log(totalamount);
-           console.log(comments); 
 
           $.ajax({
            type: "post",
@@ -969,11 +930,7 @@ $(document).on("click", "#updatespecial", function() {
          }); 
   
  
-
-
-
-      
-      $("input.special").on("keyup", function() {
+$("input.special").on("keyup", function() {
 
             var sno = $(this).parent('td').parent('tr').find('#num').val(); 
             var num1 = $(this).parent('td').parent('tr').find('#specialdata_first'+sno).val();
@@ -981,18 +938,63 @@ $(document).on("click", "#updatespecial", function() {
      
             var num1=num1.replace('$','');
             var num2=num2.replace('$','');
-  
+            
+           
             var result = parseFloat(num1) + parseFloat(num2);
 
         
 
             if (!isNaN(result)) {
 
-              $(this).parent('td').parent('tr').find('#specialdata_total'+sno).val('$'+result);
+              $(this).parent('td').parent('tr').find('#specialdata_total'+sno).val(result);
     
             }
         });
+
+
+
+
        
+
+
+// delete function
+
+
+$(document).ready(function(){
+
+  $('#delete').click(function(){
+
+    $('#customers input[type=checkbox]').each(function() {
+      if (jQuery(this).is(":checked")) {
+
+       var num = $(this).parent('td').parent('tr').find('#checkboxid').val();
+       var id = $('#idd').val();
+       var month=$('#mon'+num).val(); 
+       var year=$('#yea'+num).val();
+      if ($('.chkBox:checked').length == 1) {
+            $.ajax({
+                    type:'POST',
+                    url:"<?= base_url();?>deleteemployee",
+                    data:{month:month, year:year,id:id },
+                    success: function(json){
+                     alert('Deleted');
+                     location.reload();
+                     }
+
+                  });
+           }
+     if ($('.chkBox:checked').length ==0 || $('.chkBox:checked').length >1) {
+
+           alert('please select only one row to delete');
+           return false;
+
+          } 
+      }
+    });
+ 
+  });
+ 
+});
 
 
 

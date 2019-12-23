@@ -25,6 +25,13 @@ class Balance_model extends CI_Model {
     return $te;
   }
 
+   public function special_total($id){
+    $query2="SELECT SUM(special_amount) as st FROM tbl_balance where emp_id='$id' ";
+    $te=$this->db->query($query2)->result();
+    return $te;
+  }
+
+
    
 
  public function balance($id){
@@ -59,8 +66,11 @@ class Balance_model extends CI_Model {
 
  }
 
- public function update_balance_payroll($id,$balance){
-        $query=" UPDATE `tbl_balance` SET `balance`='$balance' WHERE emp_id='$id' ";
+ public function update_balance_payroll_special($id,$balance,$special){
+        $query1=" UPDATE `tbl_balance` SET `balance`='$balance' WHERE emp_id='$id' ";
+         $this->db->query($query1);
+
+        $query=" UPDATE `tbl_balance` SET `special_amount`='$special' WHERE emp_id='$id' ";
          $this->db->query($query);
  }
 
