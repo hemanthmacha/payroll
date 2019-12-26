@@ -5,7 +5,7 @@ class Payroll_sheet_model extends CI_Model {
 
 	public function getpayrolls($month,$year,$status){
 
-    $this->db->select('sno,tbl_users.id,tbl_users.firstname,tbl_users.lastname,onestpay,onefivethpay,rate_percent,percentage,hours,tbl_users.status,IFNULL(total,0) as total,balance, month,year,totalbilled_hours,tiz_share,tbl_balance.curent_rate,tbl_balance.current_percent');
+    $this->db->select('sno,tbl_users.id,tbl_users.firstname,tbl_users.lastname,onestpay,onefivethpay,rate_percent,percentage,hours,tbl_users.status,IFNULL(total,0) as total,balance, month,year,totalbilled_hours,tiz_share,tbl_balance.current_tez,tbl_balance.curent_rate,tbl_balance.current_percent');
       $this->db->from('tbl_payrool_sheet');
       $this->db->join('tbl_balance AS tbl_balance','tbl_payrool_sheet.id=tbl_balance.emp_id');
       $this->db->join('tbl_users AS tbl_users','tbl_users.id=tbl_balance.emp_id');
@@ -63,6 +63,40 @@ public function getting_last_id($month,$year){
 		return $response;
 
     }
+
+    public function getpayrolls_mislineous($month,$year){
+
+    $this->db->select(`mis_id`,`mis_name`, `mis_first`, `mis_second`, `mis_total`, `month`, `year`);  
+    $this->db->from('tbl_mislenous');
+    $this->db->where('month',$month);
+    $this->db->where('year',$year);
+    $query = $this->db->get();
+    $response = $query->result();
+    return $response;
+
+    }
+
+     public function insert_into_payroll_mislenous($name,$pay1,$pay2,$total,$month,$year){
+
+    $query="INSERT INTO `tbl_mislenous`(`mis_name`, `mis_first`, `mis_second`, `mis_total`, `month`, `year`) VALUES('$name', '$pay1','$pay2','$total','$month','$year')";
+    $this->db->query($query);
+    return true;
+  }
+
+  public function update_into_payroll_mislenous($name,$pay1,$pay2,$total,$month,$year,$id){
+
+    $query="UPDATE `tbl_mislenous` SET `mis_name`='$name',`mis_first`='$pay1',`mis_second`='$pay2',`mis_total`='$total',`month`='$month',`year`='$year' WHERE mis_id='$id'";
+    $this->db->query($query);
+    return true;
+  }
+
+  public function delete_payroll_mislenous($id){
+
+    $query="DELETE FROM `tbl_mislenous` WHERE mis_id='$id'";
+    $this->db->query($query);
+    return true;
+  }
+
 
 
 

@@ -70,6 +70,12 @@ $route['saveemployeelist']= 'Employe/saveempstatus';
 
 $route['special_case']= 'Special_case';
 
+$route['mislenous']= 'Payroll_sheet/add_mislenous';
+
+$route['mislenous_update']= 'Payroll_sheet/update_mislenous';
+
+$route['delete_mislenous']= 'Payroll_sheet/delete_mislenous';
+
 
 
 

@@ -110,7 +110,8 @@
 <tr>
       <?php $id=0; ?>
       <th></th>
-      <th>Sno</th>  
+      <th>Sno</th> 
+      <th></th> 
       <th>Billed Month</th>
       <th></th>
       <th>Billed Hours</th>
@@ -162,7 +163,7 @@
       <input type="hidden" id="idd" value="<?=$val->id?>">
       <input type="hidden" id="mon<?php echo $i;?>" value="<?=$val->month?>">
       <input type="hidden" id="yea<?php echo $i;?>" value="<?=$val->year?>">
-    <td style="display: none"><input type="text" id="tiz<?php echo $i;?>" value=""  readonly/></td>
+      <td style="display:none"><input type="text" id="tiz11<?php echo $i;?>" /></td>
     <td><input type="text" style="border: 0" size= "13" id="billedmonth<?php echo $i;?>" name="month" value="<?php echo $val->month; echo "-"; echo $val->year; ?>"  readonly/> </td> 
 
     <td> <?php if($specialdata_total[$mp]==0) { ?> <input type="button"  class="addRow" id="addrow" value="Add special" /> <?php } ?></td>
@@ -379,7 +380,7 @@ $(document).ready(function(){
              var ratearray=[];
              var percentagearray=[];
              var hours = [];
-              var tiz = [];
+              var tizzing = [];
 
              
 
@@ -400,7 +401,7 @@ $(document).ready(function(){
                        // hourstoparray.push(<?php echo $val->hourstop;?>);
             ratearray.push(<?php echo $val->rate;?>);
             percentagearray.push(<?php echo $val->percentage;?>);
-            tiz.push(<?php echo $val->tiz_share;?>);
+            tizzing.push(<?php echo $val->tiz_share;?>);
 
      <?php } ?>
      var storeid = 1;
@@ -616,7 +617,7 @@ abc++;
 
 
             $('#rate'+(storeid)).val(ratearray[q]); 
-            $('#tiz'+(storeid)).val(tiz[q]);
+            $('#tiz11'+(storeid)).val(tizzing[q]);
 
             if(percentagearray[q]>0){
             $('#percent'+(storeid)).val(percentagearray[q]); 
@@ -638,12 +639,14 @@ abc++;
 
                 var id = <?php echo $_GET['var1'];  ?>;
                 //var sno = $('#sno').val();
-                var tiz = $('#tiz'+storeid).val();
+                var tiz = $('#tiz11'+storeid).val();
                 var mon = $('#billedmonth'+storeid).val();
                 var billedhours = $('#billedhours'+storeid).val();
                 var rate = $('#rate'+storeid).val();
                 var percentage1 = $('#percent'+storeid).val();
                 var totalamount = $('#totalamount'+storeid).val();
+
+                console.log(tiz);
 
                   $.ajax({
                     type: "post",

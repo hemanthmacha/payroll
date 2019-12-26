@@ -80,8 +80,8 @@ class Balance_model extends CI_Model {
  }
 
 
- public function update_rate_percentage($id,$rate,$percent){
-        $query=" UPDATE `tbl_balance` SET `curent_rate`='$rate',`current_percent`='$percent' WHERE emp_id='$id' ";
+ public function update_rate_percentage($id,$rate,$percent,$ctez){
+        $query=" UPDATE `tbl_balance` SET `curent_rate`='$rate',`current_percent`='$percent',`current_tez`='$ctez' WHERE emp_id='$id' ";
          $this->db->query($query);
  }
   

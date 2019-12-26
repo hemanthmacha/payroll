@@ -54,63 +54,11 @@ class Payroll_sheet extends CI_Controller {
         $data['complete'] = $this->Payroll_sheet_model->getpayrolls($month,$year,'Project Completed');
         $data['left'] = $this->Payroll_sheet_model->getpayrolls($month,$year,'Left Company');
         $data['inactive'] = $this->Payroll_sheet_model->getpayrolls($month,$year,'Inactive');
-        $data['balance_single'] = $this->Payroll_sheet_model->getpayrolls_balance($month,$year);  
+        $data['balance_single'] = $this->Payroll_sheet_model->getpayrolls_balance($month,$year);
+        $data['mislenous'] = $this->Payroll_sheet_model->getpayrolls_mislineous($month,$year);    
         $this->load->view('payroll_view',$data);
 
-                /*$config = array();
-                $config['page_query_string'] = TRUE;
-                $config["base_url"] = base_url() . "month/$month/?var1=$year";
-                $config["per_page"] = 10;
-                $page = $_GET['per_page'];
-                if($per_page==0 || $per_page =''){
-
-                  $per_page==0;
-                }
-                else{
-                  $per_page = $_GET['page'];
-                  //$per_page = explode('/', $page); 
-                  
-                }
-              $config["total_rows"] = $this->Payroll_sheet_model->getpayrolls($month,$year,$config["per_page"], $page)['numRows'];
-       
-                $config["uri_segment"] = 4;
-                $config['full_tag_open'] = "<ul class='pagination'>";
-                $config['full_tag_close'] = '</ul>';
-                $config['num_tag_open'] = '<li>';
-                $config['num_tag_close'] = '</li>';
-                $config['cur_tag_open'] = '<li class="active"><a href="#">';
-                $config['cur_tag_close'] = '</a></li>';
-                $config['prev_tag_open'] = '<li>';
-                $config['prev_tag_close'] = '</li>';
-                $config['first_tag_open'] = '<li>';
-                $config['first_tag_close'] = '</li>';
-                $config['last_tag_open'] = '<li>';
-                $config['last_tag_close'] = '</li>';
-
-                $config['next_link'] = 'Next Page';
-                $config['next_tag_open'] = '<li>';
-                $config['next_tag_close'] = '</li>';
-
-                $config['prev_link'] = 'Previous Page';
-                $config['prev_tag_open'] = '<li>';
-                $config['prev_tag_close'] = '</li>';
-
-               $this->pagination->initialize($config);             
-               $per_page = $_GET['per_page'];
-
-                if($per_page==0 || $per_page =''){
-
-                  $per_page==0;
-                }
-
-                else{
-                  $page = $_GET['per_page'];                                     
-                }
-
-
-        $data["links"] = $this->pagination->create_links();*/
-       
-
+                
      }
 
 
@@ -300,6 +248,7 @@ public function autoload_balance(){
           $changevalue2=array();
           $changevalue3=array();
           $changevalue4=array();
+          $tez_sharee = array();
 
             foreach ($sresult1 as $key => $val) { 
             array_push($changevalue1,"$val->hourstart");
@@ -321,6 +270,12 @@ public function autoload_balance(){
             }
 
             foreach ($sresult1 as $key => $val) { 
+            array_push($tez_sharee,"$val->tiz_share");
+            }
+
+
+
+            foreach ($sresult1 as $key => $val) { 
               if($val->percentage==0){
                 array_push($changevalue4,100);
               }
@@ -339,12 +294,13 @@ public function autoload_balance(){
            if($changevalue2[$i]>$totalhour || $changevalue2[$i] == $totalhour){
 
             $rate11=$changevalue3[$i];
-            $percent11=$changevalue4[$i];                    
+            $percent11=$changevalue4[$i];
+            $ctez=$tez_sharee[$i];                    
              }
           }
         }
 
-      $this->Balance_model->update_rate_percentage($id,$rate11,$percent11);
+      $this->Balance_model->update_rate_percentage($id,$rate11,$percent11,$ctez);
       }
    }
 
@@ -424,6 +380,53 @@ public function autoload_balance(){
       echo json_encode($result);
 
      }
+
+     public function add_mislenous(){
+
+         $name      = $_POST['name'];
+         $pay1      = $_POST['first'];
+         $pay2  = $_POST['second'];
+         $total      = $_POST['totalamount'];
+         $month      = $_POST['month'];
+         $year      = $_POST['year'];
+
+
+         //$this->Balance_model->update_balance_payroll($id,$balance);
+
+         $result['res'] = $this->Payroll_sheet_model->insert_into_payroll_mislenous($name,$pay1,$pay2,$total,$month,$year); 
+
+        // calling auto update balance table
+      //  $this->autoload_balance();
+        echo json_encode($result);
+
+     }
+
+     public function update_mislenous(){
+
+         $id = $_POST['id'];
+         $name      = $_POST['name'];
+         $pay1      = $_POST['first'];
+         $pay2  = $_POST['second'];
+         $total      = $_POST['totalamount'];
+         $month      = $_POST['month'];
+         $year      = $_POST['year'];
+
+         $result['res'] = $this->Payroll_sheet_model->update_into_payroll_mislenous($name,$pay1,$pay2,$total,$month,$year,$id);
+
+         echo json_encode($result);
+
+     }
+
+     public function delete_mislenous(){
+
+         $id = $_POST['id'];
+         $result['res'] = $this->Payroll_sheet_model->delete_payroll_mislenous($id);
+
+         echo json_encode($result);
+
+     }
+
+
 
 
 }

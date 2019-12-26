@@ -85,6 +85,7 @@ height:auto; " readonly> </h3>
 
      <?php if($val->hours>0) { ?>
       <td><input type="text" style="border: 0" id="rate<?php echo $i; ?>" size="5" value="<?php echo $val->rate_percent; ?>" readonly/> </td>
+
     <?php if($val->percentage >0) { ?>
     <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="<?php echo $val->percentage; ?>" readonly/></td>
     <?php } ?>
@@ -93,7 +94,15 @@ height:auto; " readonly> </h3>
     <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="100" readonly/></td>
     <?php } } ?>
 
-     <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+
+    <?php if($val->tiz_share >0) { ?>
+      <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+    <?php } ?>
+
+    <?php if($val->tiz_share ==0) { ?>
+    <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->current_tez; ?>" readonly/> </td>
+    <?php } ?>
+
 
     <td><input type="text"  id="firsttpay<?php echo $i; ?>" size="8"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo "$"; echo $val->onestpay; ?>"/> <input type="image" id="lastmonthfirstpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
 
@@ -102,7 +111,9 @@ height:auto; " readonly> </h3>
     <td><input type="text" size="8"  style="border: 0" id="total<?php echo $i; ?>" value="<?php echo "$";echo $val->total; ?>" readonly/></td>
 
     <td><input type="text" style="border: 0" size="10" id="totalbilled<?php echo $i; ?>" name="name" value="<?php echo $val->totalbilled_hours; ?>" readonly/></td>
+
     <td><input type="text" style="border: 0" size="10" id="balance<?php echo $i; ?>" name="name" value="<?php  echo "$"; echo $val->balance; ?>" readonly/></td>
+
     <td><a href="<?=base_url()?>list/?var1=<?=$val->id?>&var2=<?=$val->firstname?>&var3=<?=$val->lastname?>" target="_blank" >See More</a></td>
 
       <td >
@@ -155,7 +166,13 @@ height:auto; " readonly> </h3>
     <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="100" readonly/></td>
     <?php } } ?>
 
-     <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+     <?php if($val->tiz_share >0) { ?>
+      <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+    <?php } ?>
+
+    <?php if($val->tiz_share ==0) { ?>
+    <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->current_tez; ?>" readonly/> </td>
+    <?php } ?>
 
     <td><input type="text"  id="firsttpay<?php echo $i; ?>" size="8"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo "$"; echo $val->onestpay; ?>"/> <input type="image" id="lastmonthfirstpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
 
@@ -218,7 +235,13 @@ height:auto; " readonly> </h3>
     <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="100" readonly/></td>
     <?php } } ?>
 
-     <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+     <?php if($val->tiz_share >0) { ?>
+      <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+    <?php } ?>
+
+    <?php if($val->tiz_share ==0) { ?>
+    <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->current_tez; ?>" readonly/> </td>
+    <?php } ?>
 
     <td><input type="text"  id="firsttpay<?php echo $i; ?>" size="8"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo "$"; echo $val->onestpay; ?>"/> <input type="image" id="lastmonthfirstpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
 
@@ -280,7 +303,13 @@ height:auto; " readonly> </h3>
     <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="100" readonly/></td>
     <?php } } ?>
 
-     <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+     <?php if($val->tiz_share >0) { ?>
+      <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+    <?php } ?>
+
+    <?php if($val->tiz_share ==0) { ?>
+    <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->current_tez; ?>" readonly/> </td>
+    <?php } ?>
 
     <td><input type="text"  id="firsttpay<?php echo $i; ?>" size="8"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo "$"; echo $val->onestpay; ?>"/> <input type="image" id="lastmonthfirstpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
 
@@ -337,7 +366,13 @@ height:auto; " readonly> </h3>
     <td><input type="text" style="border: 0" id="percent<?php echo $i; ?>"  size="5" value="100" readonly/></td>
     <?php } } ?>
 
-     <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+    <?php if($val->tiz_share >0) { ?>
+      <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->tiz_share; ?>" readonly/> </td>
+    <?php } ?>
+
+    <?php if($val->tiz_share ==0) { ?>
+    <td><input type="text" style="border: 0" id="tiz_share<?php echo $i; ?>" size="5" value="<?php echo $val->current_tez; ?>" readonly/> </td>
+    <?php } ?>
 
     <td><input type="text"  id="firsttpay<?php echo $i; ?>" size="8"  class="paychange" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="<?php echo "$"; echo $val->onestpay; ?>"/> <input type="image" id="lastmonthfirstpay" src="<?= base_url();?>assests/images/add_data.jpg" style="height: 15;"></td>
 
@@ -369,7 +404,12 @@ height:auto; " readonly> </h3>
 
 
   <button class="btn btn-primary buttonsave" id="total">Total</button>&nbsp; &nbsp; &nbsp; &nbsp; 
+ 
+ <button type="button" id="back" class="btn btn-primary buttonsave" onclick="history.back()"> <span class="glyphicon glyphicon-arrow-left"></span> Back </button>&nbsp;&nbsp;
+&nbsp; &nbsp;   <button class="btn btn-primary buttonsave" id="unpaid" >No. of Unpaid Employes</button> &nbsp;&nbsp;
+<button class="btn btn-primary buttonsave" id="mislenous_show">Show Miscellaneous</button>
 
+<button class="btn btn-primary buttonsave" id="mislenous_add" style="display: none">Add Miscellaneous</button>
 
  <button type="button" id="back" class="btn btn-primary buttonsave" onclick="history.back()"> <span class="glyphicon glyphicon-arrow-left"></span> Back </button>&nbsp;&nbsp;
 &nbsp; &nbsp;   <button class="btn btn-primary buttonsave" id="unpaid" >No. of Unpaid Employes</button> 
@@ -400,6 +440,39 @@ height:auto; " readonly> </h3>
         <h4><tr> <td>15th pay Remaining Employees </td> <td> <?php $temp1 =$unpid[2]-$unpid[1]; echo $temp1; ?> </td> </tr> </h4>
     </table> 
     </div>
+  
+  <br>
+  <div id="aaaa" style="display: none">
+    <table id = "mislenous" class="col-sm-4" >
+    <br><br>
+        <h4>Miscellaneous&nbsp;Data</h4>
+        <tr> 
+        <th></th><th></th>
+        <th></th><th></th>        
+        <th>Name</th>
+        <th>1st Pay</th>
+        <th> 15th Pay </th>
+        <th>Total </th>
+        </tr>
+        
+        <?php $k=0; foreach($mislenous as $key=>$vall) { $k++; ?>
+           <tr>
+            <td><input type="hidden" id="mis_sno" value="<?php echo $k;?>"/></td>
+            <td><input type="hidden" id="mis_id" value="<?php echo $vall->mis_id; ?>" name="">
+             <td><input type="hidden" id="mis_month" value="<?php echo $vall->month;?>"/></td>
+             <td><input type="hidden" id="mis_year" value="<?php echo $vall->year;?>"/></td>
+             <td><input type="text" id="misname<?php echo $k; ?>" value="<?php echo $vall->mis_name;?> "/> </td>
+             <td><input type="text" id="misfirst<?php echo $k; ?>" class="mis_pay" value="<?php echo $vall->mis_first;?>"/> </td>
+             <td><input type="text" id="missecond<?php echo $k; ?>" class="mis_pay" value="<?php echo $vall->mis_second;?>"/> </td>
+             <td><input type="text" id="mistotal<?php echo $k; ?>" value="<?php echo $vall->mis_total;?>" readonly/> </td>
+             <td> <button class='btn btn-primary buttonsave' style="display:none" id='mislenous_update'>update</button> <br> </td>
+             <td><button class='btn btn-primary buttonsave'   id='mislenous_delete'>Delete</button></td>
+           </tr> 
+        <?php } ?> 
+          
+    </table> 
+</td>
+ 
 
 </div>
 </div> </div>
@@ -423,6 +496,17 @@ height:auto; " readonly> </h3>
      $('.remaining').toggle();
       $(".counts").hide();
 });
+
+
+
+  $(document).on("click","#mislenous_show", function(){   
+     
+     $('#mislenous_add').show();
+     $('#mislenous_show').hide();
+     $('#aaaa').show();
+
+});
+
 
 
 $(document).on("click","#total", function(){
@@ -686,7 +770,126 @@ $(document).on("click","#lastmonthfirstpay",function(){
          });
         });
 
-        
+        $(document).on("click", "#mislenous_add", function() { 
+
+          $('#mislenous_add').hide();
+          mis_markup="<tr> <td></td> <td></td><<td></td>t<td></td> <td><input type='text' id='misname' /> </td> <td><input type='text' id='misfirst' class='mislenous' value='0'/> </td> <td><input type='text' id='missecond' class='mislenous' value='0' /> </td> <td><input type='text' id='mistotal' value='0' readonly/> </td> <td> <button class='btn btn-primary buttonsave' id='mislenous_save'>save</button> </td> </tr>";
+          $('#mislenous').append('<br>');
+         $('#mislenous').append(mis_markup);
+
+
+         $("input.mislenous").on("keyup", function() {
+
+          var mis_first = $(this).parent('td').parent('tr').find('#misfirst').val();
+          var mis_second = $(this).parent('td').parent('tr').find('#missecond').val();
+
+          var result = parseFloat(mis_first) + parseFloat(mis_second);
+
+          if (!isNaN(result)) {
+
+              $('#mistotal').val(result);
+    
+            }
+
+         })
+
+        });    
+
+
+           $(document).on("click", "#mislenous_save", function() { 
+
+
+           var mis_month="<?php echo $this->uri->segment(2);?>";
+           var mis_yesr = "<?php echo $_GET['var1']; ?>";
+           var mis_name = $(this).parent('td').parent('tr').find('#misname').val();
+           var mis_first = $(this).parent('td').parent('tr').find('#misfirst').val();
+           var mis_second= $(this).parent('td').parent('tr').find('#missecond').val();
+           var mis_totalamount= $(this).parent('td').parent('tr').find('#mistotal').val();
+           
+              
+
+          $.ajax({
+           type: "post",
+           url: "<?= base_url();?>mislenous",
+           cache: false,    
+           data: {first:mis_first, second:mis_second, totalamount:mis_totalamount, month:mis_month, year:mis_yesr,name:mis_name},
+           success: function(json){    
+            alert('Saved Miscellaneous');
+            location.reload();
+          } 
+          });
+         
+         });
+
+
+
+      $("input.mis_pay").on("keyup", function() {
+
+           $('#mislenous_update').show(); 
+           var num = $(this).parent('td').parent('tr').find('#mis_sno').val();
+           var mis_first = $(this).parent('td').parent('tr').find('#misfirst'+num).val();
+           var mis_second= $(this).parent('td').parent('tr').find('#missecond'+num).val();
+ 
+          var result = parseFloat(mis_first) + parseFloat(mis_second);
+
+          if (!isNaN(result)) {
+
+              $('#mistotal'+num).val(result);
+    
+            }
+
+         })
+
+
+
+
+   $(document).on("click", "#mislenous_update", function() { 
+
+
+           var mis_month="<?php echo $this->uri->segment(2);?>";
+           var mis_yesr = "<?php echo $_GET['var1']; ?>";
+           var num = $(this).parent('td').parent('tr').find('#mis_sno').val();
+           var id = $(this).parent('td').parent('tr').find('#mis_id').val();
+           var mis_name = $(this).parent('td').parent('tr').find('#misname'+num).val();
+           var mis_first = $(this).parent('td').parent('tr').find('#misfirst'+num).val();
+           var mis_second= $(this).parent('td').parent('tr').find('#missecond'+num).val();
+           var mis_totalamount= $(this).parent('td').parent('tr').find('#mistotal'+num).val();
+           
+          $.ajax({
+           type: "post",
+           url: "<?= base_url();?>mislenous_update",
+           cache: false,    
+           data: {id:id,first:mis_first, second:mis_second, totalamount:mis_totalamount, month:mis_month, year:mis_yesr,name:mis_name},
+           success: function(json){    
+            alert('Updated Miscellaneous');
+            location.reload();
+          } 
+          });
+         
+         });
+
+   $(document).on("click", "#mislenous_delete", function() { 
+
+           
+           var id = $(this).parent('td').parent('tr').find('#mis_id').val();
+         
+           
+          $.ajax({
+           type: "post",
+           url: "<?= base_url();?>delete_mislenous",
+           cache: false,    
+           data: {id:id},
+           success: function(json){    
+            alert('Deleted Miscellaneous');
+
+            location.reload();
+          } 
+          });
+         
+         });
+
+
+
 
 </script>
 
